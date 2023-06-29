@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gla.catarina.mapper.OrdersMapper">
+    <insert id="InsertOrder" parameterType="com.gla.catarina.entity.Orders">
+        insert into orders(id,commid,ordernumber,ordertime,commname,commdesc,commnumber,price,useraddress,orderstatus,username,mobilephone,kdstatus,kdnumber,buyuserid,selluserid)
+        value(#{id},#{commid},#{ordernumber},#{ordertime},#{commname},#{commdesc},#{commnumber},#{price},#{useraddress},#{orderstatus},#{username},#{mobilephone},#{kdstatus},#{kdnumber},#{buyuserid},#{selluserid})
+    </insert>
+    <select id="LookOrderDetail" parameterType="java.lang.String" resultType="com.gla.catarina.entity.Orders">
+        select * from orders where ordernumber=#{ordernumber}
+    </select>
+    <update id="ChangeOrder" parameterType="com.gla.catarina.entity.Orders">
+        update orders
+        <set>
+            <if test="orderstatus!=null">
+                orderstatus=#{orderstatus},
+            </if>
+            <if test="kdstatus!=null">
+                kdstatus=#{kdstatus},
+            </if>
+            <if test="kdnumber!=null">
+                kdnumber=#{kdnumber},
+            </if>
+        </set>
+        where ordernumber=#{ordernumber}
+    </update>
+
+
+    <!--分页展示订单记录-->
+    <select id="queryAllOrderecord" resultType="com.gla.catarina.entity.Orders">
+        select ordernumber,commid,commname,commdesc,price,username,mobilephone,kdstatus,kdnumber,ordertime
+        from orders
+        <where>
+            <if test="buyuserid != null">and buyuserid = #{buyuserid}</if>
+            and orderstatus=1
+        </where>
+        order by ordertime desc limit #{page},#{count}
+    </select>
+    <!--查看售出订单总数-->
+    <select id="queryOrderCount" resultType="java.lang.Integer">
+        select count(*) from orders
+        <where>
+            <if test="buyuserid != null">and buyuserid = #{buyuserid}</if>
+            and orderstatus=1
+        </where>
+    </select>
+
+    <!--分页展示售出记录-->
+    <select id="queryAllSoldrecord" resultType="com.gla.catarina.entity.Orders">
+        select ordernumber,commid,commname,commdesc,price,kdstatus,ordertime from orders
+        <where>
+            <if test="selluserid != null">and selluserid = #{selluserid}</if>
+            and orderstatus=1
+        </where>
+        order by ordertime desc limit #{page},#{count}
+    </select>
+    <!--查看售出记录总数-->
+    <select id="querySoldCount" resultType="java.lang.Integer">
+        select count(*) from orders
+        <where>
+            <if test="selluserid != null">and selluserid = #{selluserid}</if>
+            and orderstatus=1
+        </where>
+    </select>
+
+</mapper>

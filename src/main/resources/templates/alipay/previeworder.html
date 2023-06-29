@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}"/>
+    <script th:src="@{/static/layui/jquery.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/946d63ec4ba6a3c5be78.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/fefaf0dbda4fa986ba98.css}"/>
+    <title>校园二手交易商城 | 订单预览</title>
+    <script th:inline="javascript">
+        var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
+    </script>
+</head>
+<body>
+<div class="layui-container" style="margin-top:20px">
+    <div class="row">
+        <div class="layui-col-xs2"></div>
+        <div class="layui-col-xs8">
+            <div style="border:1px solid rgba(0,0,0,.2);border-radius:.3rem;background-color:white">
+                <header id="modal-purchase___BV_modal_header_" class="modal-header">
+                    <div data-v-0f103e85="" class="custom-modal-header w-100 vertical-center">
+                        <h3 data-v-0f103e85="" class="no-margin" th:text="${orders.commname}"></h3>
+                    </div>
+                </header>
+                <div data-v-0f103e85="" class="section-header font-16 bold" style="margin:20px 0px 20px 20px;">
+                    <span data-v-0f103e85="">支付方式</span>
+                </div>
+                <div style="margin:0px 0px 0px 50px;">
+                    <img th:src="@{/static/images/alipay.png}"style="height:40px;border:1px solid #f55f60;">
+                </div>
+                <hr style="color:#DEE2E6;background-color:#DEE2E6">
+                <div class="layui-container">
+                    <div class="row">
+                        <div class="layui-col-xs6" style="padding:10px 0px 30px 30px;">
+                            <div data-v-0f103e85="" class="box-left">
+                                <span data-v-0f103e85="" class="vertical-middle font-18">付款:</span>
+                                <strong data-v-0f103e85="" class="color-red vertical-middle real-price"
+                                        style="font-size:40px" th:text="'￥'+${orders.price}"></strong>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs6" style="padding:10px 0px 30px 30px;line-height:60px;">
+                            <form id="payForm" method="post" th:action="@{/alipay/gopay}">
+                                <input type="hidden" name="orderid" th:value="${orders.ordernumber}"/>
+                                <input type="submit" class="btn btn-confirm btn-danger"
+                                       style="padding:10px 40px 10px 40px" value="确认购买">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs2"></div>
+    </div>
+</div>
+
+</body>
+<script th:src="@{/static/layui/layui.js}"></script>
+<script>
+    layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer', 'table', 'layedit', 'upload'], function () {
+        var element = layui.element;
+        var util = layui.util;
+        var carousel = layui.carousel;
+        var form = layui.form;
+        var layer = layui.layer;
+        var table = layui.table;
+        var layedit = layui.layedit
+            , upload = layui.upload
+            , laypage = layui.laypage;
+    });
+</script>
+</html>
