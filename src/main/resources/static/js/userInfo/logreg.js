@@ -324,9 +324,9 @@ function getphonecode() {
         return;
     }
     //ajax到后台
-    var phone=$("#userphone").val();
+    var userEmail=$("#useremail").val();
     var object = new Object(); //创建一个存放数据的对象
-    object["mobilephone"] = phone;
+    object["userEmail"] = userEmail;
     object["type"] = 0;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
     $.ajax({

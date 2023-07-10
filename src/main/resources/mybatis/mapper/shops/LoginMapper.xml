@@ -7,13 +7,14 @@
         <result column="userid" jdbcType="INTEGER" property="userid"/>
         <result column="roleid" jdbcType="INTEGER" property="roleid"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="userstatus" jdbcType="INTEGER" property="userstatus"/>
     </resultMap>
 
     <!-- 注册 -->
     <insert id="loginAdd" parameterType="com.gla.catarina.entity.Login">
-        insert into login (id,userid,username,password,mobilephone) values (#{id},#{userid},#{username},#{password},#{mobilephone})
+        insert into login (id,userid,username,password,mobilephone,email) values (#{id},#{userid},#{username},#{password},#{mobilephone},#{email})
     </insert>
     <!-- 登录及判断用户是否存在 -->
     <select id="userLogin" parameterType="com.gla.catarina.entity.Login" resultMap="shoplogin">
@@ -22,6 +23,7 @@
             <if test="userid != null">and userid = #{userid}</if>
             <if test="username != null">and username = #{username}</if>
             <if test="mobilephone != null">and mobilephone = #{mobilephone}</if>
+            <if test="email != null">and email = #{email}</if>
             <if test="password != null">and password = #{password}</if>
         </where>
         and userstatus=1
@@ -34,6 +36,7 @@
             <if test="username != null">username = #{username},</if>
             <if test="password != null">password = #{password},</if>
             <if test="mobilephone != null">mobilephone = #{mobilephone},</if>
+            <if test="email != null">and email = #{email}</if>
             <if test="userstatus != null">userstatus = #{userstatus}</if>
         </set>
         where id=#{id} or userid=#{userid}

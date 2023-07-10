@@ -55,4 +55,8 @@ public class Login implements Serializable {
      * 验证码
      * */
     private String vercode;
+    /**
+     * 邮箱
+     */
+    private String email;
 }

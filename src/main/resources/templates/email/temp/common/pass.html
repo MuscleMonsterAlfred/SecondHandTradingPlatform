@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>审批邮件通知</title>
+</head>
+<body>
+<div id="mailContentContainer" class="fms_mail_box qm_con_body_content" style="">
+    <style>
+        {
+            font-weight: normal
+
+        ;
+            font-style: normal
+
+        ;
+        }
+        .fms_mail_box body {
+            background-color: #EFF4FA;
+            font: 12px/22px '微软雅黑', Arial, '宋体';
+        }
+
+        .fms_mail_box p, .fms_mail_box div, .fms_mail_box li, .fms_mail_box td, .fms_mail_box th {
+            font: 12px/22px '微软雅黑', Arial, '宋体';
+            font-weight: normal;
+        }
+
+        .fms_mail_box a {
+            color: #3582fb;
+            text-decoration: none;
+        }
+
+        .fms_mail_box table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            table-layout: auto;
+        }
+
+        .fms_mail_box td, .fms_mail_box th {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        .fms_mail_box #body {
+            table-layout: auto;
+            padding: 20px 10px;
+            text-align: center;
+            background-color: #f8f8f8;
+        }
+
+        .fms_mail_box #wrapper {
+            table-layout: auto;
+            background-color: #fff;
+            margin: 0 auto;
+            border: 1px solid #DEE3E7;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .fms_mail_box #tip {
+            width: 800px;
+            table-layout: auto;
+            margin: 0 auto;
+            margin-bottom: 5px;
+            text-align: right;
+            background-color: #EFF4FA;
+        }
+
+        .fms_mail_box #mail-preview-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #3F67AB;
+            color: #C5D1E6;
+            z-index: 100;
+            padding: 0 20px;
+            height: 30px;
+            line-height: 30px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+            text-align: right;
+            display: none;
+        }
+
+        .fms_mail_box #mail-preview-header a {
+            color: #fff;
+        }
+
+        .fms_mail_box #mail-preview-header-helper {
+            height: 40px;
+            display: none;
+        }
+
+        .fms_mail_box .mail-preview-header {
+            background: #F8F8F8;
+            padding: 25px;
+            border-bottom: 1px solid #d9d9d9;
+        }
+
+        .fms_mail_box .mail-preview-header a {
+            font-size: 14px;
+            color: #3f4a56;
+        }
+
+        .fms_mail_box .mail-preview-header h1 {
+            display: inline;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .fms_mail_box .email-head-message th {
+            text-align: left;
+            color: #8091a5;
+            font-size: 14px;
+        }
+
+        .fms_mail_box .email-head-message td {
+            text-align: left;
+            color: #8091a5;
+            font-size: 14px;
+        }
+
+        .fms_mail_box ul.list li, .fms_mail_box ul.list {
+            list-style-type: disc;
+        }
+
+        .fms_mail_box ul.list {
+            margin-left: 20px;
+        }
+
+        .fms_mail_box .table {
+            table-layout: auto;
+        }
+
+        .fms_mail_box .table th, .fms_mail_box .table td {
+            text-align: left;
+            line-height: 30px;
+            height: 30px;
+            border-top: 1px solid #F2F2F2;
+            border-bottom: 1px solid #F2F2F2;
+            padding: 2px 8px;
+            white-space: nowrap;
+            font-weight: normal;
+        }
+
+        .fms_mail_box .table td {
+            vertical-align: top;
+        }
+
+        .fms_mail_box .table td div, .fms_mail_box .table td strong, .fms_mail_box .table td span, .fms_mail_box .table td p, .fms_mail_box .table td {
+            font-size: 14px !important;
+        }
+
+        .fms_mail_box .table th {
+            border-top: 0;
+            border-bottom: 1px solid #F2F2F2;
+            background-color: #ffffff;
+            font-size: 12px;
+            color: #8091a5;
+        }
+
+        .fms_mail_box .table .first {
+            padding-left: 20px;
+        }
+
+        .fms_mail_box .table td:first-child, .fms_mail_box .table th:first-child {
+            padding-left: 0;
+        }
+
+        .fms_mail_box .table td:last-child, .fms_mail_box .table th:last-child {
+            padding-right: 0;
+        }
+
+        .fms_mail_box .table td, .fms_mail_box .table th {
+            text-aligh: left;
+        }
+
+        .fms_mail_box .table .rowdone, .fms_mail_box .table .rowdone a, .fms_mail_box .table .rowdone .highlight-text {
+            color: #999;
+        }
+
+        .fms_mail_box .data-2columns th {
+            text-align: left;
+            padding-right: 20px;
+            font-weight: normal;
+            vertical-align: top;
+        }
+
+        .fms_mail_box .data-2columns td {
+            color: #6F6F6F;
+            vertical-align: top;
+            word-break: break-all;
+        }
+
+        .fms_mail_box .block-title {
+            background-color: #2a68c9;
+            color: #FFF;
+            font-size: 16px;
+            line-height: 24px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+
+        .fms_mail_box .btn {
+            line-height: 26px;
+            border-radius: 4px;
+            background: #5091F9;
+            color: #fff;
+            display: inline-block;
+            border: 1px solid #3079ED;
+        }
+
+        .fms_mail_box .tapdbtn {
+            line-height: 26px;
+            border-radius: 4px;
+            background: #5091F9 !important;
+            color: #fff !important;
+            display: inline-block;
+            border: 1px solid #3079ED;
+            text-decoration: none !important;
+        }
+
+        .fms_mail_box .iteration-title {
+            width: 300px;
+            border-bottom: none;
+            height: 18px;
+            line-height: 18px;
+            overflow: hidden;
+            text-align: left;
+            white-space: nowrap;
+            vertical-align: top;
+            padding: 4px 20px;
+        }
+
+        .fms_mail_box .iteration-title a {
+            font-size: 14px;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            width: auto;
+            font-weight: bold;
+        }
+
+        .fms_mail_box .project-banner, .fms_mail_box .testplan-title {
+            padding: 5px 20px;
+        }
+
+        .fms_mail_box .testplan-title a {
+            font-weight: bold;
+        }
+
+        .fms_mail_box .testplan-fields {
+            padding: 20px;
+            display: table;
+            width: 90%;
+        }
+
+        .fms_mail_box .project-banner .fl {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .fms_mail_box a.withexpand {
+            background: none;
+            color: #404040;
+            cursor: default;
+        }
+
+        .fms_mail_box .source-files-workitem, .fms_mail_box .source-files-type {
+            padding-left: 20px;
+        }
+
+        .fms_mail_box .source-files-type {
+            padding-bottom: 20px;
+        }
+
+        .fms_mail_box .file_list dt {
+            font-weight: bold;
+        }
+
+        .fms_mail_box .file_list dd {
+            padding-left: 20px;
+        }
+
+        .fms_mail_box .workitem-title, .fms_mail_box .workitem-title a {
+            font-size: 16px;
+            display: inline;
+        }
+
+        .fms_mail_box .comment-content {
+            color: #6F6F6F;
+        }
+
+        .fms_mail_box .common-mail .block-title {
+            padding-left: 30px;
+        }
+
+        .fms_mail_box .text-content {
+            margin-left: 20px;
+        }
+
+        .fms_mail_box .text-content, .fms_mail_box .textarea-comment {
+            width: 670px;
+        }
+
+        .fms_mail_box #qareport_form .text-content .textarea-comment {
+            height: 70px;
+            width: 670px;
+        }
+
+        .fms_mail_box .type-prompt {
+            padding-left: 20px;
+        }
+
+        .fms_mail_box #div_qareport_edit {
+            padding: 0px;
+        }
+
+        .fms_mail_box #qa_fix_action .btn {
+            margin: 0px 5px 0px 15px;
+            border-radius: 2px;
+        }
+
+        .fms_mail_box #qa_fix_action .btn-secondary {
+            background-color: #F6F6F6;
+            border: 1px solid #CDD0D1;
+            background-image: linear-gradient(to bottom, #F7F7F7, #F1F1F1);
+            color: #363B42;
+        }
+
+        .fms_mail_box #qa_fix_action .btn-secondary:hover {
+            background-color: #F8F8F8;
+            background-image: linear-gradient(to bottom, #F8F8F8, #F2F2F2);
+            box-shadow: 0 -1px #CDD0D1 inset;
+            color: #363B42;
+        }
+
+        .fms_mail_box #div_qareport_edit #wrapper {
+            border: 0px;
+            box-shadow: none;
+            margin: 0px;
+        }
+
+        .fms_mail_box .line {
+            height: 2px;
+            float: left;
+        }
+
+        .fms_mail_box .line-left {
+            width: 80%;
+            background-color: #3582fb;
+        }
+
+        .fms_mail_box .line-right {
+            width: 20%;
+            background-color: #ffad33;
+        }
+
+        .fms_mail_box .mail-content-wrap {
+            margin: 40px 45px;
+        }
+
+        .fms_mail_box .mail-preview-foot {
+            font-size: 12px;
+            color: #8091a5;
+        }
+
+        .fms_mail_box .mail-preview-foot a {
+            font-size: 12px;
+            color: #8091a5;
+        }
+
+        .fms_mail_box .mail-preview-foot a:hover {
+            color: #3582fb;
+        }
+
+        .fms_mail_box .mail-preview-foot .copyright {
+            font-size: 12px;
+            color: #b0bac5;
+        }
+
+        .fms_mail_box .send-mail {
+            float: right;
+            color: #fff !important;
+            font-size: 14px;
+            width: 100px;
+            height: 36px;
+            background: #3582fb;
+            text-align: center;
+        }
+
+        .fms_mail_box .btn-primary {
+            display: block;
+            cursor: pointer;
+            height: 42px;
+            line-height: 42px;
+            width: 168px;
+            text-align: center;
+            margin-right: 2px;
+            text-decoration: none;
+            outline: 0;
+            border-radius: 2px;
+            color: #fff;
+            border: 1px solid #467fdb;
+            background-color: #5091f9;
+            background-image: -webkit-linear-gradient(top, #5091f9, #4e8df2);
+        }
+
+        .fms_mail_box a {
+            text-decoration: none !important;
+        }
+
+        .fms_mail_box .btn-primary:hover {
+            border: 1px solid #4176cb !important;
+            background-color: #609bfa !important;
+            text-decoration: none !important;
+            background-image: -webkit-linear-gradient(top, #609bfa, #5091f9) !important;
+        }
+
+        .fms_mail_box .link-text {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .fms_mail_box .link-btn {
+            color: #b3c5e9;
+        }
+
+        .fms_mail_box .link-btn:hover {
+            color: #266298;
+        }
+
+        .fms_mail_box .footer-link {
+            color: #a8b0b7;
+        }
+
+        .fms_mail_box .footer-link:hover {
+            color: #266298;
+        }
+    </style>
+    <table cellpadding="0" cellspacing="0" width="100%" class="block-wrap" style="width:100%;">
+        <tbody>
+        <tr>
+            <td id="body" class="common-mail"
+                style="padding-top:60px;padding-right:20px;padding-bottom:0;padding-left:20px;">
+                <table cellpadding="0" cellspacing="0" width="686" style="display:inline-block;width:686px;">
+                    <tbody>
+                    <tr>
+                        <td width="100%" style="width:100%;">
+                            <table cellpadding="0" cellspacing="0" width="686" class="block-wrap" style="width:686px;">
+                                <tbody>
+                                <tr>
+                                    <td style=""></td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" style="font-weight:bold;font-size:18px;color:#3f4a56;width:100%;">
+                                        审批通过通知 <span style="font-family:Arial;">&nbsp; </span></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                    <tr class="blank">
+                        <td height="20" style="height:20px;"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table cellpadding="0" cellspacing="0" id="wrapper" width="686" class="block-wrap" style="width:686px;">
+                    <tbody>
+                    <tr>
+                        <td style="border:1px solid #DEE3E7;">
+                            <table cellpadding="0" cellspacing="0" width="686" style="width:686px;">
+                                <tbody>
+                                <tr>
+                                    <td style="padding-left:44px;padding-right:44px;">
+                                        <div style="font-size:18px;font-weight:bold;margin-bottom:20px;margin-top:30px;">
+                                            Hi ${applyUserName}
+                                        </div>
+                                        <div style="font-size:16px;line-height:30px;color:#4b565c">
+                                            您发起的单号为【${applySn}】，标题为【${title}】的申请已通过，请进入系统进行查看。
+                                            <br/>
+                                            <a class="btn-primary" style="margin:20px 0;" href="${address}" rel="noopener"
+                                               target="_blank">进入系统</a>
+                                        </div>
+                                        <div style="color:#a8b0b7; font-size:14px;max-width:598px;">
+                                            <p style="margin:0;font-size:14px;">如果按钮无法点击，请点击或复制以下链接到浏览器地址栏打开：</p>
+                                            <a href="" style="color:#b3c5e9;" rel="noopener"
+                                               target="_blank">${address}</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="">
+                                        <table>
+                                            <tbody>
+                                            <tr class="blank">
+                                                <td height="30" style="height:30px;"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <table cellpadding="0" cellspacing="0" width="100%" class="block-wrap"
+                                               style="width:100%;">
+                                            <tbody>
+                                            <tr>
+                                                <td align="center"
+                                                    style="text-align:center;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;">
+                                                    <div style="font-size:12px; color:#a8b0b7; margin: 0 0 10px 0;">
+                                                        本邮件由系统自动发送，请勿回复。
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table cellpadding="0" cellspacing="0" width="100%" class="block-wrap" style="width:100%;">
+                    <tbody>
+                    <tr>
+                        <td align="center" style="text-align:center;">
+                            <div style="color:#b0bac5;margin-top:8px;font-size:12px;">
+                                Copyright&nbsp; &copy;&nbsp; 2005-2021
+                                <a href="" style="color:#b0bac5;" rel="noopener" target="_blank">DoJian</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <style type="text/css">.fms_mail_box style, .fms_mail_box script, .fms_mail_box head, .fms_mail_box link, .fms_mail_box meta {
+        display: none !important;
+    }</style>
+</div>
+</body>
+</html>
