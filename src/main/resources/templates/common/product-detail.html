@@ -38,6 +38,8 @@
     <script th:src="@{/static/js/html5shiv.js}"></script>
     <script th:src="@{/static/js/respond.min.js}"></script>
     <script th:src="@{/static/js/vue.js}"></script>
+    <script th:src="@{'https://maps.googleapis.com/maps/api/js?key=AIzaSyDo_DjtOGiptsI11Uzk3xkMUT4Z4FicMOw&libraries=places'}"></script>
+
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
         var goodsid = [[${gddetail.commid}]];
@@ -118,6 +120,9 @@
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
                                     style="background-color:#27B574">浏&nbsp;览</button>&nbsp;&nbsp;<span th:text="${gddetail.rednumber}"></span>
+                        </h4>
+                        <h4 style="margin-bottom:15px">
+                            点击查看位置<i id="openPositionBtn" th:attr="goodposition = ${gddetail.goodposition}" class="layui-icon layui-icon-release" style="font-size: 30px; "></i>
                         </h4>
                         <div class="ps-product__shopping">
                             <a class="ps-btn mb-10" style="cursor: pointer"
@@ -395,7 +400,7 @@
 <script type="text/javascript" th:src="@{/static/plugins/elevatezoom/jquery.elevatezoom.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/jquery-ui/jquery-ui.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/ditugoogle.js}"></script>
+<!--<script type="text/javascript" th:src="@{/static/js/ditugoogle.js}"></script>-->
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/jquery.themepunch.tools.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/jquery.themepunch.revolution.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/extensions/revolution.extension.video.min.js}"></script>
@@ -412,4 +417,5 @@
 <script type="text/javascript" th:src="@{/static/layui/layui.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/common/productdetail.js}"></script>
 </body>
+<div   style="border:0;width: 900px;height: 600px;display: none;" allowfullscreen=""  id="map"></div>
 </html>

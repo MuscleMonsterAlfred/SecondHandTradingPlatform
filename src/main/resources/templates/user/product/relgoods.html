@@ -9,6 +9,7 @@
     <script type="text/javascript" th:src="@{/static/layui/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/userInfo/ckplayer.js}"></script>
+    <script th:src="@{'https://maps.googleapis.com/maps/api/js?key=AIzaSyDo_DjtOGiptsI11Uzk3xkMUT4Z4FicMOw&libraries=places'}"></script>
     <title>校园二手交易商城 | 发布商品</title>
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
@@ -92,12 +93,7 @@
             <button type="button" class="layui-btn" id="test3">上传其他图（最多3张）</button>
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>位置信息</label>
-        <div class="layui-inline">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d26515866.254280455!2d104.13743495!3d35.780286950000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-CN!2s!4v1688378385908!5m2!1szh-CN!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-    </div>
+
     <div id="otherimages" style="margin-top:0px;display: none;margin-left:100px;margin-bottom:10px">
         <div class="imgDiv" v-for="(img,index) in listimages"
              :key="index" :id="'img'+index" @mouseover="mouseOver(index)" @mouseleave="mouseLeave(index)">
@@ -113,6 +109,15 @@
             <p>温馨提示：请勿发布涉及政治、广告、营销、违反国家法律法规等商品。</p>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color: red">*</span>位置信息</label>
+        <div class="layui-inline">
+            <input type="text"  id="address-input"  placeholder="输入地址"  class="layui-input">
+            <div   style="border:0;width: 600px;height: 450px;" allowfullscreen=""  id="map"></div>
+        </div>
+        <input type="hidden" id = "goodPosition" name = "goodPosition"/>
+    </div>
+
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit="" id="demo1" lay-filter="demo1">立即提交</button>

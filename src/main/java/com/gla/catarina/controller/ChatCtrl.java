@@ -9,6 +9,7 @@ import com.gla.catarina.service.UserInfoService;
 import com.gla.catarina.util.StatusCode;
 import com.gla.catarina.vo.ResultVo;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,9 @@ public class ChatCtrl {
     @Resource
     ChatmsgService chatmsgService;
 
+    @Value("${catarina.env.filePath}")
+    private String filePath;
+
     /**
      * 上传聊天图片
      * **/
@@ -40,7 +44,7 @@ public class ChatCtrl {
         String filename = UUID.randomUUID().toString().replaceAll("-", "");
         String ext = FilenameUtils.getExtension(file.getOriginalFilename());//获得文件扩展名
         String filenames = filename + "." + ext;
-        file.transferTo(new File("D:\\campusshops\\file\\" + filenames));
+        file.transferTo(new File(filePath + filenames));
         resUrl.put("src", "/pic/" + filenames);
         res.put("msg", "");
         res.put("code", 0);
@@ -58,7 +62,7 @@ public class ChatCtrl {
         String filename = UUID.randomUUID().toString().replaceAll("-", "");
         String ext = FilenameUtils.getExtension(file.getOriginalFilename());//获得文件扩展名
         String filenames = filename + "." + ext;
-        file.transferTo(new File("D:\\campusshops\\file\\" + filenames));
+        file.transferTo(new File(filePath + filenames));
         resUrl.put("src", "/pic/" + filenames);
         resUrl.put("name",file.getOriginalFilename());
         res.put("msg", "");

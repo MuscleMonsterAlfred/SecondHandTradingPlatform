@@ -140,6 +140,78 @@ layui.use(['form', 'util','layer','carousel'], function () {
         });
         return false;
     });
+
+    var activeMap= function (position, map) {
+
+        // 在地图上添加标记
+        var marker = new google.maps.Marker({
+            position: position,
+            map: map
+        });
+
+        // 将位置信息显示在信息窗口中
+        var infowindow = new google.maps.InfoWindow({
+            content: '当前位置: ' + position.name
+        });
+
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+
+        // 将地图中心移动到当前位置
+        map.setCenter(position);
+        infowindow.open(map, marker);
+    }
+
+    layui.$('#openPositionBtn').on('click', function(e){
+        var goodpositionStr = $(e.target).attr('goodposition');
+        if(undefined != goodpositionStr){
+            // 创建地图
+            var goodposition = JSON.parse(goodpositionStr);
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644}, // 设置地图中心坐标
+                zoom: 8 // 设置地图缩放级别
+            });
+            activeMap(goodposition,map);
+
+            /*
+            var directionsService = new google.maps.DirectionsService();
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
+
+
+            // 获取当前位置
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var currentPos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    var destination = {lat: goodposition.lat, lng: goodposition.lng};
+
+                    var request = {
+                        origin: currentPos,
+                        destination: destination,
+                        travelMode: 'DRIVING'
+                    };
+
+                    directionsService.route(request, function(result, status) {
+                        if (status == 'OK') {
+                            directionsDisplay.setDirections(result);
+                        }
+                    });
+                });
+            }*/
+
+            layer.open({
+                type: 1,
+                area: ['920px', '620px'],
+                content: $('#map') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            });
+        }
+    });
+
 });
 function submitbuy() {
     if(userid==null){

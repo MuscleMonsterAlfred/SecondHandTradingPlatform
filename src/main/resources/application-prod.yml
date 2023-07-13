@@ -78,3 +78,4 @@ server:
 catarina:
   env:
     website: http://127.0.0.1
+    filePath: D:/campusshops/file/

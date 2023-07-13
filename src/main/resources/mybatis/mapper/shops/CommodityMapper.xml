@@ -4,12 +4,12 @@
 
     <!-- 插入商品 -->
     <insert id="InsertCommodity" parameterType="com.gla.catarina.entity.Commodity">
-        insert into commodity (commid,commname,commdesc,videourl,orimoney,thinkmoney,school,common,category,image,userid) value
-        (#{commid},#{commname},#{commdesc},#{videourl},#{orimoney},#{thinkmoney},#{school},#{common},#{category},#{image},#{userid})
+        insert into commodity (commid,commname,commdesc,videourl,orimoney,thinkmoney,school,common,category,image,userid,goodposition) value
+        (#{commid},#{commname},#{commdesc},#{videourl},#{orimoney},#{thinkmoney},#{school},#{common},#{category},#{image},#{userid},#{goodposition})
     </insert>
     <!-- 查询商品详情 -->
     <select id="LookCommodity" resultType="com.gla.catarina.entity.Commodity" parameterType="com.gla.catarina.entity.Commodity">
-        select commid,commname,commdesc,videourl,orimoney,thinkmoney,school,createtime,commstatus,common,rednumber,category,image,userid from commodity
+        select commid,commname,commdesc,videourl,orimoney,thinkmoney,school,createtime,commstatus,common,rednumber,category,image,userid,goodposition from commodity
         where commid=#{commid}
     </select>
     <!-- 修改商品 -->

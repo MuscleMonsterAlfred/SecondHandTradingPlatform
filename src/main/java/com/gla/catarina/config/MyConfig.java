@@ -1,6 +1,8 @@
 package com.gla.catarina.config;
 
 import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -9,6 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 public class MyConfig extends WebMvcConfigurerAdapter {
+
+    @Value("${catarina.env.filePath}")
+    private String filePath;
     @Resource
     private LoginHandlerInterceptor loginHandlerInterceptor;
 
@@ -31,7 +36,7 @@ public class MyConfig extends WebMvcConfigurerAdapter {
             /**静态资源处理*/
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("/pic/**").addResourceLocations("file:D:/campusshops/file/");
+                registry.addResourceHandler("/pic/**").addResourceLocations("file:"+filePath);
                 super.addResourceHandlers(registry);
             }
         };

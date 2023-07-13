@@ -12,6 +12,8 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -43,6 +45,10 @@ public class UserController {
     private LoginService loginService;
     @Resource
     private UserInfoService userInfoService;
+
+    @Value("${catarina.env.filePath}")
+    private String filePath;
+
     /**手机号和更换手机号验证码map集合*/
     private static Map<String, String> phonecodemap = new HashMap<>();
     /**
@@ -101,7 +107,7 @@ public class UserController {
         String filename = UUID.randomUUID().toString().replaceAll("-", "");
         String ext = FilenameUtils.getExtension(file.getOriginalFilename());//获得文件扩展名
         String filenames = filename + "." + ext;//文件全名
-        String pathname = "D:\\campusshops\\file\\" + filenames;
+        String pathname = filePath + filenames;
         file.transferTo(new File(pathname));
         resUrl.put("src", "/pic/"+filenames);
         res.put("msg", "");

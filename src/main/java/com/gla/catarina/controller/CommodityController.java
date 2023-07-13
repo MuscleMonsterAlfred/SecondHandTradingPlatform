@@ -11,6 +11,8 @@ import com.gla.catarina.vo.PageVo;
 import com.gla.catarina.vo.ResultVo;
 import org.apache.commons.io.FilenameUtils;
 import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -45,6 +47,9 @@ public class CommodityController {
     private CollectService collectService;
     @Resource
     private NoticesService noticesService;
+
+    @Value("${catarina.env.filePath}")
+    private String filePath;
 
     /**
      * 跳转到发布商品
@@ -144,7 +149,7 @@ public class CommodityController {
         String filename = UUID.randomUUID().toString().replaceAll("-", "");
         String ext = FilenameUtils.getExtension(file.getOriginalFilename());
         String filenames = filename + "." + ext;
-        String pathname = "D:\\campusshops\\file\\" + filenames;
+        String pathname = filePath + filenames;
         file.transferTo(new File(pathname));
         resUrl.put("src", "/pic/"+filenames);
         res.put("msg", "");
@@ -166,7 +171,7 @@ public class CommodityController {
             String filename = UUID.randomUUID().toString().replaceAll("-", "");
             String ext = FilenameUtils.getExtension(files.getOriginalFilename());
             String filenames = filename + "." + ext;
-            String pathname = "D:\\campusshops\\file\\" + filenames;
+            String pathname = filePath + filenames;
             files.transferTo(new File(pathname));
             imageurls.add("/pic/"+filenames);
             res.put("msg", "");

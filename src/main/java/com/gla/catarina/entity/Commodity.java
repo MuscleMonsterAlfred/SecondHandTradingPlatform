@@ -100,4 +100,5 @@ public class Commodity implements Serializable {
      */
     private String userid;
 
+    private String goodposition;
 }
