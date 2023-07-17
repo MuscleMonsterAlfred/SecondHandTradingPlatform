@@ -107,19 +107,19 @@
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                            style="background-color:#27B574">地&nbsp;址</button>&nbsp;&nbsp;<span th:text="${gddetail.school}" id="school"></span>
+                            style="background-color:#1E9FFF">地&nbsp;址</button>&nbsp;&nbsp;<span th:text="${gddetail.school}" id="school"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                                    style="background-color:#27B574">标&nbsp;签</button>&nbsp;&nbsp;<span th:text="${gddetail.common}"></span>
+                                    style="background-color:#1E9FFF">标&nbsp;签</button>&nbsp;&nbsp;<span th:text="${gddetail.common}"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                                    style="background-color:#27B574">日&nbsp;期</button>&nbsp;&nbsp;<span th:text="${#dates.format(gddetail.createtime,'yyyy-MM-dd')}"></span>
+                                    style="background-color:#1E9FFF">日&nbsp;期</button>&nbsp;&nbsp;<span th:text="${#dates.format(gddetail.createtime,'yyyy-MM-dd')}"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                                    style="background-color:#27B574">浏&nbsp;览</button>&nbsp;&nbsp;<span th:text="${gddetail.rednumber}"></span>
+                                    style="background-color:#1E9FFF">浏&nbsp;览</button>&nbsp;&nbsp;<span th:text="${gddetail.rednumber}"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             点击查看位置<i id="openPositionBtn" th:attr="goodposition = ${gddetail.goodposition}" class="layui-icon layui-icon-release" style="font-size: 30px; "></i>
@@ -132,7 +132,7 @@
                             </div>
                             <div class="ps-product__actions" id="quxiaoshoucang" style="cursor: pointer"><!--点击取消收藏-->
                                 <a class="mr-10" onclick="dianjicllect(2)"
-                                style="background-color: #3AB87E"><i class="ps-icon-heart"></i></a>
+                                style="background-color: #1E9FFF"><i class="ps-icon-heart"></i></a>
                             </div>
                             <div id="buy" style="cursor: pointer;margin-top: 10px;"><!--点击购买-->
                                 <button type="button" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-lg"
@@ -203,7 +203,7 @@
                                     <div class="ps-review__content">
                                         <header>
                                             <p>By&nbsp;<a href="">{{cmm.cusername}}</a>&nbsp;-&nbsp;{{cmm.commtime | changeTime}}
-                                                &nbsp;-&nbsp;<a style="color:#27B574;cursor: pointer"
+                                                &nbsp;-&nbsp;<a style="color:#1E9FFF;cursor: pointer"
                                                 @click="replyuser(cmm.cusername,cmm.cid,cmm.cuserid)">回复</a>
                                             </p>
                                         </header>
@@ -216,7 +216,7 @@
                                         <header>
                                             <p>By&nbsp;<a href="">{{rep.rusername}}</a>&nbsp;To&nbsp;<a href="">{{rep.cusername}}</a>
                                                 &nbsp;-&nbsp;{{rep.replytime | changeTime}}&nbsp;-&nbsp;
-                                                <a style="color:#27B574;cursor: pointer"
+                                                <a style="color:#1E9FFF;cursor: pointer"
                                                    @click="replyuser(rep.rusername,rep.cid,rep.spuserid)">回复</a>
                                             </p>
                                         </header>
