@@ -13,7 +13,7 @@ window.onload = function() {
         },
         mounted: function() {
             this.getCategoryList(this.clilckCategory);
-            this.getLatestProduct();
+            this.getLatestProduct();1
             this.getLatestNews();
         },
         methods: {

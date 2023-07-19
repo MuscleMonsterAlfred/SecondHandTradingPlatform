@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
 /**
- * @Author: hlt
+ * @Author: catarina
  * @Description:
- * @Date: 2020/3/7 11:40
+ * @Date: 2023/3/7 11:40
  */
 public class ErrorConfig {
     @Bean

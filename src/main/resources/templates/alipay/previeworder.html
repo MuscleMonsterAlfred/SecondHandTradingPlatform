@@ -15,21 +15,56 @@
 </head>
 <body>
 <div class="layui-container" style="margin-top:20px">
-    <div class="row">
+    <div class="layui-form row" >
         <div class="layui-col-xs2"></div>
         <div class="layui-col-xs8">
-            <div style="border:1px solid rgba(0,0,0,.2);border-radius:.3rem;background-color:white">
+            <div style="border:1px solid rgba(0,0,0,.2);border-radius:.3rem;background-color:white;padding: 20px 50px;">
                 <header id="modal-purchase___BV_modal_header_" class="modal-header">
                     <div data-v-0f103e85="" class="custom-modal-header w-100 vertical-center">
                         <h3 data-v-0f103e85="" class="no-margin" th:text="${orders.commname}"></h3>
                     </div>
                 </header>
-                <div data-v-0f103e85="" class="section-header font-16 bold" style="margin:20px 0px 20px 20px;">
-                    <span data-v-0f103e85="">支付方式</span>
+
+                <label class="layui-form-label" style="width: 150px;">支付方式</label>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="radio" name="payWay" value="1" title="" checked="">
+                        <img th:src="@{/static/images/mastercard.jpg}"style="width:80px;height:70px;border:1px solid #fff;">
+                        &nbsp;&nbsp;<img th:src="@{/static/images/visacard.jpg}"style="width:80px;height:70px;border:1px solid #fff;">
+
+                    </div>
                 </div>
-                <div style="margin:0px 0px 0px 50px;">
-                    <img th:src="@{/static/images/alipay.png}"style="height:40px;border:1px solid #f55f60;">
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <input style="width: 250px;" lay-verify="cardNumber"  type="text" name="cardNumber" required   placeholder="Card Number" autocomplete="off" maxlength="16" class="layui-input">
+                    </div>
                 </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="margin: 0px;">
+                        <div class="layui-input-inline" style="width: 51px;margin: 0px;">
+                            <input  style="width: 50px;" type="number" name="cardNumber" required lay-verify="month"  placeholder="MM" autocomplete="off"  maxlength="2" class="layui-input">
+                        </div>
+                    </div>
+                    /
+                    <div class="layui-inline" style="margin: 0px;">
+                        <div class="layui-input-inline"  style="width: 51px;margin: 0px;">
+                            <input  style="width: 50px;" type="number" name="cardNumber" required lay-verify="year" placeholder="YY" autocomplete="off"  maxlength="2" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <input style="width: 250px;"  type="text" name="cardNumber" required lay-verify="required" placeholder="Name on Card" autocomplete="off"  maxlength="16" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <input style="width: 250px;"  type="text" name="cardNumber" required lay-verify="cvc" placeholder="CVC" autocomplete="off"  maxlength="6" class="layui-input">
+                    </div>
+                </div>
+
+
                 <hr style="color:#DEE2E6;background-color:#DEE2E6">
                 <div class="layui-container">
                     <div class="row">
@@ -41,10 +76,11 @@
                             </div>
                         </div>
                         <div class="layui-col-xs6" style="padding:10px 0px 30px 30px;line-height:60px;">
-                            <form id="payForm" method="post" th:action="@{/alipay/gopay}">
+                           <!-- <form id="payForm" method="post" th:action="@{/alipay/gopay}">-->
+                            <form id="payForm" class="layui-form">
                                 <input type="hidden" name="orderid" th:value="${orders.ordernumber}"/>
-                                <input type="submit" class="btn btn-confirm btn-danger"
-                                       style="padding:10px 40px 10px 40px" value="确认购买">
+                                <input type="submit" class="btn btn-confirm btn-danger" lay-submit lay-filter="*"
+                                       style="" value="确认购买">
                             </form>
                         </div>
                     </div>
@@ -61,6 +97,7 @@
     layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer', 'table', 'layedit', 'upload'], function () {
         var element = layui.element;
         var util = layui.util;
+        var form = layui.form;
         var carousel = layui.carousel;
         var form = layui.form;
         var layer = layui.layer;
@@ -68,6 +105,47 @@
         var layedit = layui.layedit
             , upload = layui.upload
             , laypage = layui.laypage;
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,cardNumber: [
+                /^[\S]{16}$/
+                ,'卡号必须16位，且不能出现空格'
+            ]
+            ,month: [
+                /^(0[1-9]|1[0-2])$/
+                ,'请正确填写月份'
+            ]
+            ,year: [
+                /^(2[3-9]|3[0-9]\\d)$/
+                ,'请正确填写年份'
+            ]
+            ,cvc: [
+                /^[\S]{3}$/
+                ,'密码为3位'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+
+        form.on('submit(*)', function(data){
+            layer.open({
+                title: 'Pay Success'
+                ,content: 'You have made a successful payment!!!'
+                ,btn: ['OK']
+                ,yes: function(index, layero){
+                    window.location.href = basePath;
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
     });
 </script>
 </html>

@@ -1096,7 +1096,7 @@ iframe {
 
 @media (min-width: 1440px) {
     .ps-container {
-        width: 1170px;
+        width: 1440px;
     }
 }
 
@@ -3009,7 +3009,7 @@ textarea.form-control {
     font-size: 20px;
     font-weight: 700;
     line-height: 1.8em;
-    color: #fff;
+    color: #000;
     text-transform: uppercase;
 }
 
@@ -3022,7 +3022,10 @@ textarea.form-control {
 .ps-widget--info p {
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
-    color: #999;
+    color: #000;
+}
+.ps-footer__content{
+    background: #fafafa;
 }
 
 .ps-widget--info p strong {
@@ -3167,10 +3170,11 @@ textarea.form-control {
 .ps-widget--search {
     border-bottom: none;
 }
-
+.ps-section--features-product{
+    background: #f5f5f5;
+}
 .ps-shoe {
     position: relative;
-    padding-bottom: 70px;
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
     transition: all 0.4s ease;
@@ -5018,7 +5022,7 @@ textarea.form-control {
 
 .ps-section--offer .ps-column {
     /* position: relative; */
-    width: 1120px;
+    width: 1440px;
     /* left: 162px; */
     overflow: hidden;
     margin: 0 auto;
@@ -5058,8 +5062,8 @@ textarea.form-control {
 } */
 
 .ps-section--offer .ps-column img{
-    width: 1120px;
-    height: 130px;
+    width: 1440px;
+    height: 250px;
 }
 
 @media (max-width: 991px) {
@@ -7148,13 +7152,10 @@ textarea.form-control {
     width: 100%;
     height: 100%;
     z-index: 10;
-    background-color: #333;
+    background-color: #fafafa;
     z-index: 0;
 }
 
-.ps-footer__content {
-    padding: 100px 0;
-}
 
 .ps-footer__copyright {
     padding: 40px 0;
@@ -8988,7 +8989,7 @@ html .bg--parallax {
 }
 
 .heading-part {
-    border-bottom: 3px solid #e5e5e5;
+    /*border-bottom: 3px solid #e5e5e5;*/
     display: inline-block;
     width: 1120px;
     margin-left: 10px;
@@ -9078,7 +9079,7 @@ html .bg--parallax {
     padding: 35px 18px;
     border-radius: 0;
     overflow:hidden;
-    color: #fff;
+    color: #000;
     text-transform: uppercase;
 }
 #menu > li > a:hover, #menu > li > a:focus {
@@ -9123,7 +9124,7 @@ html .bg--parallax {
 #myCarousel {
     margin-right: 20px;
 }
-.header {
+.header__top {
     background: #333 none repeat scroll 0 0;
 }
 .header-top a {

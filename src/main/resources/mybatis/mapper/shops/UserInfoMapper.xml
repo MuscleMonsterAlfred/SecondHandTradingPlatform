@@ -44,6 +44,6 @@
     </update>
     <!--查询用户的昵称和头像-->
     <select id="queryPartInfo" parameterType="java.lang.String" resultType="com.gla.catarina.entity.UserInfo">
-        select username,uimage from user_info where userstatus=1 and userid=#{userid}
+        select username,uimage,mobilephone from user_info where userstatus=1 and userid=#{userid}
     </select>
 </mapper>
