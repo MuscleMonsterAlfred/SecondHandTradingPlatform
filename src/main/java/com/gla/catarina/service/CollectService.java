@@ -3,8 +3,15 @@ package com.gla.catarina.service;
 import com.gla.catarina.entity.Collect;
 import com.gla.catarina.mapper.CollectMapper;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import com.gla.catarina.util.GetDate;
+import com.gla.catarina.util.KeyUtil;
+import com.gla.catarina.util.StatusCode;
+import com.gla.catarina.vo.ResultVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -41,5 +48,48 @@ public class CollectService {
     /**查询我的收藏的总数*/
     public Integer queryCollectCount(String couserid){
         return collectMapper.queryCollectCount(couserid);
+    }
+
+    public ResultVo insertcollect(Collect collect, HttpSession session) {
+        String couserid = (String) session.getAttribute("userid");
+        Integer colloperate = collect.getColloperate();
+        collect.setCouserid(couserid);
+
+        if (StringUtils.isEmpty(couserid)){
+            return new ResultVo(false, StatusCode.ACCESSERROR, "请先登录");
+        }
+
+        if (colloperate == 1){
+            Collect collect1 = this.queryCollectStatus(collect);
+            if(!StringUtils.isEmpty(collect1)){
+                /**更改原来的收藏信息和状态*/
+                collect1.setCommname(collect.getCommname()).setCommdesc(collect.getCommdesc()).setSchool(collect.getSchool())
+                        .setSoldtime(GetDate.strToDate());
+                Integer i = this.updateCollect(collect);
+                if (i == 1){
+                    return new ResultVo(true, StatusCode.OK, "收藏成功");
+                }
+                return new ResultVo(false, StatusCode.ERROR, "收藏失败");
+            }else{
+                collect.setId(KeyUtil.genUniqueKey());
+                Integer i = this.insertCollect(collect);
+                if (i == 1){
+                    return new ResultVo(true, StatusCode.OK, "收藏成功");
+                }
+                return new ResultVo(false, StatusCode.ERROR, "收藏失败");
+            }
+
+        }else {
+            Collect collect1 = this.queryCollectStatus(collect);
+            /**判断是否为本人操作*/
+            if (collect1.getCouserid().equals(couserid)){
+                Integer i = this.updateCollect(collect);
+                if (i == 1){
+                    return new ResultVo(true, StatusCode.OK, "取消成功");
+                }
+                return new ResultVo(false, StatusCode.ERROR, "取消失败");
+            }
+            return new ResultVo(false, StatusCode.ACCESSERROR, "禁止操作");
+        }
     }
 }

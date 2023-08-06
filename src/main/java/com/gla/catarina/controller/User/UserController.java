@@ -67,6 +67,10 @@ public class UserController {
         Login login = new Login();
         UserInfo userInfo = new UserInfo();
         login.setUserid(userid);
+        return getResultVo(oldpwd, newpwd, login, userInfo);
+    }
+
+    private ResultVo getResultVo(String oldpwd, String newpwd, Login login, UserInfo userInfo) {
         Login login1 = loginService.userLogin(login);
         String oldpwds = new Md5Hash(oldpwd, "Campus-shops").toString();
         //如果旧密码相等
@@ -156,6 +160,10 @@ public class UserController {
     public ResultVo updateInfo(@RequestBody UserInfo userInfo, HttpSession session) {
         String username = userInfo.getUsername();
         String userid = (String) session.getAttribute("userid");
+        return getResultVo(userInfo, username, userid);
+    }
+
+    private ResultVo getResultVo(UserInfo userInfo, String username, String userid) {
         Login login = new Login();
         //如果传入用户名
         if (!StringUtils.isEmpty(username)){
@@ -207,16 +215,6 @@ public class UserController {
         if(result == 1) {//发送成功
             phonecodemap.put(mobilephone, code);//放入map集合进行对比
 
-/*
-            final Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    phonecodemap2.remove(phoneNum);
-                    timer.cancel();
-                }
-            }, 5 * 60 * 1000);
-*/
 
             //执行定时任务
             ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1,
@@ -248,8 +246,12 @@ public class UserController {
     public ResultVo updatephone(@PathVariable("mobilephone")String mobilephone,@PathVariable("vercode")String vercode,HttpSession session) {
         String userid = (String) session.getAttribute("userid");
         String rel = phonecodemap.get(mobilephone);
+        return getResultVo(mobilephone, vercode, userid, rel);
+    }
+
+    private ResultVo getResultVo(String mobilephone, String vercode, String userid, String rel) {
         if (StringUtils.isEmpty(rel)) {//验证码到期 或者 没发送短信验证码
-            return new ResultVo(false,StatusCode.ERROR,"请重新获取验证码");
+            return new ResultVo(false, StatusCode.ERROR, "请重新获取验证码");
         }
         if (rel.equalsIgnoreCase(vercode)) {//验证码正确
             Login login = new Login().setUserid(userid).setMobilephone(mobilephone);
@@ -261,7 +263,7 @@ public class UserController {
             }
             return new ResultVo(false, StatusCode.SERVERERROR, "系统错误，更换失败");
         }
-        return new ResultVo(false,StatusCode.ERROR,"验证码错误");
+        return new ResultVo(false, StatusCode.ERROR, "验证码错误");
     }
 
 

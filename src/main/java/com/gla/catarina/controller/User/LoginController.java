@@ -95,15 +95,15 @@ public class LoginController {
         JSONObject jsonObject = JsonReader.receivePost(request);
         final String userEmail = jsonObject.getString("userEmail");
         Integer type = jsonObject.getInt("type");
-        Login login = new Login();
+
         if (type != 0) {
             return new ResultVo(false, StatusCode.ACCESSERROR, "违规操作");
         }
         if (!Validator.isEmail(userEmail)) {//判断输入的手机号格式是否正确
             return new ResultVo(false, StatusCode.ERROR, "请输入正确格式的邮箱");
         }
+        Login login = Login.builder().email(userEmail).build();
         //查询手机号是否已经注册
-        login.setEmail(userEmail);
         Login userIsExist = loginService.userLogin(login);
         if (!StringUtils.isEmpty(userIsExist)) {//用户账号已经存在
             return new ResultVo(false, StatusCode.ERROR, "该邮箱已经注册过了");
@@ -115,16 +115,6 @@ public class LoginController {
         if (null == result) {//发送成功
             emailCodeMap1.put(userEmail, code);//放入map集合进行对比
 
-/*
-            final Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    phonecodemap1.remove(phoneNum);
-                    timer.cancel();
-                }
-            }, 5 * 60 * 1000);
-*/
             //执行定时任务
             ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1,
                     new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());

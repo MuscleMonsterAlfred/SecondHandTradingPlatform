@@ -45,46 +45,7 @@ public class CollectController {
     @ResponseBody
     @PostMapping("/collect/operate")
     public ResultVo insertcollect(@RequestBody Collect collect, HttpSession session){
-        String couserid = (String) session.getAttribute("userid");
-        Integer colloperate = collect.getColloperate();
-        collect.setCouserid(couserid);
-
-        if (StringUtils.isEmpty(couserid)){
-            return new ResultVo(false, StatusCode.ACCESSERROR,"请先登录");
-        }
-
-        if (colloperate == 1){
-            Collect collect1 = collectService.queryCollectStatus(collect);
-            if(!StringUtils.isEmpty(collect1)){
-                /**更改原来的收藏信息和状态*/
-                collect1.setCommname(collect.getCommname()).setCommdesc(collect.getCommdesc()).setSchool(collect.getSchool())
-                        .setSoldtime(GetDate.strToDate());
-                Integer i = collectService.updateCollect(collect);
-                if (i == 1){
-                    return new ResultVo(true, StatusCode.OK,"收藏成功");
-                }
-                return new ResultVo(false,StatusCode.ERROR,"收藏失败");
-            }else{
-                collect.setId(KeyUtil.genUniqueKey());
-                Integer i = collectService.insertCollect(collect);
-                if (i == 1){
-                    return new ResultVo(true, StatusCode.OK,"收藏成功");
-                }
-                return new ResultVo(false,StatusCode.ERROR,"收藏失败");
-            }
-
-        }else {
-            Collect collect1 = collectService.queryCollectStatus(collect);
-            /**判断是否为本人操作*/
-            if (collect1.getCouserid().equals(couserid)){
-                Integer i = collectService.updateCollect(collect);
-                if (i == 1){
-                    return new ResultVo(true, StatusCode.OK,"取消成功");
-                }
-                return new ResultVo(false,StatusCode.ERROR,"取消失败");
-            }
-            return new ResultVo(false,StatusCode.ACCESSERROR,"禁止操作");
-        }
+        return collectService.insertcollect(collect, session);
     }
 
     /**
