@@ -1,7 +1,8 @@
-package com.gla.catarina.service;
+package com.gla.catarina.service.impl;
 
 import com.gla.catarina.entity.News;
 import com.gla.catarina.mapper.NewsMapper;
+import com.gla.catarina.service.INewsService;
 import com.gla.catarina.util.KeyUtil;
 import com.gla.catarina.util.StatusCode;
 import com.gla.catarina.vo.ResultVo;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -26,50 +26,59 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class NewsService {
+public class NewsServiceImpl implements INewsService {
     @Resource
     private NewsMapper newsMapper;
 
     /**发布公告*/
+    @Override
     public Integer insertNews(News news){
         return newsMapper.insertNews(news);
     }
 
     /**删除公告*/
+    @Override
     public Integer delectNews(String id){
         return newsMapper.delectNews(id);
     }
 
     /**修改公告*/
+    @Override
     public Integer updateNews(News news){
         return newsMapper.updateNews(news);
     }
 
     /**查看公告详情*/
+    @Override
     public News queryNewsById(String id){
         return newsMapper.queryNewsById(id);
     }
 
     /**浏览量*/
+    @Override
     public void addNewsRednumber(String id){
         newsMapper.addNewsRednumber(id);
     }
 
     /**查询前三条公告*/
+    @Override
     public List<News> queryNews(){
         return newsMapper.queryNews();
     }
 
     /**分页展示公告信息*/
+    @Override
     public List<News> queryAllNews(@Param("page") Integer page, @Param("count") Integer count){
         return newsMapper.queryAllNews(page,count);
     }
 
     /**查找所有公告的总数*/
+    @Override
     public Integer LookNewsCount(){
         return newsMapper.LookNewsCount();
     }
 
+    @Override
     public ResultVo insertNews(News news, HttpSession session){
         String username=(String) session.getAttribute("username");
         news.setId(KeyUtil.genUniqueKey()).setUsername(username);
@@ -80,7 +89,8 @@ public class NewsService {
         return new ResultVo(false,StatusCode.ERROR,"公告发布失败，请重新发布");
     }
 
-    public ResultVo delectNews (String id, HttpSession session) {
+    @Override
+    public ResultVo delectNews(String id, HttpSession session) {
         String username = (String) session.getAttribute("username");
         News news = this.queryNewsById(id);
         if (StringUtils.isEmpty(news)){
@@ -99,7 +109,8 @@ public class NewsService {
         }
     }
 
-    public String queryNewsById (String id, ModelMap modelMap){
+    @Override
+    public String queryNewsById(String id, ModelMap modelMap){
         this.addNewsRednumber(id);
         News news = this.queryNewsById(id);
         if (StringUtils.isEmpty(news)){
@@ -109,7 +120,8 @@ public class NewsService {
         return "/common/newsdetail";
     }
 
-    public String toupdate (String id, ModelMap modelMap, HttpSession session){
+    @Override
+    public String toupdate(String id, ModelMap modelMap, HttpSession session){
         String username=(String) session.getAttribute("username");
         News news = this.queryNewsById(id);
         /**如果是本人则可以跳转修改*/
@@ -123,7 +135,8 @@ public class NewsService {
         return "/admin/news/updatenews";
     }
 
-    public ResultVo updateNew (News news){
+    @Override
+    public ResultVo updateNew(News news){
         Integer i = this.updateNews(news);
         if (i == 1){
             return new ResultVo(true,StatusCode.OK,"修改成功");

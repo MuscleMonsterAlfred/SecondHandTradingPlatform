@@ -36,17 +36,17 @@ import java.util.*;
 @Controller
 public class CommodityController {
     @Resource
-    private CommodityService commodityService;
+    private ICommodityService ICommodityService;
     @Resource
-    private CommimagesService commimagesService;
+    private ICommimagesService commimagesService;
     @Resource
-    private LoginService loginService;
+    private ILoginService ILoginService;
     @Resource
-    private UserInfoService userInfoService;
+    private IUserInfoService IUserInfoService;
     @Resource
-    private CollectService collectService;
+    private ICollectService collectService;
     @Resource
-    private NoticesService noticesService;
+    private INoticesService INoticesService;
 
     @Value("${catarina.env.filePath}")
     private String filePath;
@@ -75,7 +75,7 @@ public class CommodityController {
         if(userid==null){
             return "redirect:/:";
         }*/
-        Commodity commodity=commodityService.LookCommodity(new Commodity().setCommid(commid));
+        Commodity commodity= ICommodityService.LookCommodity(new Commodity().setCommid(commid));
         if(commodity.getCommstatus().equals(2) || commodity.getCommstatus().equals(4)){
             return "/error/404";//商品已被删除或已完成交易
         }
@@ -98,7 +98,7 @@ public class CommodityController {
         String userid = (String) session.getAttribute("userid");
         commodity.setUpdatetime(new Date()).setCommstatus(3);
         commodity.setCommon(commodity.getCommon()+"、"+commodity.getCommon2());//常用选项拼接
-        commodityService.ChangeCommodity(commodity);
+        ICommodityService.ChangeCommodity(commodity);
         commimagesService.DelGoodImages(commodity.getCommid());
         List<Commimages> commimagesList=new ArrayList<>();
         for (String list:commodity.getOtherimg()) {
@@ -108,7 +108,7 @@ public class CommodityController {
         /**发出待审核系统通知*/
         Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("商品审核")
                 .setWhys("您的商品 <a href=/product-detail/"+commodity.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> 进入待审核队列，请您耐心等待。");
-        noticesService.insertNotices(notices);
+        INoticesService.insertNotices(notices);
         return "0";
     }
 
@@ -121,11 +121,11 @@ public class CommodityController {
     @ResponseBody
     public String relgoods(@RequestBody Commodity commodity, HttpSession session){
         String userid = (String) session.getAttribute("userid");
-        UserInfo userInfo = userInfoService.LookUserinfo(userid);
+        UserInfo userInfo = IUserInfoService.LookUserinfo(userid);
         String commid = KeyUtil.genUniqueKey();
         commodity.setCommid(commid).setUserid(userid).setSchool(userInfo.getSchool());//商品id
         commodity.setCommon(commodity.getCommon()+"、"+commodity.getCommon2());//常用选项拼接
-        commodityService.InsertCommodity(commodity);
+        ICommodityService.InsertCommodity(commodity);
         List<Commimages> commimagesList=new ArrayList<>();
         for (String list:commodity.getOtherimg()) {
             commimagesList.add(new Commimages().setId(KeyUtil.genUniqueKey()).setCommid(commid).setImage(list));
@@ -134,7 +134,7 @@ public class CommodityController {
         /**发出待审核系统通知*/
         Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("商品审核")
                 .setWhys("您的商品 <a href=/product-detail/"+commid+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> 进入待审核队列，请您耐心等待。");
-        noticesService.insertNotices(notices);
+        INoticesService.insertNotices(notices);
         return "0";
     }
 
@@ -192,12 +192,12 @@ public class CommodityController {
     public String product_detail(@PathVariable("commid") String commid, ModelMap modelMap,HttpSession session){
         String couserid = (String) session.getAttribute("userid");
 
-        Commodity commodity = commodityService.LookCommodity(new Commodity().setCommid(commid).setCommstatus(1));
+        Commodity commodity = ICommodityService.LookCommodity(new Commodity().setCommid(commid).setCommstatus(1));
         int i = 0;
         if (commodity.getCommstatus().equals(1)){//如果商品正常
             i=1;
         }else if (!StringUtils.isEmpty(couserid)){//如果用户已登录
-            Login login = loginService.userLogin(new Login().setUserid(couserid));
+            Login login = ILoginService.userLogin(new Login().setUserid(couserid));
             /**商品为违规状态时：本人和管理员可查看*/
             if (commodity.getCommstatus().equals(0) && (commodity.getUserid().equals(couserid) || (login.getRoleid().equals(2) || login.getRoleid().equals(3)))){
                 i=1;
@@ -212,8 +212,8 @@ public class CommodityController {
         if(i==1){
             commodity.setOtherimg(commimagesService.LookGoodImages(commid));
             /**商品浏览量+1*/
-            commodityService.ChangeCommodity(new Commodity().setCommid(commid).setRednumber(1));
-            modelMap.put("userinfo",userInfoService.queryPartInfo(commodity.getUserid()));
+            ICommodityService.ChangeCommodity(new Commodity().setCommid(commid).setRednumber(1));
+            modelMap.put("userinfo", IUserInfoService.queryPartInfo(commodity.getUserid()));
             modelMap.put("gddetail",commodity);
             //如果没有用户登录
             if (StringUtils.isEmpty(couserid)){
@@ -243,7 +243,7 @@ public class CommodityController {
     @GetMapping("/product/search/number/{commname}")
     @ResponseBody
     public PageVo searchCommodityNumber(@PathVariable("commname") String commname){
-        Integer dataNumber = commodityService.queryCommodityByNameCount(commname);
+        Integer dataNumber = ICommodityService.queryCommodityByNameCount(commname);
         return new PageVo(StatusCode.OK,"查询成功",dataNumber);
     }
 
@@ -254,7 +254,7 @@ public class CommodityController {
     @GetMapping("/product/search/{nowPaging}/{commname}")
     @ResponseBody
     public ResultVo searchCommodity(@PathVariable("nowPaging") Integer page, @PathVariable("commname") String commname){
-        List<Commodity> commodityList = commodityService.queryCommodityByName((page - 1) * 20, 20, commname);
+        List<Commodity> commodityList = ICommodityService.queryCommodityByName((page - 1) * 20, 20, commname);
 
         if(!StringUtils.isEmpty(commodityList)){//如果有对应商品
             for (Commodity commodity : commodityList) {
@@ -275,7 +275,7 @@ public class CommodityController {
     @ResponseBody
     @GetMapping("/index/product/{category}")
     public ResultVo indexCommodity(@PathVariable("category") String category) {
-        List<Commodity> commodityList = commodityService.queryCommodityByCategory(category);
+        List<Commodity> commodityList = ICommodityService.queryCommodityByCategory(category);
         for (Commodity commodity : commodityList) {
             /**查询商品对应的其它图片*/
             List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
@@ -291,7 +291,7 @@ public class CommodityController {
     @GetMapping("/product/latest")
     public ResultVo latestCommodity() {
         String category = "全部";
-        List<Commodity> commodityList = commodityService.queryCommodityByCategory(category);
+        List<Commodity> commodityList = ICommodityService.queryCommodityByCategory(category);
         for (Commodity commodity : commodityList) {
             /**查询商品对应的其它图片*/
             List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
@@ -314,10 +314,10 @@ public class CommodityController {
         String school=null;
         if(!area.equals("全部")){
             String userid = (String) session.getAttribute("userid");
-            UserInfo userInfo = userInfoService.LookUserinfo(userid);
+            UserInfo userInfo = IUserInfoService.LookUserinfo(userid);
             school = userInfo.getSchool();
         }
-        Integer dataNumber = commodityService.queryAllCommodityByCategoryCount(area, school, category, minmoney, maxmoney);
+        Integer dataNumber = ICommodityService.queryAllCommodityByCategoryCount(area, school, category, minmoney, maxmoney);
         return new PageVo(StatusCode.OK,"查询成功",dataNumber);
     }
 
@@ -335,10 +335,10 @@ public class CommodityController {
         String school=null;
         if(!area.equals("全部")) {
             String userid = (String) session.getAttribute("userid");
-            UserInfo userInfo = userInfoService.LookUserinfo(userid);
+            UserInfo userInfo = IUserInfoService.LookUserinfo(userid);
             school = userInfo.getSchool();
         }
-        List<Commodity> commodityList = commodityService.queryAllCommodityByCategory((page - 1) * 16, 16, area, school, category, minmoney, maxmoney);
+        List<Commodity> commodityList = ICommodityService.queryAllCommodityByCategory((page - 1) * 16, 16, area, school, category, minmoney, maxmoney);
         for (Commodity commodity : commodityList) {
             /**查询商品对应的其它图片*/
             List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
@@ -400,11 +400,11 @@ public class CommodityController {
         List<Commodity> commodityList=null;
         Integer dataNumber;
         if(commstatus==100){
-            commodityList = commodityService.queryAllCommodity((page - 1) * limit, limit, userid,null);
-            dataNumber = commodityService.queryCommodityCount(userid,null);
+            commodityList = ICommodityService.queryAllCommodity((page - 1) * limit, limit, userid,null);
+            dataNumber = ICommodityService.queryCommodityCount(userid,null);
         }else{
-            commodityList = commodityService.queryAllCommodity((page - 1) * limit, limit, userid,commstatus);
-            dataNumber = commodityService.queryCommodityCount(userid,commstatus);
+            commodityList = ICommodityService.queryAllCommodity((page - 1) * limit, limit, userid,commstatus);
+            dataNumber = ICommodityService.queryCommodityCount(userid,commstatus);
         }
         return new LayuiPageVo("",0,dataNumber,commodityList);
     }
@@ -417,7 +417,7 @@ public class CommodityController {
     @ResponseBody
     @GetMapping("/user/changecommstatus/{commid}/{commstatus}")
     public ResultVo ChangeCommstatus(@PathVariable("commid") String commid, @PathVariable("commstatus") Integer commstatus, HttpSession session) {
-        Integer i = commodityService.ChangeCommstatus(commid, commstatus);
+        Integer i = ICommodityService.ChangeCommstatus(commid, commstatus);
         if (i == 1){
             return new ResultVo(true,StatusCode.OK,"操作成功");
         }

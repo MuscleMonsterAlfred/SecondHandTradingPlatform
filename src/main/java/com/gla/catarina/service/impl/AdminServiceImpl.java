@@ -1,10 +1,8 @@
-package com.gla.catarina.service;
+package com.gla.catarina.service.impl;
 
 import com.gla.catarina.entity.*;
-import com.gla.catarina.util.JustPhone;
-import com.gla.catarina.util.KeyUtil;
-import com.gla.catarina.util.StatusCode;
-import com.gla.catarina.util.ValidateCode;
+import com.gla.catarina.service.*;
+import com.gla.catarina.util.*;
 import com.gla.catarina.vo.LayuiPageVo;
 import com.gla.catarina.vo.ResultVo;
 import org.apache.shiro.SecurityUtils;
@@ -19,20 +17,25 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * @author catarina
+ * @since 2023-06-21
+ */
 @Service
-public class AdminService {
+public class AdminServiceImpl implements IAdminService {
 
     @Resource
-    private UserRoleService userRoleService;
+    private IUserRoleService IUserRoleService;
     @Resource
-    private LoginService loginService;
+    private ILoginService ILoginService;
     @Resource
-    private UserInfoService userInfoService;
+    private IUserInfoService IUserInfoService;
     @Resource
-    private CommodityService commodityService;
+    private ICommodityService ICommodityService;
     @Resource
-    private NoticesService noticesService;
+    private INoticesService INoticesService;
 
+    @Override
     public ResultVo adminlogin(Login login, HttpSession session) {
         String account = login.getUsername();
         String password = login.getPassword();
@@ -42,7 +45,7 @@ public class AdminService {
             return new ResultVo(false, StatusCode.ERROR, "请输入正确的验证码");
         }
         //判断输入的账号是否手机号
-        if (!JustPhone.justPhone(account)) {
+        if (!EmailUtils.justPhone(account)) {
             //输入的是用户名
             String username = account;
             //盐加密
@@ -62,9 +65,9 @@ public class AdminService {
             //盐加密
             String passwords = new Md5Hash(password, "Campus-shops").toString();
             login.setPassword(passwords);
-            Login login1 = loginService.userLogin(login);
+            Login login1 = ILoginService.userLogin(login);
             //查询登录者的权限
-            Integer roleId = userRoleService.LookUserRoleId(login1.getUserid());
+            Integer roleId = IUserRoleService.LookUserRoleId(login1.getUserid());
             if (roleId == 2 || roleId == 3) {
                 session.setAttribute("userid", login1.getUserid());
                 session.setAttribute("admin", login1.getUsername());
@@ -82,32 +85,34 @@ public class AdminService {
         }
     }
 
+    @Override
     public LayuiPageVo userlist(int limit, int page, Integer roleid, Integer userstatus) {
-        List<UserInfo> userInfoList = userInfoService.queryAllUserInfo((page - 1) * limit, limit, roleid, userstatus);
-        Integer dataNumber = userInfoService.queryAllUserCount(roleid);
+        List<UserInfo> userInfoList = IUserInfoService.queryAllUserInfo((page - 1) * limit, limit, roleid, userstatus);
+        Integer dataNumber = IUserInfoService.queryAllUserCount(roleid);
         return new LayuiPageVo("", 0, dataNumber, userInfoList);
     }
 
+    @Override
     public ResultVo setadmin(String userid, Integer roleid) {
         if (roleid == 2) {
-            Integer i = loginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
+            Integer i = ILoginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
             if (i == 1) {
-                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(2).setIdentity("网站管理员"));
+                IUserRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(2).setIdentity("网站管理员"));
                 /**发出设置为管理员的系统通知*/
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
                         .setWhys("恭喜您已被设置为网站管理员，努力维护网站的良好氛围。");
-                noticesService.insertNotices(notices);
+                INoticesService.insertNotices(notices);
                 return new ResultVo(true, StatusCode.OK, "设置管理员成功");
             }
             return new ResultVo(true, StatusCode.ERROR, "设置管理员失败");
         } else if (roleid == 1) {
-            Integer i = loginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
+            Integer i = ILoginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
             if (i == 1) {
-                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(1).setIdentity("网站用户"));
+                IUserRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(1).setIdentity("网站用户"));
                 /**发出设置为网站用户的系统通知*/
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
                         .setWhys("您已被设置为网站用户，希望您再接再厉。");
-                noticesService.insertNotices(notices);
+                INoticesService.insertNotices(notices);
                 return new ResultVo(true, StatusCode.OK, "设置成员成功");
             }
             return new ResultVo(true, StatusCode.ERROR, "设置成员失败");
@@ -115,26 +120,27 @@ public class AdminService {
         return new ResultVo(false, StatusCode.ACCESSERROR, "违规操作");
     }
 
+    @Override
     public ResultVo adminuserlist(String userid, Integer userstatus) {
         if (userstatus == 0) {
-            Integer i = loginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
-            Integer j = userInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
+            Integer i = ILoginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
+            Integer j = IUserInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
             if (i == 1 && j == 1) {
                 /**发出封号的系统通知*/
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
                         .setWhys("因为您的不良行为，您在该网站的账号已被封号。");
-                noticesService.insertNotices(notices);
+                INoticesService.insertNotices(notices);
                 return new ResultVo(true, StatusCode.OK, "封号成功");
             }
             return new ResultVo(true, StatusCode.ERROR, "封号失败");
         } else if (userstatus == 1) {
-            Integer i = loginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
-            Integer j = userInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
+            Integer i = ILoginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
+            Integer j = IUserInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
             if (i == 1 && j == 1) {
                 /**发出解封的系统通知*/
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
                         .setWhys("您在该网站的账号已被解封，希望您保持良好的行为。");
-                noticesService.insertNotices(notices);
+                INoticesService.insertNotices(notices);
                 return new ResultVo(true, StatusCode.OK, "解封成功");
             }
             return new ResultVo(true, StatusCode.ERROR, "解封失败");
@@ -143,31 +149,33 @@ public class AdminService {
     }
 
 
+    @Override
     public LayuiPageVo userCommodity(Integer commstatus, int limit, int page) {
         if (commstatus == 100) {
-            List<Commodity> commodityList = commodityService.queryAllCommodity((page - 1) * limit, limit, null, null);
-            Integer dataNumber = commodityService.queryCommodityCount(null, null);
+            List<Commodity> commodityList = ICommodityService.queryAllCommodity((page - 1) * limit, limit, null, null);
+            Integer dataNumber = ICommodityService.queryCommodityCount(null, null);
             return new LayuiPageVo("", 0, dataNumber, commodityList);
         } else {
-            List<Commodity> commodityList = commodityService.queryAllCommodity((page - 1) * limit, limit, null, commstatus);
-            Integer dataNumber = commodityService.queryCommodityCount(null, commstatus);
+            List<Commodity> commodityList = ICommodityService.queryAllCommodity((page - 1) * limit, limit, null, commstatus);
+            Integer dataNumber = ICommodityService.queryCommodityCount(null, commstatus);
             return new LayuiPageVo("", 0, dataNumber, commodityList);
         }
     }
 
+    @Override
     public ResultVo changeCommstatus(String commid, Integer commstatus) {
-        Integer i = commodityService.ChangeCommstatus(commid, commstatus);
+        Integer i = ICommodityService.ChangeCommstatus(commid, commstatus);
         if (i == 1) {
             /**发出商品审核结果的系统通知*/
-            Commodity commodity = commodityService.LookCommodity(new Commodity().setCommid(commid));
+            Commodity commodity = ICommodityService.LookCommodity(new Commodity().setCommid(commid));
             if (commstatus == 0) {
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(commodity.getUserid()).setTpname("商品审核")
                         .setWhys("您的商品 <a href=/product-detail/" + commodity.getCommid() + " style=\"color:#08bf91\" target=\"_blank\" >" + commodity.getCommname() + "</a> 未通过审核，目前不支持公开发布。");
-                noticesService.insertNotices(notices);
+                INoticesService.insertNotices(notices);
             } else if (commstatus == 1) {
                 Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(commodity.getUserid()).setTpname("商品审核")
                         .setWhys("您的商品 <a href=/product-detail/" + commodity.getCommid() + " style=\"color:#08bf91\" target=\"_blank\" >" + commodity.getCommname() + "</a> 已通过审核，快去看看吧。");
-                noticesService.insertNotices(notices);
+                INoticesService.insertNotices(notices);
             }
             return new ResultVo(true, StatusCode.OK, "操作成功");
         }

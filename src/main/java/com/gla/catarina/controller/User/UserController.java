@@ -2,8 +2,8 @@ package com.gla.catarina.controller.User;
 
 import com.gla.catarina.entity.Login;
 import com.gla.catarina.entity.UserInfo;
-import com.gla.catarina.service.LoginService;
-import com.gla.catarina.service.UserInfoService;
+import com.gla.catarina.service.ILoginService;
+import com.gla.catarina.service.IUserInfoService;
 import com.gla.catarina.util.*;
 import com.gla.catarina.vo.ResultVo;
 import net.sf.json.JSONObject;
@@ -42,9 +42,9 @@ import java.util.concurrent.TimeUnit;
 @Controller
 public class UserController {
     @Resource
-    private LoginService loginService;
+    private ILoginService ILoginService;
     @Resource
-    private UserInfoService userInfoService;
+    private IUserInfoService IUserInfoService;
 
     @Value("${catarina.env.filePath}")
     private String filePath;
@@ -60,7 +60,7 @@ public class UserController {
     @ResponseBody
     @PutMapping("/user/updatepwd")
     public ResultVo updatepwd(HttpSession session, HttpServletRequest request) throws IOException {
-        JSONObject json = JsonReader.receivePost(request);
+        JSONObject json = EmailUtils.receivePost(request);
         String oldpwd = json.getString("oldpwd");
         String newpwd = json.getString("newpwd");
         String userid = (String) session.getAttribute("userid");
@@ -71,7 +71,7 @@ public class UserController {
     }
 
     private ResultVo getResultVo(String oldpwd, String newpwd, Login login, UserInfo userInfo) {
-        Login login1 = loginService.userLogin(login);
+        Login login1 = ILoginService.userLogin(login);
         String oldpwds = new Md5Hash(oldpwd, "Campus-shops").toString();
         //如果旧密码相等
         if (oldpwds.equals(login1.getPassword())){
@@ -79,8 +79,8 @@ public class UserController {
             String passwords = new Md5Hash(newpwd, "Campus-shops").toString();
             login.setPassword(passwords);
             userInfo.setPassword(passwords).setUserid(login1.getUserid());
-            Integer integer = loginService.updateLogin(login);
-            Integer integer1 = userInfoService.UpdateUserInfo(userInfo);
+            Integer integer = ILoginService.updateLogin(login);
+            Integer integer1 = IUserInfoService.UpdateUserInfo(userInfo);
             if (integer == 1 && integer1 == 1) {
                 return new ResultVo(true, StatusCode.OK, "修改密码成功");
             }
@@ -96,7 +96,7 @@ public class UserController {
     @PostMapping("/user/avatar")
     public ResultVo userAvatar( HttpSession session) {
         String userid = (String) session.getAttribute("userid");
-        UserInfo userInfo = userInfoService.queryPartInfo(userid);
+        UserInfo userInfo = IUserInfoService.queryPartInfo(userid);
         return new ResultVo(true, StatusCode.OK, "查询头像成功",userInfo);
     }
 
@@ -121,7 +121,7 @@ public class UserController {
 
         String userid=(String) session.getAttribute("userid");
         UserInfo userInfo = new UserInfo().setUserid(userid).setUimage(uimgUrl);
-        userInfoService.UpdateUserInfo(userInfo);
+        IUserInfoService.UpdateUserInfo(userInfo);
         return res;
     }
 
@@ -132,7 +132,7 @@ public class UserController {
     @GetMapping("/user/lookinfo")
     public String lookinfo(HttpSession session, ModelMap modelMap) {
         String userid = (String) session.getAttribute("userid");
-        UserInfo userInfo = userInfoService.LookUserinfo(userid);
+        UserInfo userInfo = IUserInfoService.LookUserinfo(userid);
         modelMap.put("userInfo",userInfo);
         return "/user/userinfo";
     }
@@ -143,7 +143,7 @@ public class UserController {
     @GetMapping("/user/perfectinfo")
     public String perfectInfo(HttpSession session, ModelMap modelMap) {
         String userid = (String) session.getAttribute("userid");
-        UserInfo userInfo = userInfoService.LookUserinfo(userid);
+        UserInfo userInfo = IUserInfoService.LookUserinfo(userid);
         modelMap.put("perfectInfo",userInfo);
         return "/user/perfectInfo";
     }
@@ -168,17 +168,17 @@ public class UserController {
         //如果传入用户名
         if (!StringUtils.isEmpty(username)){
             login.setUsername(username);
-            Login login1 = loginService.userLogin(login);
+            Login login1 = ILoginService.userLogin(login);
             //如果该用户名对应有用户
             if (!StringUtils.isEmpty(login1)){
                 return new ResultVo(false, StatusCode.ERROR, "该用户名已存在");
             }
             login.setUserid(userid);
             //修改登录表中用户名
-            loginService.updateLogin(login);
+            ILoginService.updateLogin(login);
         }
         userInfo.setUserid(userid);
-        Integer integer1 = userInfoService.UpdateUserInfo(userInfo);
+        Integer integer1 = IUserInfoService.UpdateUserInfo(userInfo);
         if (integer1 == 1) {
             return new ResultVo(true, StatusCode.OK, "修改成功");
         }
@@ -194,23 +194,23 @@ public class UserController {
     @ResponseBody
     @PostMapping("/user/sendupdatephone")
     public ResultVo sendupdatephone(HttpServletRequest request) throws IOException {
-        JSONObject json = JsonReader.receivePost(request);
+        JSONObject json = EmailUtils.receivePost(request);
         final String mobilephone = json.getString("mobilephone");
         Integer type = json.getInt("type");
         Login login = new Login();
         if(type!=2){
             return new ResultVo(false,StatusCode.ACCESSERROR,"违规操作");
         }
-        if (!JustPhone.justPhone(mobilephone)) {//判断输入的手机号格式是否正确
+        if (!EmailUtils.justPhone(mobilephone)) {//判断输入的手机号格式是否正确
             return new ResultVo(false,StatusCode.ERROR,"请输入正确格式的手机号");
         }
         //查询手机号是否存在
         login.setMobilephone(mobilephone);
-        Login userIsExist = loginService.userLogin(login);
+        Login userIsExist = ILoginService.userLogin(login);
         if (!StringUtils.isEmpty(userIsExist)){//若手机号已注册过
             return new ResultVo(false, StatusCode.REPERROR,"手机号已存在");
         }
-        String code = GetCode.phonecode();
+        String code = EmailUtils.phonecode();
         Integer result = new SmsUtil().SendMsg(mobilephone, code, type);//发送验证码
         if(result == 1) {//发送成功
             phonecodemap.put(mobilephone, code);//放入map集合进行对比
@@ -256,8 +256,8 @@ public class UserController {
         if (rel.equalsIgnoreCase(vercode)) {//验证码正确
             Login login = new Login().setUserid(userid).setMobilephone(mobilephone);
             UserInfo userInfo = new UserInfo().setUserid(userid).setMobilephone(mobilephone);
-            Integer integer = loginService.updateLogin(login);
-            Integer integer1 = userInfoService.UpdateUserInfo(userInfo);
+            Integer integer = ILoginService.updateLogin(login);
+            Integer integer1 = IUserInfoService.UpdateUserInfo(userInfo);
             if (integer == 1 && integer1 == 1) {
                 return new ResultVo(true, StatusCode.OK, "更换手机号成功");
             }

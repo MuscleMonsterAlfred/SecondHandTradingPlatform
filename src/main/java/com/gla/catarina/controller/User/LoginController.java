@@ -2,14 +2,13 @@ package com.gla.catarina.controller.User;
 
 
 import cn.hutool.core.lang.Validator;
-import cn.hutool.core.util.NumberUtil;
 import com.gla.catarina.contants.EmailConstants;
 import com.gla.catarina.entity.Login;
 import com.gla.catarina.entity.UserInfo;
 import com.gla.catarina.entity.UserRole;
-import com.gla.catarina.service.LoginService;
-import com.gla.catarina.service.UserInfoService;
-import com.gla.catarina.service.UserRoleService;
+import com.gla.catarina.service.ILoginService;
+import com.gla.catarina.service.IUserInfoService;
+import com.gla.catarina.service.IUserRoleService;
 import com.gla.catarina.util.*;
 import com.gla.catarina.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
@@ -50,11 +49,11 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class LoginController {
     @Resource
-    private LoginService loginService;
+    private ILoginService ILoginService;
     @Resource
-    private UserInfoService userInfoService;
+    private IUserInfoService IUserInfoService;
     @Resource
-    private UserRoleService userRoleService;
+    private IUserRoleService IUserRoleService;
 
     @Resource
     private EmailUtils emailUtils;
@@ -92,7 +91,7 @@ public class LoginController {
     @ResponseBody
     @PostMapping("/user/sendregcode")
     public ResultVo sendregcode(HttpServletRequest request) throws IOException {
-        JSONObject jsonObject = JsonReader.receivePost(request);
+        JSONObject jsonObject = EmailUtils.receivePost(request);
         final String userEmail = jsonObject.getString("userEmail");
         Integer type = jsonObject.getInt("type");
 
@@ -104,11 +103,11 @@ public class LoginController {
         }
         Login login = Login.builder().email(userEmail).build();
         //查询手机号是否已经注册
-        Login userIsExist = loginService.userLogin(login);
+        Login userIsExist = ILoginService.userLogin(login);
         if (!StringUtils.isEmpty(userIsExist)) {//用户账号已经存在
             return new ResultVo(false, StatusCode.ERROR, "该邮箱已经注册过了");
         }
-        String code = GetCode.phonecode();
+        String code = EmailUtils.phonecode();
         com.alibaba.fastjson.JSONObject param = new com.alibaba.fastjson.JSONObject();
         param.put("code", code);
         String result = emailUtils.sendTemplateMail(userEmail, "Register", EmailConstants.PATH_REGISTER_CODE_SEND, param);
@@ -149,13 +148,13 @@ public class LoginController {
         Login login = new Login();
 
         login.setUsername(username);
-        Login userNameIsExist = loginService.userLogin(login);
+        Login userNameIsExist = ILoginService.userLogin(login);
         if (!StringUtils.isEmpty(userNameIsExist)) {//用户名已经存在
             return new ResultVo(false, StatusCode.ERROR, "用户名已存在，请换一个吧");
         }
         //查询账号是否已经注册
         login.setEmail(email);
-        Login userIsExist = loginService.userLogin(login);
+        Login userIsExist = ILoginService.userLogin(login);
         if (!StringUtils.isEmpty(userIsExist)) {//用户账号已经存在
             return new ResultVo(false, StatusCode.ERROR, "该邮箱已经注册过了");
         }
@@ -169,17 +168,17 @@ public class LoginController {
             String passwords = new Md5Hash(password, "Campus-shops").toString();
             String userid = KeyUtil.genUniqueKey();
             login.setId(KeyUtil.genUniqueKey()).setUserid(userid).setMobilephone(mobilephone).setPassword(passwords);
-            Integer integer = loginService.loginAdd(login);
+            Integer integer = ILoginService.loginAdd(login);
             //新注册用户存入默认头像、存入默认签名
             userInfo.setUserid(userid).setPassword(passwords).setUimage("/pic/d1d66c3ea71044a9b938b00859ca94df.jpg").
                     setSign("").setStatus("offline");
-            Integer integer1 = userInfoService.userReg(userInfo);
+            Integer integer1 = IUserInfoService.userReg(userInfo);
             if (integer == 1 && integer1 == 1) {
                 /**注册成功后存入session*/
                 session.setAttribute("userid", userid);
                 session.setAttribute("username", username);
                 /**存入用户角色信息*/
-                userRoleService.InsertUserRole(new UserRole().setUserid(userid).setRoleid(1).setIdentity("网站用户"));
+                IUserRoleService.InsertUserRole(new UserRole().setUserid(userid).setRoleid(1).setIdentity("网站用户"));
                 return new ResultVo(true, StatusCode.OK, "注册成功");
             }
             return new ResultVo(false, StatusCode.ERROR, "注册失败");
@@ -232,7 +231,7 @@ public class LoginController {
             //盐加密
             String passwords = new Md5Hash(password, "Campus-shops").toString();
             login.setPassword(passwords);
-            Login login1 = loginService.userLogin(login);
+            Login login1 = ILoginService.userLogin(login);
             session.setAttribute("userid", login1.getUserid());
             session.setAttribute("username", login1.getUsername());
             return new ResultVo(true, StatusCode.OK, "登录成功");
@@ -254,23 +253,23 @@ public class LoginController {
     @ResponseBody
     @PostMapping("/user/sendresetpwd")
     public ResultVo sendresetpwd(HttpServletRequest request) throws IOException {
-        JSONObject json = JsonReader.receivePost(request);
+        JSONObject json = EmailUtils.receivePost(request);
         final String mobilephone = json.getString("mobilephone");
         Integer type = json.getInt("type");
         Login login = new Login();
         if (type != 1) {
             return new ResultVo(false, StatusCode.ACCESSERROR, "违规操作");
         }
-        if (!JustPhone.justPhone(mobilephone)) {//判断输入的手机号格式是否正确
+        if (!EmailUtils.justPhone(mobilephone)) {//判断输入的手机号格式是否正确
             return new ResultVo(false, StatusCode.ERROR, "请输入正确格式的手机号");
         }
         //查询手机号是否存在
         login.setMobilephone(mobilephone);
-        Login userIsExist = loginService.userLogin(login);
+        Login userIsExist = ILoginService.userLogin(login);
         if (StringUtils.isEmpty(userIsExist)) {//用户账号不存在
             return new ResultVo(false, StatusCode.LOGINERROR, "该用户不存在");
         }
-        String code = GetCode.phonecode();
+        String code = EmailUtils.phonecode();
         Integer result = new SmsUtil().SendMsg(mobilephone, code, type);//发送验证码
         if (result == 1) {//发送成功
             phonecodemap2.put(mobilephone, code);//放入map集合进行对比
@@ -320,12 +319,12 @@ public class LoginController {
         String vercode = login.getVercode();
         Login login1 = new Login();
         UserInfo userInfo = new UserInfo();
-        if (!JustPhone.justPhone(mobilephone)) {//判断输入的手机号格式是否正确
+        if (!EmailUtils.justPhone(mobilephone)) {//判断输入的手机号格式是否正确
             return new ResultVo(false, StatusCode.ERROR, "请输入正确格式的手机号");
         }
         //查询手机号是否存在
         login1.setMobilephone(mobilephone);
-        Login userIsExist = loginService.userLogin(login1);
+        Login userIsExist = ILoginService.userLogin(login1);
         if (StringUtils.isEmpty(userIsExist)) {//用户账号不存在
             return new ResultVo(false, StatusCode.LOGINERROR, "该账号不存在");
         }
@@ -338,8 +337,8 @@ public class LoginController {
             String passwords = new Md5Hash(password, "Campus-shops").toString();
             login1.setPassword(passwords).setId(userIsExist.getId()).setMobilephone(null);
             userInfo.setMobilephone(mobilephone).setPassword(passwords).setUserid(userIsExist.getUserid());
-            Integer integer = loginService.updateLogin(login1);
-            Integer integer1 = userInfoService.UpdateUserInfo(userInfo);
+            Integer integer = ILoginService.updateLogin(login1);
+            Integer integer1 = IUserInfoService.UpdateUserInfo(userInfo);
             if (integer == 1 && integer1 == 1) {
                 return new ResultVo(true, StatusCode.OK, "重置密码成功");
             }

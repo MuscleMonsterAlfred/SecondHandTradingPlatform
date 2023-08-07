@@ -3,6 +3,7 @@ package com.gla.catarina.util;
 import com.gla.catarina.config.EnvConfig;
 import freemarker.template.*;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -15,9 +16,15 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * 〈功能详细描述〉
@@ -185,5 +192,38 @@ public class EmailUtils {
             log.error("发送邮件时发生异常！", e);
         }
 
+    }
+
+    public static String phonecode(){
+        String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
+        System.out.println("=============短信的六位验证码为："+verifyCode);
+        return verifyCode;
+    }
+
+    public static JSONObject receivePost(HttpServletRequest request) throws IOException {
+        // 读取请求内容
+        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"));
+        String line = null;
+        StringBuilder sb = new StringBuilder();
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+        JSONObject jsonObject = JSONObject.fromObject(sb.toString());
+        return jsonObject;
+    }
+
+    public static boolean justPhone(String phoneNum){
+        if(phoneNum.length()!=11){
+            return false;//不符合规则的账号
+        }
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        if(!pattern.matcher(phoneNum).matches()){//判断是否包含字符
+            return false;//包含字符不是手机号
+        }
+        return true;
+    }
+
+    public static Integer getPages(Integer dataNumber,Integer pageSize){
+        return (dataNumber + pageSize - 1) / pageSize;
     }
 }

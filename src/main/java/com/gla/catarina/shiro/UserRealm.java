@@ -1,10 +1,9 @@
 package com.gla.catarina.shiro;
 
 import cn.hutool.core.lang.Validator;
-import com.gla.catarina.service.LoginService;
-import com.gla.catarina.service.UserPermService;
-import com.gla.catarina.service.UserRoleService;
-import com.gla.catarina.util.JustPhone;
+import com.gla.catarina.service.ILoginService;
+import com.gla.catarina.service.IUserPermService;
+import com.gla.catarina.service.IUserRoleService;
 import com.gla.catarina.entity.Login;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -24,11 +23,11 @@ import java.util.List;
 
 public class UserRealm extends AuthorizingRealm {
     @Resource
-    private UserPermService userPermsService;
+    private IUserPermService userPermsService;
     @Resource
-    private UserRoleService userRoleService;
+    private IUserRoleService IUserRoleService;
     @Resource
-    private LoginService loginService;
+    private ILoginService ILoginService;
 
     /**
      * 执行授权逻辑
@@ -41,7 +40,7 @@ public class UserRealm extends AuthorizingRealm {
         //到数据库查询当前用户的授权的字符串
         Subject subject = SecurityUtils.getSubject();
         Login login = (Login) subject.getPrincipal();
-        Integer permId = userRoleService.LookUserRoleId(login.getUserid());
+        Integer permId = IUserRoleService.LookUserRoleId(login.getUserid());
         List<String> userPerms = userPermsService.LookPermsByUserid(permId);
         info.addStringPermissions(userPerms);
         return info;
@@ -68,7 +67,7 @@ public class UserRealm extends AuthorizingRealm {
         } else {
             login.setUsername(username);
         }
-        Login Login1 = loginService.userLogin(login);
+        Login Login1 = ILoginService.userLogin(login);
         if (Login1 == null) {
             //用户不存在
             return null;//shiro底层抛出UnknownAccountException

@@ -2,19 +2,9 @@ package com.gla.catarina.controller.admin;
 
 import com.gla.catarina.entity.*;
 import com.gla.catarina.service.*;
-import com.gla.catarina.util.JustPhone;
-import com.gla.catarina.util.KeyUtil;
-import com.gla.catarina.util.StatusCode;
-import com.gla.catarina.util.ValidateCode;
 import com.gla.catarina.vo.LayuiPageVo;
 import com.gla.catarina.vo.ResultVo;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.subject.Subject;
 
 import javax.annotation.Resource;
 
@@ -22,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * @Author: catarina
@@ -33,7 +22,7 @@ import java.util.List;
 public class AdminController {
 
     @Resource
-    private AdminService adminService;
+    private IAdminService adminService;
 
     @GetMapping("/admin")
     public String admintologin() {

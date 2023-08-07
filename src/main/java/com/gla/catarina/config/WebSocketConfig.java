@@ -10,8 +10,8 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @Description：
  * @Date： created in 15:56 2019/5/13
  */
-@Configuration
-@EnableWebSocket
+//@Configuration
+//@EnableWebSocket
 public class WebSocketConfig {
  
     @Bean

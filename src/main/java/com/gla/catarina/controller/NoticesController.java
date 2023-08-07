@@ -1,7 +1,7 @@
 package com.gla.catarina.controller;
 
 
-import com.gla.catarina.service.NoticesService;
+import com.gla.catarina.service.INoticesService;
 import com.gla.catarina.entity.Notices;
 import com.gla.catarina.util.StatusCode;
 import com.gla.catarina.vo.LayuiPageVo;
@@ -27,7 +27,7 @@ import java.util.List;
 @Controller
 public class NoticesController {
     @Resource
-    private NoticesService noticesService;
+    private INoticesService INoticesService;
 
     /**
      * 用户查看通知消息后
@@ -37,7 +37,7 @@ public class NoticesController {
     @ResponseBody
     @PutMapping("/notices/look/{id}")
     public ResultVo LookNoticesById (@PathVariable("id") String id) {
-        Integer i = noticesService.updateNoticesById(id);
+        Integer i = INoticesService.updateNoticesById(id);
         if (i == 1){
             return new ResultVo(true, StatusCode.OK,"设置成功");
         }
@@ -51,7 +51,7 @@ public class NoticesController {
     @GetMapping("/notices/queryNotices")
     public ResultVo queryNotices (HttpSession session){
         String userid = (String) session.getAttribute("userid");
-        List<Notices> noticesList = noticesService.queryNotices(userid);
+        List<Notices> noticesList = INoticesService.queryNotices(userid);
         return new ResultVo(true,StatusCode.OK,"查询成功",noticesList);
     }
 
@@ -63,7 +63,7 @@ public class NoticesController {
     @GetMapping("/notices/cancelLatest")
     public ResultVo CancelLatest (HttpSession session){
         String userid = (String) session.getAttribute("userid");
-        Integer i = noticesService.CancelLatest(userid);
+        Integer i = INoticesService.CancelLatest(userid);
         if (i == 1){
             return new ResultVo(true,StatusCode.OK,"设置成功");
         }
@@ -80,8 +80,8 @@ public class NoticesController {
     @GetMapping("/notices/queryall")
     public LayuiPageVo queryallSold(int limit, int page, HttpSession session) {
         String userid = (String) session.getAttribute("userid");
-        List<Notices> noticesList = noticesService.queryAllNotices((page - 1) * limit, limit, userid);
-        Integer dataNumber = noticesService.queryNoticesCount(userid);
+        List<Notices> noticesList = INoticesService.queryAllNotices((page - 1) * limit, limit, userid);
+        Integer dataNumber = INoticesService.queryNoticesCount(userid);
         return new LayuiPageVo("", 0,dataNumber,noticesList);
     }
 

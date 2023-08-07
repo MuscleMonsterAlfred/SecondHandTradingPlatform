@@ -1,7 +1,7 @@
 package com.gla.catarina.controller;
 
-import com.gla.catarina.service.NoticesService;
-import com.gla.catarina.service.OrdersService;
+import com.gla.catarina.service.INoticesService;
+import com.gla.catarina.service.IOrdersService;
 import com.gla.catarina.entity.Notices;
 import com.gla.catarina.entity.Orders;
 import com.gla.catarina.util.KeyUtil;
@@ -31,9 +31,9 @@ import java.util.List;
 public class SoldrecordController {
 
     @Resource
-    private OrdersService ordersService;
+    private IOrdersService IOrdersService;
     @Resource
-    private NoticesService noticesService;
+    private INoticesService INoticesService;
 
     /**
      * 确认收货
@@ -42,14 +42,14 @@ public class SoldrecordController {
     @ResponseBody
     @PutMapping("/soldrecord/change/{ordernumber}")
     public ResultVo delectSold (@PathVariable("ordernumber") String ordernumber) {
-        ordersService.ChangeOrder(new Orders().setOrdernumber(ordernumber).setKdstatus(2));
+        IOrdersService.ChangeOrder(new Orders().setOrdernumber(ordernumber).setKdstatus(2));
 
         /**查询订单详情*/
-        Orders orders = ordersService.LookOrderDetail(ordernumber);
+        Orders orders = IOrdersService.LookOrderDetail(ordernumber);
         /**给卖家发送订单通知*/
         Notices notices1 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getSelluserid()).setTpname("系统通知")
                 .setWhys("您售出的商品 <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a> 已经被收货啦。");
-        noticesService.insertNotices(notices1);
+        INoticesService.insertNotices(notices1);
 
         return new ResultVo(true, StatusCode.OK,"操作成功");
     }
@@ -67,8 +67,8 @@ public class SoldrecordController {
         if(StringUtils.isEmpty(selluserid)){
             selluserid = "123456";
         }
-        List<Orders> soldrecordList = ordersService.queryAllSoldrecord((page - 1) * limit, limit, selluserid);
-        Integer dataNumber = ordersService.querySoldCount(selluserid);
+        List<Orders> soldrecordList = IOrdersService.queryAllSoldrecord((page - 1) * limit, limit, selluserid);
+        Integer dataNumber = IOrdersService.querySoldCount(selluserid);
         return new LayuiPageVo("",0,dataNumber,soldrecordList);
     }
 
@@ -80,8 +80,8 @@ public class SoldrecordController {
     @ResponseBody
     @GetMapping("/soldrecord/queryall")
     public LayuiPageVo queryAllSold(int limit, int page) {
-        List<Orders> soldrecordList = ordersService.queryAllSoldrecord((page - 1) * limit, limit, null);
-        Integer dataNumber = ordersService.querySoldCount(null);
+        List<Orders> soldrecordList = IOrdersService.queryAllSoldrecord((page - 1) * limit, limit, null);
+        Integer dataNumber = IOrdersService.querySoldCount(null);
         return new LayuiPageVo("",0,dataNumber,soldrecordList);
     }
 

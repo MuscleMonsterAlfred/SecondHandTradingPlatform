@@ -1084,7 +1084,7 @@ iframe {
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1170px) {
     .ps-container {
         width: 1170px;
     }
@@ -1094,9 +1094,9 @@ iframe {
     }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1170px) {
     .ps-container {
-        width: 1440px;
+        width: 1170px;
     }
 }
 
@@ -4793,7 +4793,7 @@ textarea.form-control {
     height: 100%;
     width: 460px;
     padding: 50px 40px;
-    margin-left: calc((100% - 1440px) / 2);
+    margin-left: calc((100% - 1170px) / 2);
     z-index: 10;
     background-color: rgba(255, 255, 255, 0.9);
 }
@@ -4849,7 +4849,7 @@ textarea.form-control {
     border-color: #1E9FFF;
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1170px) {
     .ps-home-contact .ps-home-contact__form {
         margin-left: 15px;
     }
@@ -5022,7 +5022,7 @@ textarea.form-control {
 
 .ps-section--offer .ps-column {
     /* position: relative; */
-    width: 1440px;
+    width: 1170px;
     /* left: 162px; */
     overflow: hidden;
     margin: 0 auto;
@@ -5062,7 +5062,7 @@ textarea.form-control {
 } */
 
 .ps-section--offer .ps-column img{
-    width: 1440px;
+    width: 1170px;
     height: 250px;
 }
 
@@ -5371,7 +5371,7 @@ textarea.form-control {
 }
 
 .mega-menu .mega-wrap {
-    max-width: 1440px;
+    max-width: 1170px;
     margin: 0 auto;
     padding: 35px 30px;
     display: -webkit-box;
@@ -6678,7 +6678,7 @@ textarea.form-control {
     color: #1E9FFF;
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1170px) {
     .ps-search--header {
         max-width: 200px;
     }

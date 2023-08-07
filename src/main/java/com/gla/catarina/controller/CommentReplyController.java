@@ -25,15 +25,15 @@ import java.util.List;
 @Controller
 public class CommentReplyController {
     @Resource
-    private CommodityService commodityService;
+    private ICommodityService ICommodityService;
     @Resource
-    private CommentService commentService;
+    private ICommentService commentService;
     @Resource
-    private ReplyService replyService;
+    private IReplyService IReplyService;
     @Resource
-    private UserInfoService userInfoService;
+    private IUserInfoService IUserInfoService;
     @Resource
-    private NoticesService noticesService;
+    private INoticesService INoticesService;
 
     /**
      * 查询商品下的评论和回复
@@ -45,18 +45,18 @@ public class CommentReplyController {
         List<Comment> commentsList = commentService.queryComments(commid);
         for (Comment comment : commentsList) {
             /**查询对应评论下的回复*/
-            List<Reply> repliesList = replyService.queryReply(comment.getCid());
+            List<Reply> repliesList = IReplyService.queryReply(comment.getCid());
             for (Reply reply : repliesList) {
                 /**查询回复者的昵称和头像信息*/
-                UserInfo ruser = userInfoService.queryPartInfo(reply.getRuserid());
+                UserInfo ruser = IUserInfoService.queryPartInfo(reply.getRuserid());
                 /**查询被回复者的昵称信息*/
-                UserInfo cuser = userInfoService.queryPartInfo(reply.getCuserid());
+                UserInfo cuser = IUserInfoService.queryPartInfo(reply.getCuserid());
                 /**添加回复中涉及到的用户昵称及头像信息*/
                 reply.setRusername(ruser.getUsername()).setRuimage(ruser.getUimage()).setCusername(cuser.getUsername());
             }
             /**查询评论者的昵称和头像信息*/
             System.out.println("评论者ID：" + comment.getCuserid());
-            UserInfo userInfo = userInfoService.queryPartInfo(comment.getCuserid());
+            UserInfo userInfo = IUserInfoService.queryPartInfo(comment.getCuserid());
             /**添加评论下的回复及评论者昵称和头像信息*/
             comment.setReplyLsit(repliesList).setCusername(userInfo.getUsername()).setCuimage(userInfo.getUimage());
         }
@@ -87,10 +87,10 @@ public class CommentReplyController {
         Integer i = commentService.insertComment(comment);
         if (i == 1){
             /**发出评论通知消息*/
-            Commodity commodity = commodityService.LookCommodity(new Commodity().setCommid(comment.getCommid()));
+            Commodity commodity = ICommodityService.LookCommodity(new Commodity().setCommid(comment.getCommid()));
             Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(comment.getSpuserid()).setTpname("评论")
                     .setWhys("您的商品 <a href=/product-detail/"+comment.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> 被评论了，快去看看吧。");
-            noticesService.insertNotices(notices);
+            INoticesService.insertNotices(notices);
             return new ResultVo(true, StatusCode.OK,"评论成功");
         }
         return new ResultVo(false,StatusCode.ERROR,"评论失败");
@@ -118,13 +118,13 @@ public class CommentReplyController {
 
         reply.setRid(KeyUtil.genUniqueKey()).setRuserid(ruserid).setRecontent(recontent);
         /**插入回复*/
-        Integer i = replyService.insetReply(reply);
+        Integer i = IReplyService.insetReply(reply);
         if (i == 1){
             /**发出评论回复通知消息*/
-            Commodity commodity = commodityService.LookCommodity(new Commodity().setCommid(reply.getCommid()));
+            Commodity commodity = ICommodityService.LookCommodity(new Commodity().setCommid(reply.getCommid()));
             Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(reply.getCuserid()).setTpname("评论回复")
                     .setWhys("有小伙伴在 <a href=/product-detail/"+reply.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> 下回复了您的评论，快去看看吧。");
-            noticesService.insertNotices(notices);
+            INoticesService.insertNotices(notices);
             return new ResultVo(true, StatusCode.OK,"回复成功");
         }
         return new ResultVo(false,StatusCode.ERROR,"回复失败");
@@ -144,7 +144,7 @@ public class CommentReplyController {
         /**如果是评论者本人或者商品发布者则进行删除操作*/
         if (comment.getCuserid().equals(cuserid) || comment.getSpuserid().equals(cuserid)){
             Integer i = commentService.deleteComment(cid);
-            Integer j = replyService.deleteReply(new Reply().setCid(cid));
+            Integer j = IReplyService.deleteReply(new Reply().setCid(cid));
             if (i == 1 && j == 1){
                 return new ResultVo(true, StatusCode.OK,"删除成功");
             }
@@ -163,10 +163,10 @@ public class CommentReplyController {
     @PutMapping("/reply/delete/{rid}")
     public ResultVo deletereply(@PathVariable("rid") String rid,HttpSession session){
         String ruserid = (String) session.getAttribute("userid");
-        Reply reply = replyService.queryById(rid);
+        Reply reply = IReplyService.queryById(rid);
         /**如果是回复者本人或者商品发布者则进行删除操作*/
         if (reply.getRuserid().equals(ruserid) || reply.getSpuserid().equals(ruserid)){
-            Integer i = replyService.deleteReply(new Reply().setRid(rid));
+            Integer i = IReplyService.deleteReply(new Reply().setRid(rid));
             if (i == 1){
                 return new ResultVo(true, StatusCode.OK,"删除成功");
             }

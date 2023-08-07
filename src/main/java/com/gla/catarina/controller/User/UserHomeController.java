@@ -1,7 +1,7 @@
 package com.gla.catarina.controller.User;
 
-import com.gla.catarina.service.CommodityService;
-import com.gla.catarina.service.UserInfoService;
+import com.gla.catarina.service.ICommodityService;
+import com.gla.catarina.service.IUserInfoService;
 import com.gla.catarina.entity.Commodity;
 import com.gla.catarina.entity.UserInfo;
 import com.gla.catarina.util.StatusCode;
@@ -24,9 +24,9 @@ import java.util.List;
 @Controller
 public class UserHomeController {
     @Resource
-    private UserInfoService userInfoService;
+    private IUserInfoService IUserInfoService;
     @Resource
-    private CommodityService commodityService;
+    private ICommodityService ICommodityService;
 
     /**
      * 个人简介
@@ -35,7 +35,7 @@ public class UserHomeController {
     @ResponseBody
     @GetMapping("/user/userinfo/{userid}")
     public ResultVo userinfo(@PathVariable("userid") String userid) {
-        UserInfo userInfo = userInfoService.LookUserinfo(userid);
+        UserInfo userInfo = IUserInfoService.LookUserinfo(userid);
         if (!StringUtils.isEmpty(userInfo)){
             return new ResultVo(true, StatusCode.OK, "查询成功",userInfo);
         }
@@ -49,8 +49,8 @@ public class UserHomeController {
     @ResponseBody
     @GetMapping("/user/usercommodity/{userid}")
     public LayuiPageVo userHomeCommodity(@PathVariable("userid") String userid,int limit, int page) {
-        List<Commodity> commodityList = commodityService.queryAllCommodity((page - 1) * limit, limit, userid,1);
-        Integer dataNumber = commodityService.queryCommodityCount(userid,1);
+        List<Commodity> commodityList = ICommodityService.queryAllCommodity((page - 1) * limit, limit, userid,1);
+        Integer dataNumber = ICommodityService.queryCommodityCount(userid,1);
         return new LayuiPageVo("", 0,dataNumber,commodityList);
     }
 

@@ -1,16 +1,13 @@
 package com.gla.catarina.controller;
 
 
-import com.gla.catarina.service.CollectService;
+import com.gla.catarina.service.ICollectService;
 import com.gla.catarina.entity.Collect;
-import com.gla.catarina.util.GetDate;
-import com.gla.catarina.util.KeyUtil;
 import com.gla.catarina.util.StatusCode;
 import com.gla.catarina.vo.LayuiPageVo;
 import com.gla.catarina.vo.ResultVo;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -27,7 +24,7 @@ import java.util.List;
 @Controller
 public class CollectController {
     @Resource
-    private CollectService collectService;
+    private ICollectService collectService;
 
     /**
      * 商品详情界面：收藏商品or取消收藏
