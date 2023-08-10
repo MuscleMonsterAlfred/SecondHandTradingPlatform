@@ -92,7 +92,7 @@
         select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
         from commodity
         <where>
-            <if test="category != '全部'">and category = #{category}</if>
+            <if test="category != 'All'">and category = #{category}</if>
             and commstatus=1
         </where>
             order by updatetime desc limit 0,8
@@ -102,10 +102,10 @@
         select commid,commname,orimoney,thinkmoney,school,updatetime,image
         from commodity
         <where>
-            <if test="category != '全部'">and category = #{category}</if>
+            <if test="category != 'All'">and category = #{category}</if>
             <if test="(minmoney != null) and (maxmoney != null)">and thinkmoney between #{minmoney} and #{maxmoney}</if>
-            <if test="area == '附近'">and school != #{school}</if>
-            <if test="area == '本校'">and school = #{school}</if>
+            <if test="area == 'Vicinity'">and school != #{school}</if>
+            <if test="area == 'School'">and school = #{school}</if>
             and commstatus=1
         </where>
         order by updatetime desc limit #{page},#{count}
@@ -114,11 +114,11 @@
     <select id="queryAllCommodityByCategoryCount" resultType="java.lang.Integer">
         select count(*) from commodity
         <where>
-            <if test="category != '全部'">and category = #{category}</if>
+            <if test="category != 'All'">and category = #{category}</if>
             <if test="minmoney != null">and thinkmoney &gt;= #{minmoney}</if>
             <if test="maxmoney != null">and thinkmoney &lt;= #{maxmoney}</if>
-            <if test="area == '附近'">and school != #{school}</if>
-            <if test="area == '本校'">and school = #{school}</if>
+            <if test="area == 'Vicinity'">and school != #{school}</if>
+            <if test="area == 'School'">and school = #{school}</if>
             and commstatus=1
         </where>
     </select>

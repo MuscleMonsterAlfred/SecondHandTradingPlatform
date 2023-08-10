@@ -228,7 +228,7 @@ layui.use(['form', 'upload', 'element'], function () {
             return false;
         }
         if(vuelistimages.length===0){
-            layer.msg('请上传商品的其他图', {
+            layer.msg('请上传商品的Other图', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'

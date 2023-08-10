@@ -5,7 +5,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品清单</title>
+    <title></title>
     <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/animate.css}"/>
     <script th:src="@{/static/layui/jquery.min.js}"></script>
@@ -19,14 +19,14 @@
         <div class="col-sm-12">
             <form class="layui-form" action="">
                 <div class="layui-form-item">
-                    <label class="layui-form-label" style="font-size:20px">选择状态</label>
+                    <label class="layui-form-label" style="font-size:20px">Choose</label>
                     <div class="layui-input-inline">
                         <select name="type" lay-filter="types">
-                            <option th:title="100">全部商品</option>
-                            <option th:title="3">待审核</option>
-                            <option th:title="1">正常</option>
-                            <option th:title="0">违规</option>
-                            <option th:title="4">已售出</option>
+                            <option th:title="100">All Goods</option>
+                            <option th:title="3">Waiting Approve</option>
+                            <option th:title="1">Normal</option>
+                            <option th:title="0">Violation</option>
+                            <option th:title="4">Sold</option>
                         </select>
                     </div>
                 </div>
@@ -34,16 +34,16 @@
             <div class="animated fadeIn">
                 <table class="layui-hide" id="product" lay-filter="test"></table>
                 <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-xs" lay-event="xiangqing">详情</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="xiangqing">Detail</a>
                     {{# if(d.commstatus!=3){ }}
                         {{# if(d.commstatus!=4){ }}
-                        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="bianji">编辑</a>
+                        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="bianji">Edit</a>
                         {{# } }}
                         {{# if(d.commstatus!=4 && d.commstatus!=0){ }}
-                        <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="yishou">已售</a>
+                        <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="yishou">Sold</a>
                         {{# } }}
                     {{# } }}
-                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="shanchu">删除</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="shanchu">Delete</a>
                 </script>
             </div>
         </div>

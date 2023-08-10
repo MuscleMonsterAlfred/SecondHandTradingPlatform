@@ -226,4 +226,9 @@ public class EmailUtils {
     public static Integer getPages(Integer dataNumber,Integer pageSize){
         return (dataNumber + pageSize - 1) / pageSize;
     }
+
+    public static Integer SendMsg(String PhoneNumbers, String TemplateParam,Integer type) {
+
+        return 0;
+    }
 }

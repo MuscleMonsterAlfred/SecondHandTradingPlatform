@@ -15,7 +15,7 @@
     <meta name="author" content="Nghia Minh Luong">
     <meta name="keywords" content="Default Description">
     <meta name="description" content="Default keyword">
-    <title>商品清单</title>
+    <title>PRODUCTS</title>
     <!-- Fonts-->
     <link rel="stylesheet" th:href="@{/static/css/fontsgoogleapis.css}">
     <link rel="stylesheet" th:href="@{static/plugins/font-awesome/css/font-awesome.min.css}">
@@ -67,20 +67,20 @@
             <div class="ps-product-action">
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
-                        <label class="layui-form-label" style="font-size:25px;color:#626262"><b>价格</b></label>
+                        <label class="layui-form-label" style="font-size:25px;color:#626262"><b>Price</b></label>
                         <div class="layui-input-inline">
                             <select name="cname" lay-filter="setprices">
-                                <option th:title="0">默认</option>
-                                <option th:title="1">价格 (从低到高)</option>
-                                <option th:title="2">价格 (从高到低)</option>
+                                <option th:title="0">Default</option>
+                                <option th:title="1">Price (High)</option>
+                                <option th:title="2">Price (Low)</option>
                             </select>
                         </div>
-                        <label class="layui-form-label" style="font-size:25px;color:#626262"><b>区域</b></label>
+                        <label class="layui-form-label" style="font-size:25px;color:#626262"><b>Area</b></label>
                         <div class="layui-input-inline">
                             <select name="cname" lay-filter="setareas">
-                                <option th:title="全部">全部</option>
-                                <option th:title="本校">本校</option>
-                                <option th:title="附近">附近</option>
+                                <option th:title="All">All</option>
+                                <option th:title="School">School</option>
+                                <option th:title="Vicinity">vicinity</option>
                             </select>
                         </div>
                     </div>
@@ -134,24 +134,24 @@
         <div class="ps-sidebar" data-mh="product-listing">
             <aside class="ps-widget--sidebar ps-widget--category">
                 <div class="ps-widget__header">
-                    <h3>类别</h3>
+                    <h3>Category</h3>
                 </div>
                 <div class="ps-widget__content">
                     <ul class="ps-list--checked">
-                        <li id="ac1" class="current" onclick="setcategory('全部','ac1');" style="cursor:pointer"><a>全部</a></li>
-                        <li id="ac2" onclick="setcategory('3C数码','ac2');" style="cursor:pointer"><a>3C数码</a></li>
-                        <li id="ac3" onclick="setcategory('书籍','ac3');" style="cursor:pointer"><a>书籍</a></li>
-                        <li id="ac4" onclick="setcategory('生活用品','ac4');" style="cursor:pointer"><a>生活用品</a></li>
-                        <li id="ac5" onclick="setcategory('服饰','ac5');" style="cursor:pointer"><a>服饰</a></li>
-                        <li id="ac6" onclick="setcategory('美妆','ac6');" style="cursor:pointer"><a>美妆</a></li>
-                        <li id="ac7" onclick="setcategory('出行','ac7');" style="cursor:pointer"><a>出行</a></li>
-                        <li id="ac8" onclick="setcategory('其他','ac8');" style="cursor:pointer"><a>其他</a></li>
+                        <li id="ac1" class="current" onclick="setcategory('All','ac1');" style="cursor:pointer"><a>All</a></li>
+                        <li id="ac2" onclick="setcategory('3C','ac2');" style="cursor:pointer"><a>3C</a></li>
+                        <li id="ac3" onclick="setcategory('Book','ac3');" style="cursor:pointer"><a>Book</a></li>
+                        <li id="ac4" onclick="setcategory('Daily Use','ac4');" style="cursor:pointer"><a>Daily Use</a></li>
+                        <li id="ac5" onclick="setcategory('Clothing','ac5');" style="cursor:pointer"><a>Clothing</a></li>
+                        <li id="ac6" onclick="setcategory('Beauty','ac6');" style="cursor:pointer"><a>Beauty</a></li>
+                        <li id="ac7" onclick="setcategory('Travel','ac7');" style="cursor:pointer"><a>Travel</a></li>
+                        <li id="ac8" onclick="setcategory('Other','ac8');" style="cursor:pointer"><a>Other</a></li>
                     </ul>
                 </div>
             </aside>
             <aside class="ps-widget--sidebar ps-widget--filter">
                 <div class="ps-widget__header">
-                    <h3>价格</h3>
+                    <h3>Price</h3>
                 </div>
                 <div class="ps-widget__content">
                     <div id="slideTest9" class="demo-slider"></div>
@@ -165,75 +165,15 @@
             <div class="ps-container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
-                        <aside class="ps-widget--footer ps-widget--info">
-                            <header><a class="ps-logo" th:href="@{/}"><img th:src="@{/static/images/logo-white.png}"
-                                                                                 alt=""></a>
-                                <h3 class="ps-widget__title">Address Office 1</h3>
-                            </header>
-                            <footer>
-                                <p><strong>460 West 34th Street, 15th floor, New York</strong></p>
-                                <p>Email: <a href='mailto:support@store.com'>support@store.com</a></p>
-                                <p>Phone: +323 32434 5334</p>
-                                <p>Fax: ++323 32434 5333</p>
-                            </footer>
-                        </aside>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                         <aside class="ps-widget--footer ps-widget--info second">
                             <header>
-                                <h3 class="ps-widget__title">Address Office 2</h3>
+                                <h3 class="ps-widget__title">Address</h3>
                             </header>
                             <footer>
-                                <p><strong>PO Box 16122 Collins Victoria 3000 Australia</strong></p>
-                                <p>Email: <a href='mailto:support@store.com'>support@store.com</a></p>
-                                <p>Phone: +323 32434 5334</p>
-                                <p>Fax: ++323 32434 5333</p>
-                            </footer>
-                        </aside>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
-                        <aside class="ps-widget--footer ps-widget--link">
-                            <header>
-                                <h3 class="ps-widget__title">Find Our store</h3>
-                            </header>
-                            <footer>
-                                <ul class="ps-list--link">
-                                    <li><a href="#">Coupon Code</a></li>
-                                    <li><a href="#">SignUp For Email</a></li>
-                                    <li><a href="#">Site Feedback</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                </ul>
-                            </footer>
-                        </aside>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
-                        <aside class="ps-widget--footer ps-widget--link">
-                            <header>
-                                <h3 class="ps-widget__title">Get Help</h3>
-                            </header>
-                            <footer>
-                                <ul class="ps-list--line">
-                                    <li><a href="#">Order Status</a></li>
-                                    <li><a href="#">Shipping and Delivery</a></li>
-                                    <li><a href="#">Returns</a></li>
-                                    <li><a href="#">Payment Options</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                </ul>
-                            </footer>
-                        </aside>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
-                        <aside class="ps-widget--footer ps-widget--link">
-                            <header>
-                                <h3 class="ps-widget__title">Products</h3>
-                            </header>
-                            <footer>
-                                <ul class="ps-list--line">
-                                    <li><a href="#">Shoes</a></li>
-                                    <li><a href="#">Clothing</a></li>
-                                    <li><a href="#">Accessries</a></li>
-                                    <li><a href="#">Football Boots</a></li>
-                                </ul>
+                                <p><strong>CATARINA SHOP</strong></p>
+                                <p>Email: <a href='mailto:aa@aa.com'>aa@aa.com</a></p>
+                                <p>Phone: +111 1111111</p>
+                                <p>Fax: ++111 1111111</p>
                             </footer>
                         </aside>
                     </div>

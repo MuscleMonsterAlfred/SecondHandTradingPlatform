@@ -22,11 +22,11 @@ function lookallproduct(stuatus) {
                 , limit: 20
             }, cols: [[
                 {field: 'qid', title: 'ID',width:80, align:'center'}
-                , {field: 'commname', title: '名称', width: 300, align:'center'}
-                , {field: 'category', title: '类别', width: 100, align:'center'}
-                , {field: 'commdesc', title: '描述', width: 700, align:'center'}
-                , {field: 'updatetime', title: '时间', width: 160,sort: true, align:'center'}
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:200, align:'center'}
+                , {field: 'commname', title: 'Name', width: 300, align:'center'}
+                , {field: 'category', title: 'Category', width: 100, align:'center'}
+                , {field: 'commdesc', title: 'Desc', width: 700, align:'center'}
+                , {field: 'updatetime', title: 'Date', width: 160,sort: true, align:'center'}
+                , {fixed: 'right', title: 'Opera', toolbar: '#barDemo', width:200, align:'center'}
             ]], done: function (res, curr, count) {
                 var i=1;
                 $("[data-field='qid']").children().each(function () {
@@ -44,9 +44,9 @@ function lookallproduct(stuatus) {
             if (obj.event === 'xiangqing') {
                 window.open(basePath+"/product-detail/"+data.commid)
             }else if(obj.event === 'weigui'){
-                layer.confirm('确认商品违规吗？', {
-                    btn: ['确定','算了'], //按钮
-                    title:"违规商品",
+                layer.confirm('Confirm reject？', {
+                    btn: ['Yes','No'], //按钮
+                    title:"",
                     offset:"50px"
                 }, function(){
                     layer.closeAll();
@@ -58,7 +58,7 @@ function lookallproduct(stuatus) {
                         dataType: "json", //回调
                         beforeSend: function () {
                             layer.load(1, { //icon支持传入0-2
-                                content: '请稍等...',
+                                content: 'loading...',
                                 success: function (layero) {
                                     layero.find('.layui-layer-content').css({
                                         'padding-top': '39px',
@@ -92,9 +92,9 @@ function lookallproduct(stuatus) {
                 }, function(){
                 });
             }else if (obj.event === 'shenhe') {
-                layer.confirm('确认该商品通过审核吗？', {
-                    btn: ['确定','算了'], //按钮
-                    title:"审核商品",
+                layer.confirm('Confirm pass？', {
+                    btn: ['Yes','No'], //按钮
+                    title:"",
                     offset:"50px"
                 }, function(){
                     layer.closeAll();
@@ -106,7 +106,7 @@ function lookallproduct(stuatus) {
                         dataType: "json", //回调
                         beforeSend: function () {
                             layer.load(1, { //icon支持传入0-2
-                                content: '请稍等...',
+                                content: 'loading...',
                                 success: function (layero) {
                                     layero.find('.layui-layer-content').css({
                                         'padding-top': '39px',

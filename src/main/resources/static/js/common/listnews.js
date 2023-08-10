@@ -40,7 +40,7 @@ var newslist = new Vue({
                         });
                     });
                 },error:function () {
-                    layer.msg("系统错误", {
+                    layer.msg("error", {
                         time: 1000,
                         icon: 2,
                         offset: '100px'
@@ -60,7 +60,7 @@ var newslist = new Vue({
                     that.newslistdata=data.data;
                     $("#newscontent").show();
                 },error:function () {
-                    layer.msg("系统错误", {
+                    layer.msg("error", {
                         time: 1000,
                         icon: 2,
                         offset: '100px'
@@ -70,7 +70,7 @@ var newslist = new Vue({
         },showNewsDetail:function(id){
             layer.open({
                 type: 2,
-                title: '公告详情',
+                title: 'Detail',
                 shadeClose: true,
                 shade: 0.8,
                 maxmin: true,

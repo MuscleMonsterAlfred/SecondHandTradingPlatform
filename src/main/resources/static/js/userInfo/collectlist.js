@@ -10,12 +10,12 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
             , limit: 20
         }, cols: [[
             {field: 'qid', title: 'ID',width:60, align:'center'}
-            , {field: 'commname', title: '名称', width: 250, align:'center'}
-            , {field: 'commdesc', title: '描述', width: 600, align:'center'}
-            , {field: 'username', title: '发布者', width: 110, align:'center'}
-            , {field: 'school', title: '学校', width: 130, align:'center'}
-            , {field: 'soldtime', title: '收藏时间', width: 160, align:'center'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:140, align:'center'}
+            , {field: 'commname', title: 'Name', width: 250, align:'center'}
+            , {field: 'commdesc', title: 'Desc', width: 600, align:'center'}
+            , {field: 'username', title: 'Publish User', width: 110, align:'center'}
+            , {field: 'school', title: 'School', width: 130, align:'center'}
+            , {field: 'soldtime', title: 'Collect Time', width: 160, align:'center'}
+            , {fixed: 'right', title: 'Opera', toolbar: '#barDemo', width:140, align:'center'}
         ]]
         ,height: 500
         , done: function (res, curr, count) {
@@ -37,7 +37,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
         }else if (obj.event === 'bianji') {
             layer.open({
                 type: 2,
-                title: '修改商品',
+                title: 'Update Product',
                 shadeClose: true,
                 shade: 0.8,
                 maxmin: true,
@@ -45,9 +45,9 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
                 content: basePath+'/user/editgoods/'+data.commid
             });
         }else if(obj.event === 'quxiaoshoucang'){
-            layer.confirm('确认取消收藏该商品吗？', {
-                btn: ['确定','算了'], //按钮
-                title:"取消收藏",
+            layer.confirm('Confirm cancel？', {
+                btn: ['Yes','No'], //按钮
+                title:"Cancel",
                 offset:"50px"
             }, function(){
                 layer.closeAll();
@@ -59,7 +59,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
                     dataType: "json", //回调
                     beforeSend: function () {
                         layer.load(1, { //icon支持传入0-2
-                            content: '请稍等...',
+                            content: 'loading...',
                             success: function (layero) {
                                 layero.find('.layui-layer-content').css({
                                     'padding-top': '39px',
@@ -93,9 +93,9 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
             }, function(){
             });
         }else if (obj.event === 'yishou') {
-            layer.confirm('确认设置该商品为已售吗？', {
-                btn: ['确定','算了'], //按钮
-                title:"售出商品",
+            layer.confirm('Are you sure to set this product as sold？', {
+                btn: ['Yes','No'], //按钮
+                title:"Sold ",
                 offset:"50px"
             }, function(){
                 layer.closeAll();
@@ -107,7 +107,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
                     dataType: "json", //回调
                     beforeSend: function () {
                         layer.load(1, { //icon支持传入0-2
-                            content: '请稍等...',
+                            content: 'loading...',
                             success: function (layero) {
                                 layero.find('.layui-layer-content').css({
                                     'padding-top': '39px',

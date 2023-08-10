@@ -5,7 +5,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>售出记录</title>
+    <title></title>
     <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}"/>
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
@@ -18,9 +18,9 @@
             <div class="animated fadeIn">
                 <table class="layui-hide" id="sold" lay-filter="test" style="width:100%"></table>
                 <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="xiangqing">详情</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="xiangqing">Detail</a>
                     {{# if(d.kdstatus==0){ }}
-                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="fahuo">确认发货</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="fahuo">Confirm shipment</a>
                     {{# } }}
                 </script>
             </div>

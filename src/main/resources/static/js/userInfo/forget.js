@@ -18,7 +18,7 @@ var app = new Vue({
         jiantingphone: function () {
             var phone=$("#mobilephone").val();
             if(phone.length==0){
-                layer.tips("请输入手机号", '#mobilephone', {
+                layer.tips("Input mobile", '#mobilephone', {
                     tips: [1, "#0FA6D8"],
                     tipsMore: !1,
                     time: 1300
@@ -26,7 +26,7 @@ var app = new Vue({
                 $("#mobilephone").focus();
                 return 0;
             }else if(!re.test(phone)){
-                layer.tips("请输入合法的手机号", '#mobilephone', {
+                layer.tips("Input mobile", '#mobilephone', {
                     tips: [1, "#FF5722"],
                     tipsMore: !1,
                     time: 1300

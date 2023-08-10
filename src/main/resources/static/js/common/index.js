@@ -6,8 +6,8 @@ window.onload = function() {
             return {
                 indexData: [],
                 latestData: [],
-                categoryList: ['全部', '3C数码', '书籍', '生活用品', '服饰', '美妆', '出行','其他'],
-                clilckCategory: '全部',
+                categoryList: ['All', '3C', 'Book', 'Daily Use', 'Clothing', 'Beauty', 'Travel','Other'],
+                clilckCategory: 'All',
                 newsData:[]
             }
         },
@@ -30,7 +30,7 @@ window.onload = function() {
                             that.indexData = msg.data;
                         }
                     },error:function () {
-                        layer.msg("系统错误", {
+                        layer.msg("error", {
                             time: 1000,
                             icon: 5,
                             offset: '100px'
@@ -52,7 +52,7 @@ window.onload = function() {
                             that.latestData = msg.data;
                         }
                     },error:function () {
-                        layer.msg("系统错误", {
+                        layer.msg("error", {
                             time: 1000,
                             icon: 5,
                             offset: '100px'
@@ -77,7 +77,7 @@ window.onload = function() {
                         that.newsData = msg.data;
                         $("#lastnews").show();
                     },error:function () {
-                        layer.msg("系统错误", {
+                        layer.msg("error", {
                             time: 1000,
                             icon: 5,
                             offset: '100px'
@@ -87,7 +87,7 @@ window.onload = function() {
             },showNewsDetail:function(id){
                 layer.open({
                     type: 2,
-                    title: '公告详情',
+                    title: 'Detail',
                     shadeClose: true,
                     shade: 0.8,
                     maxmin: true,

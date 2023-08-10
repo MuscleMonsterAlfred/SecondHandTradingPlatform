@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}"/>
     <script type="text/javascript" th:src="@{/static/layui/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
-    <title>校园二手交易商城 | 发布公告</title>
+    <title></title>
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
     </script>
@@ -15,30 +15,30 @@
 <body style="background-color:white">
 <form class="layui-form" id="relnews" style="margin-top: 10px">
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>公告标题</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Title</label>
         <div class="layui-input-block">
-            <input type="text" name="newstitle" lay-verify="required" autocomplete="off" placeholder="请输入公告标题"
+            <input type="text" name="newstitle" lay-verify="required" autocomplete="off" placeholder="Title"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label"><span style="color: red">*</span>公告简介</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Introduction</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入公告简介" name="newsdesc" lay-verify="required" autocomplete="off"
+            <textarea placeholder="Introduction" name="newsdesc" lay-verify="required" autocomplete="off"
                       class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label"><span style="color: red">*</span>公告内容</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Content</label>
         <div class="layui-input-block">
             <textarea class="layui-textarea layui-hide" id="newscontents"
-                      name="newscontent" placeholder="请输入公告内容" ></textarea>
+                      name="newscontent" placeholder="Content" ></textarea>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>公告主图</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Images</label>
         <div class="layui-inline">
-            <button type="button" class="layui-btn layui-btn-normal" id="test2">上传主图</button>
+            <button type="button" class="layui-btn layui-btn-normal" id="test2">upload</button>
         </div>
     </div>
     <div id="mainimage" style="display: none;margin-left:100px;margin-bottom:10px">
@@ -46,7 +46,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" id="demo1" lay-filter="demo1">立即提交</button>
+            <button type="submit" class="layui-btn" lay-submit="" id="demo1" lay-filter="demo1">Submit</button>
         </div>
     </div>
 </form>

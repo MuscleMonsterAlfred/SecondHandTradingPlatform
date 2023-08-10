@@ -12,8 +12,4 @@ public class KeyUtil {
         Integer number=random.nextInt(900000)+100000;//六位随机数
         return System.currentTimeMillis()+String.valueOf(number);
     }
-    public static void main(String[] args){
-        String s = KeyUtil.genUniqueKey();
-        System.out.println(s);
-    }
 }

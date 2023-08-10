@@ -47,8 +47,8 @@ public class SoldrecordController {
         /**查询订单详情*/
         Orders orders = IOrdersService.LookOrderDetail(ordernumber);
         /**给卖家发送订单通知*/
-        Notices notices1 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getSelluserid()).setTpname("系统通知")
-                .setWhys("您售出的商品 <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a> 已经被收货啦。");
+        Notices notices1 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getSelluserid()).setTpname("System Notice")
+                .setWhys("The product you sold <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a>,The goods have been received");
         INoticesService.insertNotices(notices1);
 
         return new ResultVo(true, StatusCode.OK,"操作成功");

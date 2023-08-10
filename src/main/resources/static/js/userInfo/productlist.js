@@ -22,11 +22,11 @@ function lookallproduct(stuatus) {
                 , limit: 20
             }, cols: [[
                 {field: 'qid', title: 'ID',width:80, align:'center'}
-                , {field: 'commname', title: '名称', width: 300, align:'center'}
-                , {field: 'category', title: '类别', width: 100, align:'center'}
-                , {field: 'commdesc', title: '描述', width: 700, align:'center'}
-                , {field: 'updatetime', title: '时间', width: 160,sort: true, align:'center'}
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:250, align:'center'}
+                , {field: 'commname', title: 'Name', width: 300, align:'center'}
+                , {field: 'category', title: 'Category', width: 100, align:'center'}
+                , {field: 'commdesc', title: 'Desc', width: 700, align:'center'}
+                , {field: 'updatetime', title: 'Date', width: 160,sort: true, align:'center'}
+                , {fixed: 'right', title: 'Opera', toolbar: '#barDemo', width:250, align:'center'}
             ]], done: function (res, curr, count) {
                 var i=1;
                 $("[data-field='qid']").children().each(function () {
@@ -46,7 +46,7 @@ function lookallproduct(stuatus) {
             }else if (obj.event === 'bianji') {
                 layer.open({
                     type: 2,
-                    title: '修改商品',
+                    title: 'Edit',
                     shadeClose: true,
                     shade: 0.8,
                     maxmin: true,
@@ -57,9 +57,9 @@ function lookallproduct(stuatus) {
                     }
                 });
             }else if(obj.event === 'shanchu'){
-                layer.confirm('确认删除商品吗？', {
-                    btn: ['确定','算了'], //按钮
-                    title:"删除商品",
+                layer.confirm('Confirm delete？', {
+                    btn: ['Yes','No'], //按钮
+                    title:"Delete",
                     offset:"50px"
                 }, function(){
                     layer.closeAll();
@@ -71,7 +71,7 @@ function lookallproduct(stuatus) {
                         dataType: "json", //回调
                         beforeSend: function () {
                             layer.load(1, { //icon支持传入0-2
-                                content: '请稍等...',
+                                content: 'loading...',
                                 success: function (layero) {
                                     layero.find('.layui-layer-content').css({
                                         'padding-top': '39px',
@@ -105,9 +105,9 @@ function lookallproduct(stuatus) {
                 }, function(){
                 });
             }else if (obj.event === 'yishou') {
-                layer.confirm('确认设置该商品为已售吗？', {
-                    btn: ['确定','算了'], //按钮
-                    title:"售出商品",
+                layer.confirm('Are you sure to set this product as sold？', {
+                    btn: ['Yes','No'], //按钮
+                    title:"Sold",
                     offset:"50px"
                 }, function(){
                     layer.closeAll();
@@ -119,7 +119,7 @@ function lookallproduct(stuatus) {
                         dataType: "json", //回调
                         beforeSend: function () {
                             layer.load(1, { //icon支持传入0-2
-                                content: '请稍等...',
+                                content: 'loading...',
                                 success: function (layero) {
                                     layero.find('.layui-layer-content').css({
                                         'padding-top': '39px',

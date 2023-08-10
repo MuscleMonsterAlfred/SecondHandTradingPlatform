@@ -5,7 +5,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>公告列表</title>
+    <title></title>
     <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}"/>
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
@@ -18,9 +18,9 @@
             <div class="animated fadeIn">
                 <table class="layui-hide" id="newslist" lay-filter="test" style="width:100%"></table>
                 <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-xs" lay-event="xiangqing">详情</a>
-                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="bianji">编辑</a>
-                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="shanchu">删除公告</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="xiangqing">Detail</a>
+                    <!--<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="bianji">Edit</a>-->
+                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="shanchu">Delete</a>
                 </script>
             </div>
         </div>
@@ -29,5 +29,5 @@
 </body>
 <script th:src="@{/static/layui/jquery.min.js}"></script>
 <script th:src="@{/static/layui/layui.js}"></script>
-<script th:src="@{/static/js/admin/newslist.js}"></script>
+<script th:src="@{/static/js/admin/newslist.js?version=1}"></script>
 </html>

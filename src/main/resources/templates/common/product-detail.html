@@ -15,7 +15,7 @@
     <meta name="author" content="Nghia Minh Luong">
     <meta name="keywords" content="Default Description">
     <meta name="description" content="Default keyword">
-    <title>商品详情 | [[${gddetail.commname}]]</title>
+    <title>Product Detail | [[${gddetail.commname}]]</title>
     <!-- Fonts-->
     <link rel="stylesheet" th:href="@{/static/css/fontsgoogleapis.css}">
     <link rel="stylesheet" th:href="@{/static/plugins/font-awesome/css/font-awesome.min.css}">
@@ -107,30 +107,30 @@
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                                    style="background-color:#1E9FFF">电 话</button>&nbsp;&nbsp;<span th:text="${userinfo.mobilephone}" id=""></span>
+                                    style="background-color:#1E9FFF">Tel</button>&nbsp;&nbsp;<span th:text="${userinfo.mobilephone}" id=""></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                            style="background-color:#1E9FFF">地&nbsp;址</button>&nbsp;&nbsp;<span th:text="${gddetail.school}" id="school"></span>
+                            style="background-color:#1E9FFF">Address</button>&nbsp;&nbsp;<span th:text="${gddetail.school}" id="school"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                                    style="background-color:#1E9FFF">标&nbsp;签</button>&nbsp;&nbsp;<span th:text="${gddetail.common}"></span>
+                                    style="background-color:#1E9FFF">Tags</button>&nbsp;&nbsp;<span th:text="${gddetail.common}"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                                    style="background-color:#1E9FFF">日&nbsp;期</button>&nbsp;&nbsp;<span th:text="${#dates.format(gddetail.createtime,'yyyy-MM-dd')}"></span>
+                                    style="background-color:#1E9FFF">Date</button>&nbsp;&nbsp;<span th:text="${#dates.format(gddetail.createtime,'yyyy-MM-dd')}"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                                    style="background-color:#1E9FFF">浏&nbsp;览</button>&nbsp;&nbsp;<span th:text="${gddetail.rednumber}"></span>
+                                    style="background-color:#1E9FFF">Views</button>&nbsp;&nbsp;<span th:text="${gddetail.rednumber}"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
-                            点击查看位置<i id="openPositionBtn" th:attr="goodposition = ${gddetail.goodposition}" class="layui-icon layui-icon-release" style="font-size: 30px; "></i>
+                            Open Location<i id="openPositionBtn" th:attr="goodposition = ${gddetail.goodposition}" class="layui-icon layui-icon-release" style="font-size: 30px; "></i>
                         </h4>
                         <div class="ps-product__shopping">
                             <a class="ps-btn mb-10" style="cursor: pointer"
-                               th:onclick="|ganxingqu()|">感兴趣<i class="ps-icon-next"></i></a>
+                               th:onclick="|ganxingqu()|">Interested<i class="ps-icon-next"></i></a>
                             <div class="ps-product__actions" id="shoucang"><!--点击收藏-->
                                 <a class="mr-10" onclick="dianjicllect(1)" style="cursor: pointer"><i class="ps-icon-heart"></i></a>
                             </div>
@@ -140,7 +140,7 @@
                             </div>
                             <div id="buy" style="cursor: pointer;margin-top: 10px;"><!--点击购买-->
                                 <button type="button" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-lg"
-                                        th:onclick="|submitbuy()|">立即购买</button>
+                                        th:onclick="|submitbuy()|">Buy Now</button>
                             </div>
                             <script>
                                 if(collectstatus===2){
@@ -157,14 +157,14 @@
                 </div>
                 <div class="ps-product__content" style="margin-top:0px">
                     <ul class="tab-list" role="tablist">
-                        <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">详情</a></li>
-                        <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">评论</a></li>
+                        <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Detail</a></li>
+                        <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Comment</a></li>
                     </ul>
                 </div>
                 <div class="tab-content mb-60" id="comments">
                     <div class="tab-pane active" role="tabpanel" id="tab_01">
                         <fieldset class="layui-elem-field">
-                            <legend style="font-size:25px">商品详情</legend>
+                            <legend style="font-size:25px">Detail</legend>
                             <div class="layui-field-box">
                                 <div class="layui-container" style="font-size:18px;width:100%">
                                     <div class="layui-row" style="margin-top:10px">
@@ -198,7 +198,7 @@
                     </div>
                     <div class="tab-pane" role="tabpane1" id="tab_02">
                         <div style="display: none;text-align: center" id="nocomment">
-                            暂无评论
+                            No Comment
                         </div>
                         <div style="display: none" id="havecomment">
                             <div v-for="(cmm,index) in listcomments" :key="index">
@@ -208,7 +208,7 @@
                                         <header>
                                             <p>By&nbsp;<a href="">{{cmm.cusername}}</a>&nbsp;-&nbsp;{{cmm.commtime | changeTime}}
                                                 &nbsp;-&nbsp;<a style="color:#1E9FFF;cursor: pointer"
-                                                @click="replyuser(cmm.cusername,cmm.cid,cmm.cuserid)">回复</a>
+                                                @click="replyuser(cmm.cusername,cmm.cid,cmm.cuserid)">Reply</a>
                                             </p>
                                         </header>
                                         <p>{{cmm.content}}</p>
@@ -221,7 +221,7 @@
                                             <p>By&nbsp;<a href="">{{rep.rusername}}</a>&nbsp;To&nbsp;<a href="">{{rep.cusername}}</a>
                                                 &nbsp;-&nbsp;{{rep.replytime | changeTime}}&nbsp;-&nbsp;
                                                 <a style="color:#1E9FFF;cursor: pointer"
-                                                   @click="replyuser(rep.rusername,rep.cid,rep.spuserid)">回复</a>
+                                                   @click="replyuser(rep.rusername,rep.cid,rep.spuserid)">Reply</a>
                                             </p>
                                         </header>
                                         <p>{{rep.recontent}}</p>
@@ -230,7 +230,7 @@
                             </div>
                         </div>
                         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                            <legend>评论</legend>
+                            <legend>Reply</legend>
                         </fieldset>
                         <form class="layui-form" action="">
                             <div class="layui-form-item layui-form-text">
@@ -243,11 +243,11 @@
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
                                     <button th:if="${session.userid==null}" type="submit" class="layui-btn layui-btn-disabled" disabled="disabled" lay-submit=""
-                                            lay-filter="demo1" title="请登录后评论">立即提交</button>
+                                            lay-filter="demo1" title="Login">Submit</button>
                                     <button th:if="${session.userid!=null}" id="subid" type="submit" class="layui-btn" lay-submit=""
-                                            lay-filter="demo1">立即提交</button>
+                                            lay-filter="demo1">Submit</button>
                                     <button style="display: none" id="reply" type="submit" class="layui-btn" lay-submit=""
-                                            lay-filter="demo2">立即提交</button>
+                                            lay-filter="demo2">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -261,7 +261,7 @@
             <div class="ps-section__header mb-50">
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
-                        <h3 class="ps-section__title" data-mask="Related item">- 最新商品</h3>
+                        <h3 class="ps-section__title" data-mask="Related item">- LATEST PRODUCTS</h3>
                     </div>
                 </div>
             </div>
@@ -315,74 +315,15 @@
             <div class="ps-container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
-                        <aside class="ps-widget--footer ps-widget--info">
-                            <header><a class="ps-logo" th:href="@{/}"><img th:src="@{/static/images/logo-white.png}" alt=""></a>
-                                <h3 class="ps-widget__title">Address Office 1</h3>
-                            </header>
-                            <footer>
-                                <p><strong>460 West 34th Street, 15th floor, New York</strong></p>
-                                <p>Email: <a href='mailto:support@store.com'>support@store.com</a></p>
-                                <p>Phone: +323 32434 5334</p>
-                                <p>Fax: ++323 32434 5333</p>
-                            </footer>
-                        </aside>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                         <aside class="ps-widget--footer ps-widget--info second">
                             <header>
-                                <h3 class="ps-widget__title">Address Office 2</h3>
+                                <h3 class="ps-widget__title">Address</h3>
                             </header>
                             <footer>
-                                <p><strong>PO Box 16122 Collins Victoria 3000 Australia</strong></p>
-                                <p>Email: <a href='mailto:support@store.com'>support@store.com</a></p>
-                                <p>Phone: +323 32434 5334</p>
-                                <p>Fax: ++323 32434 5333</p>
-                            </footer>
-                        </aside>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
-                        <aside class="ps-widget--footer ps-widget--link">
-                            <header>
-                                <h3 class="ps-widget__title">Find Our store</h3>
-                            </header>
-                            <footer>
-                                <ul class="ps-list--link">
-                                    <li><a href="#">Coupon Code</a></li>
-                                    <li><a href="#">SignUp For Email</a></li>
-                                    <li><a href="#">Site Feedback</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                </ul>
-                            </footer>
-                        </aside>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
-                        <aside class="ps-widget--footer ps-widget--link">
-                            <header>
-                                <h3 class="ps-widget__title">Get Help</h3>
-                            </header>
-                            <footer>
-                                <ul class="ps-list--line">
-                                    <li><a href="#">Order Status</a></li>
-                                    <li><a href="#">Shipping and Delivery</a></li>
-                                    <li><a href="#">Returns</a></li>
-                                    <li><a href="#">Payment Options</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                </ul>
-                            </footer>
-                        </aside>
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
-                        <aside class="ps-widget--footer ps-widget--link">
-                            <header>
-                                <h3 class="ps-widget__title">Products</h3>
-                            </header>
-                            <footer>
-                                <ul class="ps-list--line">
-                                    <li><a href="#">Shoes</a></li>
-                                    <li><a href="#">Clothing</a></li>
-                                    <li><a href="#">Accessries</a></li>
-                                    <li><a href="#">Football Boots</a></li>
-                                </ul>
+                                <p><strong>CATARINA SHOP</strong></p>
+                                <p>Email: <a href='mailto:aa@aa.com'>aa@aa.com</a></p>
+                                <p>Phone: +111 1111111</p>
+                                <p>Fax: ++111 1111111</p>
                             </footer>
                         </aside>
                     </div>

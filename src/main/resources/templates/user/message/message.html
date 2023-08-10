@@ -46,17 +46,17 @@
             }, cols:
                 [
                     [
-                        {field: 'isread', title: '状态',width: 60,  align:'center'}
-                        , {field: 'tpname', title: '类型',width: 120,  align:'center'}
-                        , {field: 'whys', title: '内容', align:'center'}
-                        , {field: 'nttime', title: '时间', width: 160, align:'center'}
+                        {field: 'isread', title: 'Status',width: 100,  align:'center'}
+                        , {field: 'tpname', title: 'Type',width: 120,  align:'center'}
+                        , {field: 'whys', title: 'Content', align:'center'}
+                        , {field: 'nttime', title: 'Date', width: 160, align:'center'}
                     ]
                 ]
             ,height: 500
             , done: function (res, curr, count) {
                 $("[data-field='isread']").children().each(function () {
-                    if($(this).text() == '状态') {
-                        $(this).text("状态")
+                    if($(this).text() == 'Status') {
+                        $(this).text("Status")
                     }else if($(this).text() == 0){
                         $(this).html("<span class=\"layui-badge-dot\"></span>")
                     }else if($(this).text() == 1){

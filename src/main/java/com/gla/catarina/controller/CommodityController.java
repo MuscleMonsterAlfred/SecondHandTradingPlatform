@@ -67,7 +67,7 @@ public class CommodityController {
      * 跳转到修改商品
      *  --不能修改已删除、已完成的商品
      *  1、查询商品详情
-     *  2、查询商品得其他图
+     *  2、查询商品得Other图
      */
     @GetMapping("/user/editgoods/{commid}")
     public String toeditgoods(@PathVariable("commid")String commid, HttpSession session, ModelMap modelMap){
@@ -89,8 +89,8 @@ public class CommodityController {
     /**
      * 修改商品
      * 1、修改商品信息
-     * 2、修改商品的其他图的状态
-     * 3、插入商品的其他图
+     * 2、修改商品的Other图的状态
+     * 3、插入商品的Other图
      */
     @PostMapping("/changegoods/rel")
     @ResponseBody
@@ -106,8 +106,8 @@ public class CommodityController {
         }
         commimagesService.InsertGoodImages(commimagesList);
         /**发出待审核系统通知*/
-        Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("商品审核")
-                .setWhys("您的商品 <a href=/product-detail/"+commodity.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> 进入待审核队列，请您耐心等待。");
+        Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("Wait Approve")
+                .setWhys("Your product <a href=/product-detail/"+commodity.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> waiting to approve。");
         INoticesService.insertNotices(notices);
         return "0";
     }
@@ -115,7 +115,7 @@ public class CommodityController {
     /**
      * 发布商品
      * 1、插入商品信息
-     * 2、插入商品其他图
+     * 2、插入商品Other图
      */
     @PostMapping("/relgoods/rel")
     @ResponseBody
@@ -132,8 +132,8 @@ public class CommodityController {
         }
         commimagesService.InsertGoodImages(commimagesList);
         /**发出待审核系统通知*/
-        Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("商品审核")
-                .setWhys("您的商品 <a href=/product-detail/"+commid+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> 进入待审核队列，请您耐心等待。");
+        Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("Wait Approve")
+                .setWhys("Your product <a href=/product-detail/"+commid+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> waiting to approve");
         INoticesService.insertNotices(notices);
         return "0";
     }
@@ -159,7 +159,7 @@ public class CommodityController {
     }
 
     /**
-     * 上传其他图片
+     * 上传Other图片
      */
     @PostMapping(value="/relgoods/images")
     @ResponseBody
@@ -290,14 +290,14 @@ public class CommodityController {
     @ResponseBody
     @GetMapping("/product/latest")
     public ResultVo latestCommodity() {
-        String category = "全部";
+        String category = "All";
         List<Commodity> commodityList = ICommodityService.queryCommodityByCategory(category);
         for (Commodity commodity : commodityList) {
             /**查询商品对应的其它图片*/
             List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
             commodity.setOtherimg(imagesList);
         }
-        return new ResultVo(true,StatusCode.OK,"查询成功",commodityList);
+        return new ResultVo(true,StatusCode.OK,"Success",commodityList);
     }
 
     /**
@@ -312,7 +312,7 @@ public class CommodityController {
                                     @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
                                     HttpSession session) {
         String school=null;
-        if(!area.equals("全部")){
+        if(!area.equals("All")){
             String userid = (String) session.getAttribute("userid");
             UserInfo userInfo = IUserInfoService.LookUserinfo(userid);
             school = userInfo.getSchool();
@@ -333,7 +333,7 @@ public class CommodityController {
                                  @PathVariable("area") String area, @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
                                  @PathVariable("price") Integer price, HttpSession session) {
         String school=null;
-        if(!area.equals("全部")) {
+        if(!area.equals("All")) {
             String userid = (String) session.getAttribute("userid");
             UserInfo userInfo = IUserInfoService.LookUserinfo(userid);
             school = userInfo.getSchool();
@@ -419,9 +419,9 @@ public class CommodityController {
     public ResultVo ChangeCommstatus(@PathVariable("commid") String commid, @PathVariable("commstatus") Integer commstatus, HttpSession session) {
         Integer i = ICommodityService.ChangeCommstatus(commid, commstatus);
         if (i == 1){
-            return new ResultVo(true,StatusCode.OK,"操作成功");
+            return new ResultVo(true,StatusCode.OK,"OK");
         }
-        return new ResultVo(false,StatusCode.ERROR,"操作失败");
+        return new ResultVo(false,StatusCode.ERROR,"Fail");
     }
 }
 

@@ -58,10 +58,10 @@ public class OrderController {
         /**查询订单详情*/
         Orders orders = IOrdersService.LookOrderDetail(order.getOrdernumber());
         /**给买家发送订单通知*/
-        Notices notices1 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getBuyuserid()).setTpname("系统通知")
-                .setWhys("您购买的 <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a> 已经发货， 请注意查看物流信息。");
+        Notices notices1 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getBuyuserid()).setTpname("System Notice")
+                .setWhys("The item you purchased has been shipped. Please check the logistics information carefully <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a> ");
         INoticesService.insertNotices(notices1);
-        return new ResultVo(false, StatusCode.OK,"发货成功");
+        return new ResultVo(false, StatusCode.OK,"success");
     }
 
 
@@ -148,13 +148,13 @@ public class OrderController {
         /**查询订单详情*/
         Orders orders = IOrdersService.LookOrderDetail(out_trade_no);
         /**给买家发送订单通知*/
-        Notices notices1 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getBuyuserid()).setTpname("系统通知")
-                .setWhys("您已成功购买 <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a> 请随时查看物流信息。");
+        Notices notices1 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getBuyuserid()).setTpname("System Notice")
+                .setWhys(" <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a> Please check the logistics information at any time。");
         INoticesService.insertNotices(notices1);
 
         /**给卖家发送订单通知*/
-        Notices notices2 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getSelluserid()).setTpname("系统通知")
-                .setWhys("您的商品 <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a> 被购买了，请及时发货。");
+        Notices notices2 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getSelluserid()).setTpname("System Notice")
+                .setWhys(" <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a> purchased, please ship in a timely manner。");
         INoticesService.insertNotices(notices2);
 
         return "/alipay/alipaySuccess";

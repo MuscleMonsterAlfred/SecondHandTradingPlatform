@@ -78,7 +78,7 @@ layui.use(['form', 'upload', 'element'], function () {
             //上传前判断已经上传了多少张图片
             var imgs = document.getElementById("otherimages").getElementsByTagName("img");
             if (imgs.length === 6) {
-                layer.msg('最多上传三张图片');
+                layer.msg('Upload up to three images');
                 layer.close(obj);//报错让其停止上传
             }
         }
@@ -92,10 +92,10 @@ layui.use(['form', 'upload', 'element'], function () {
         , done: function (res) {
             //如果上传失败
             if (res.code > 0) {
-                return layer.msg('上传失败');
+                return layer.msg('Error');
             } else {
                 layer.closeAll('loading');
-                layer.msg('上传成功', {
+                layer.msg('Success', {
                     time: 1000,
                     icon: 1,
                     offset: '150px'
@@ -106,7 +106,7 @@ layui.use(['form', 'upload', 'element'], function () {
         }
         , error: function () {
             layer.closeAll('loading');
-            layer.msg('上传失败', {
+            layer.msg('Error', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -129,10 +129,10 @@ layui.use(['form', 'upload', 'element'], function () {
         , done: function (res) {
             //如果上传失败
             if (res.code > 0) {
-                return layer.msg('上传失败');
+                return layer.msg('Error');
             } else {
                 layer.closeAll('loading');
-                layer.msg('上传成功', {
+                layer.msg('Success', {
                     time: 1000,
                     icon: 1,
                     offset: '150px'
@@ -143,7 +143,7 @@ layui.use(['form', 'upload', 'element'], function () {
         }
         , error: function () {
             layer.closeAll('loading');
-            layer.msg('上传失败', {
+            layer.msg('Error', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -166,10 +166,10 @@ layui.use(['form', 'upload', 'element'], function () {
         , done: function (res) {
             //如果上传失败
             if (res.code > 0) {
-                return layer.msg('上传失败');
+                return layer.msg('Error');
             } else {
                 layer.closeAll('loading');
-                layer.msg('上传成功', {
+                layer.msg('Success', {
                     time: 1000,
                     icon: 1,
                     offset: '150px'
@@ -191,7 +191,7 @@ layui.use(['form', 'upload', 'element'], function () {
         }
         , error: function () {
             layer.closeAll('loading');
-            layer.msg('上传失败', {
+            layer.msg('Error', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -204,7 +204,7 @@ layui.use(['form', 'upload', 'element'], function () {
         var vuemainimg=getmainimgurl();
         var vuelistimages=getlistimages();
         if(vuemainimg.length===0){
-            layer.msg('请上传商品的主图', {
+            layer.msg('Upload Images', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -212,7 +212,7 @@ layui.use(['form', 'upload', 'element'], function () {
             return false;
         }
         if(vuelistimages.length===0){
-            layer.msg('请上传商品的其他图', {
+            layer.msg('Upload Other Images', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -226,7 +226,7 @@ layui.use(['form', 'upload', 'element'], function () {
             rellistimgs[i]=vuelistimages[i].imgsrc;
         }
         if(data.field.commname.length>200){
-            layer.msg('商品名字过长', {
+            layer.msg('Product name too long', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -254,7 +254,7 @@ layui.use(['form', 'upload', 'element'], function () {
             dataType: "json",
             beforeSend: function () {
                 layer.load(1, {
-                    content: '请稍等...',
+                    content: 'loading...',
                     success: function (layero) {
                         layero.find('.layui-layer-content').css({
                             'padding-top': '39px',
@@ -267,7 +267,7 @@ layui.use(['form', 'upload', 'element'], function () {
                 layer.closeAll('loading');
             },
             success: function (data) {
-                layer.msg("发布成功，请等待审核", {
+                layer.msg("Successfully published, please wait for review", {
                     time: 1000,
                     icon: 1,
                     offset: '100px'
@@ -276,7 +276,7 @@ layui.use(['form', 'upload', 'element'], function () {
                     window.location.reload();
                 });
             },error:function () {
-                layer.msg('发布失败', {
+                layer.msg('error', {
                     time: 1000,
                     icon: 2,
                     offset: '150px'
@@ -301,7 +301,7 @@ layui.use(['form', 'upload', 'element'], function () {
 
         // 将位置信息显示在信息窗口中
         var infowindow = new google.maps.InfoWindow({
-            content: '当前位置: ' + pos.name
+            content: 'Current location: ' + pos.name
         });
 
         marker.addListener('click', function () {
@@ -339,7 +339,7 @@ layui.use(['form', 'upload', 'element'], function () {
             var place = autocomplete.getPlace();
 
             if (!place.geometry) {
-                window.alert("无效的地址，请重新选择。");
+                window.alert("Invalid address, please reselect");
                 return;
             }
 
@@ -354,8 +354,8 @@ layui.use(['form', 'upload', 'element'], function () {
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
-            '错误：无法获取当前位置。' :
-            '错误：您的浏览器不支持地理定位。');
+            'Error：Unable to obtain current location。' :
+            'Error：Your browser does not support geolocation。');
         infoWindow.open(map);
     }
 

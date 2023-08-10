@@ -211,7 +211,7 @@ public class UserController {
             return new ResultVo(false, StatusCode.REPERROR,"手机号已存在");
         }
         String code = EmailUtils.phonecode();
-        Integer result = new SmsUtil().SendMsg(mobilephone, code, type);//发送验证码
+        Integer result = EmailUtils.SendMsg(mobilephone, code, type);//发送验证码
         if(result == 1) {//发送成功
             phonecodemap.put(mobilephone, code);//放入map集合进行对比
 

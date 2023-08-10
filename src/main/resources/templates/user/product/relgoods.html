@@ -10,7 +10,7 @@
     <script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/userInfo/ckplayer.js}"></script>
     <script th:src="@{'https://maps.googleapis.com/maps/api/js?key=AIzaSyDo_DjtOGiptsI11Uzk3xkMUT4Z4FicMOw&libraries=places'}"></script>
-    <title>校园二手交易商城 | 发布商品</title>
+    <title></title>
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
     </script>
@@ -18,69 +18,69 @@
 <body style="background-color:white">
 <form class="layui-form" id="goodsform" style="margin-top: 10px">
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>商品名称</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Product name:</label>
         <div class="layui-input-block">
-            <input type="text" name="commname" lay-verify="required" autocomplete="off" placeholder="请输入商品名称"
+            <input type="text" name="commname" lay-verify="required" autocomplete="off" placeholder="Product name"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label"><span style="color: red">*</span>商品描述</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Product desc</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入商品描述(品牌型号，新旧程度，入手渠道，转手原因...)" name="commdesc" lay-verify="required" autocomplete="off"
+            <textarea placeholder="" name="commdesc" lay-verify="required" autocomplete="off"
                       class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">商品视频</label>
+        <label class="layui-form-label">Video</label>
         <div class="layui-inline">
-            <button type="button" class="layui-btn" id="test1">上传视频</button>
+            <button type="button" class="layui-btn" id="test1">Upload video</button>
         </div>
     </div>
     <div class="videosamplex" id="videosamplex" style="width:600px;height:400px;margin-left:100px;margin-bottom:15px;display: none">
         <video id="videoplayer"></video>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">商品原价</label>
+        <label class="layui-form-label">Origin Price</label>
         <div class="layui-input-block">
-            <input type="number" name="orimoney" autocomplete="off" placeholder="请输入商品原价"
+            <input type="number" name="orimoney" autocomplete="off" placeholder=""
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label"><span style="color: red">*</span>商品售价</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Price</label>
         <div class="layui-input-block">
-            <input type="number" name="thinkmoney" lay-verify="required" autocomplete="off" placeholder="请输入商品售价"
+            <input type="number" name="thinkmoney" lay-verify="required" autocomplete="off" placeholder="Price"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>商品类别</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Category</label>
         <div class="layui-input-block">
             <select name="category" lay-filter="required">
-                <option value="3C数码" selected="">3C数码</option>
-                <option value="书籍">书籍</option>
-                <option value="生活用品">生活用品</option>
-                <option value="服饰">服饰</option>
-                <option value="美妆">美妆</option>
-                <option value="出行">出行</option>
-                <option value="其他">其他</option>
+                <option value="3C" selected="">3C</option>
+                <option value="Book">Book</option>
+                <option value="Daily Use">Daily Use</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Beauty">Beauty</option>
+                <option value="Travel">Travel</option>
+                <option value="Other">Other</option>
             </select>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>常用选项</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Common options</label>
         <div class="layui-input-block">
-            <input type="radio" name="common" value="不议价" title="不议价" checked="">
-            <input type="radio" name="common" value="可小刀" title="可小刀">
-            <input type="radio" name="common2" value="可送货" title="可送货" checked="">
-            <input type="radio" name="common2" value="仅自提" title="仅自提">
+            <input type="radio" name="common" value="No bargaining" title="No bargaining" checked="">
+            <input type="radio" name="common" value="Bargaining" title="Bargaining">
+            <input type="radio" name="common2" value="Deliverable" title="Deliverable" checked="">
+            <input type="radio" name="common2" value="Pickup only" title="Pickup only">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>商品主图</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Main Pic</label>
         <div class="layui-inline">
-            <button type="button" class="layui-btn" id="test2">上传主图</button>
+            <button type="button" class="layui-btn" id="test2">Upload Main Pic</button>
         </div>
     </div>
     <div id="mainimage" style="display: none;margin-left:100px;margin-bottom:10px">
@@ -88,9 +88,9 @@
              @click="openimg(mainimg)">
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>商品其他图</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Other Pic</label>
         <div class="layui-inline">
-            <button type="button" class="layui-btn" id="test3">上传其他图（最多3张）</button>
+            <button type="button" class="layui-btn" id="test3">Upload Other Imges</button>
         </div>
     </div>
 
@@ -106,13 +106,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label"></label>
         <div class="layui-input-block" style="color:#C62F2F">
-            <p>温馨提示：请勿发布涉及政治、广告、营销、违反国家法律法规等商品。</p>
+
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>位置信息</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Location </label>
         <div class="layui-inline">
-            <input type="text"  id="address-input"  placeholder="输入地址"  class="layui-input">
+            <input type="text"  id="address-input"  placeholder="Input address"  class="layui-input">
             <div   style="border:0;width: 600px;height: 450px;" allowfullscreen=""  id="map"></div>
         </div>
         <input type="hidden" id = "goodPosition" name = "goodPosition"/>
@@ -120,7 +120,7 @@
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" id="demo1" lay-filter="demo1">立即提交</button>
+            <button type="submit" class="layui-btn" lay-submit="" id="demo1" lay-filter="demo1">Submit</button>
         </div>
     </div>
 </form>

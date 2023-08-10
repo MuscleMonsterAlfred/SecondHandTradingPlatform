@@ -42,7 +42,7 @@ public class NewsController {
 
     @GetMapping("/news/detail/{id}")
     public String queryNewsById (@PathVariable("id") String id,ModelMap modelMap){
-        return queryNewsById(id,modelMap);
+        return INewsService.queryNewsById(id,modelMap);
     }
     @GetMapping("/news/torelnews")
     public String torelnews (){
@@ -64,7 +64,7 @@ public class NewsController {
     @GetMapping("/news/all")
     public ResultVo queryNews (){
         List<News> newslist = INewsService.queryNews();
-        return new ResultVo(true,StatusCode.OK,"查询成功",newslist);
+        return new ResultVo(true,StatusCode.OK,"success",newslist);
     }
 
     @ResponseBody
@@ -79,7 +79,7 @@ public class NewsController {
     @ResponseBody
     public PageVo newsNumber(){
         Integer dataNumber = INewsService.LookNewsCount();
-        return new PageVo(StatusCode.OK,"查询成功",dataNumber);
+        return new PageVo(StatusCode.OK,"success",dataNumber);
     }
 
     @GetMapping("/news/index/{page}")

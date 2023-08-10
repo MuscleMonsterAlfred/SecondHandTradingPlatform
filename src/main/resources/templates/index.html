@@ -1,4 +1,4 @@
-﻿﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE 7]>
 <html class="ie ie7"><![endif]-->
 <!--[if IE 8]>
@@ -13,7 +13,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>首页</title>
+    <title>Home</title>
     <!-- Fonts-->
     <link rel="stylesheet" th:href="@{/static/css/fontsgoogleapis.css}">
     <link rel="stylesheet" th:href="@{/static/plugins/font-awesome/css/font-awesome.min.css}">
@@ -56,10 +56,10 @@
                     <div class="header__actions">
                         <div th:if="${session.userid!=null}" style="line-height:40px">
                             <img src="" style="width:30px;display: none" id="avatars" class="layui-circle">
-                            <a th:href="@{/user/center}" target="_blank"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;个人中心&nbsp;&nbsp;</a>
+                            <a th:href="@{/user/center}" target="_blank"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;User center&nbsp;&nbsp;</a>
                             <!--<a href="//www.runoob.com" target="_blank"><i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;个人主页&nbsp;&nbsp;</a>-->
                             <!--<a href="//www.runoob.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>&nbsp;消息通知&nbsp;&nbsp;</a>-->
-                            <a th:href="@{/user/logout}"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;退出登录</a>
+                            <a th:href="@{/user/logout}"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a>
                             <script>
                                 $.ajax({
                                     url: basePath + "/user/avatar",
@@ -80,7 +80,7 @@
                                 });
                             </script>
                         </div>
-                        <a th:if="${session.userid==null}" th:href="@{/login}">登录 & 注册</a>
+                        <a th:if="${session.userid==null}" th:href="@{/login}">Login & Register</a>
                     </div>
                 </div>
             </div>
@@ -94,10 +94,10 @@
             </div>
             <div class="navigation__column center collapse navbar-collapse js-navbar-collapse pull-right">
                 <ul id="menu" class="main-menu menu">
-                    <li class="menu-item menu-item-has-children dropdown"><a th:href="@{/}">首页</a>
+                    <li class="menu-item menu-item-has-children dropdown"><a th:href="@{/}">HOME</a>
                     <li class="menu-item menu-item-has-children has-mega-menu"><a
-                            th:href="@{/product-listing}">商品清单</a>
-                    <li class="menu-item menu-item-has-children dropdown"><a th:href="@{/user/newslist}">网站公告</a>
+                            th:href="@{/product-listing}">GOOD LIST</a>
+                    <li class="menu-item menu-item-has-children dropdown"><a th:href="@{/user/newslist}">NOTICE</a>
                     </li>
       <!--              <li class="menu-item menu-item-has-children dropdown"><a th:href="@{/about}">关于我们</a></li>
                     <li class="menu-item menu-item-has-children dropdown"><a th:href="@{/contacts}">联系我们</a></li>-->
@@ -106,7 +106,7 @@
             <div class="navigation__column right">
                 <form class="ps-search--header layui-form" th:action="@{/product-search}" method="get">
                     <input class="form-control" type="text" name="keys"
-                           lay-verify="required" lay-reqtext="商品关键字，岂能为空？" placeholder="请输入关键字">
+                           lay-verify="required" lay-reqtext="not null？" placeholder="">
                     <button type="submit" class="layui-btn" lay-submit="" lay-filter="tosearch"><i
                             class="ps-icon-search"></i></button>
                 </form>
@@ -141,7 +141,7 @@
 
             </div>
             <div class="heading-part mb_20 ">
-                <h2 class="main_title">全部商品</h2>
+                <h2 class="main_title">ALL GOODS</h2>
             </div>
             <ul class="nav text-right ps-masonry__filter">
                 <li v-for="(category, index) in categoryList" :key="index">
@@ -159,7 +159,7 @@
                                 <div class="ps-shoes--carousel">
                                     <div class="ps-shoe">
                                         <div class="ps-shoe__thumbnail">
-                                            <img v-bind:src="commodity.image" alt="商品主图" style="height:300px">
+                                            <img v-bind:src="commodity.image" alt="main pic" style="height:300px">
                                             <a class="ps-shoe__overlay" :href="'/product-detail/'+commodity.commid"
                                                target="_blank"></a>
                                         </div>
@@ -176,7 +176,7 @@
     <br/>
     <div class="ps-container" style="display: none;">
         <div class="heading-part mb_20 ">
-            <h2 class="main_title">最新促销</h2>
+            <h2 class="main_title">LATEST PROMOTIONS</h2>
         </div>
         <div class="ps-section--offer">
             <div class="ps-column">
@@ -208,7 +208,7 @@
                 </div>-->
             </div>
             <div class="heading-part mb_20 ">
-                <h2 class="main_title">最新商品</h2>
+                <h2 class="main_title">LATEST PRODUCTS</h2>
             </div>
             <div class="ps-section__content">
                 <div class="masonry-wrapper" data-col-md="4" data-col-sm="2" data-col-xs="1" data-gap="30"
@@ -221,7 +221,7 @@
                                         <div class="ps-shoe__thumbnail">
                                             <div class="ps-badge"><span>New</span></div>
                                             <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
-                                            <img v-bind:src="commodity.image" alt="商品主图" style="height:300px">
+                                            <img v-bind:src="commodity.image" alt="main" style="height:300px">
                                             <a class="ps-shoe__overlay" :href="'/product-detail/'+commodity.commid"
                                                target="_blank"></a>
                                         </div>
@@ -273,7 +273,7 @@
                 <h2 class="ps-section__title" data-mask="Notice">- 最新公告</h2>
             </div>-->
             <div class="heading-part mb_20 ">
-                <h2 class="main_title">最新公告</h2>
+                <h2 class="main_title">Notice</h2>
             </div>
             <div class="ps-section__content">
                 <div class="row" style="display: none" id="lastnews">
@@ -283,10 +283,9 @@
                                                                @click="showNewsDetail(news.id)"></a>
                                 <img :src="news.image" alt=""></div>
                             <div class="ps-post__content"><a class="ps-post__title" href="#">{{news.newstitle}}</a>
-                                <p class="ps-post__meta"><span>By:<a class="mr-5" href="#">网站管理员</a></span>
-                                    -<span class="ml-5">{{news.createtime}}</span></p>
+                                <p class="ps-post__meta"><span class="ml-5">{{news.createtime}}</span></p>
                                 <p>{{news.newsdesc}}</p><a class="ps-morelink" style="cursor: pointer"
-                                                           @click="showNewsDetail(news.id)">阅读全文<i
+                                                           @click="showNewsDetail(news.id)">More<i
                                         class="fa fa-long-arrow-right"></i></a>
                             </div>
                         </div>

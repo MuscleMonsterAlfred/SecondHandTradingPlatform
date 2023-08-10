@@ -398,7 +398,7 @@ function owl_carousel () {
                 items:2,
                 nav:true,
             },
-            1000:{
+            1800:{
                 items:3,
                 nav:true,
             }

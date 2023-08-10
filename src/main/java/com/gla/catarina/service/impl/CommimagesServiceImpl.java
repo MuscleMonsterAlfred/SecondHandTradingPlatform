@@ -24,17 +24,17 @@ public class CommimagesServiceImpl implements ICommimagesService {
     @Resource
     private CommimagesMapper commimagesMapper;
 
-    /**插入商品的其他图*/
+    /**插入商品的Other图*/
     @Override
     public void InsertGoodImages(List<Commimages> list){
         commimagesMapper.InsertGoodImages(list);
     }
-    /**查询某个商品得其他图*/
+    /**查询某个商品得Other图*/
     @Override
     public List<String> LookGoodImages(String commid){
         return commimagesMapper.LookGoodImages(commid);
     }
-    /**删除某个商品得其他图*/
+    /**删除某个商品得Other图*/
     @Override
     public void DelGoodImages(String commid){
         commimagesMapper.DelGoodImages(commid);

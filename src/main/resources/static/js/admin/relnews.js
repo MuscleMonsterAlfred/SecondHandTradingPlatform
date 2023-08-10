@@ -59,10 +59,10 @@ layui.use(['form', 'upload', 'element', 'layedit'], function () {
         , done: function (res) {
             //如果上传失败
             if (res.code > 0) {
-                return layer.msg('上传失败');
+                return layer.msg('error');
             } else {
                 layer.closeAll('loading');
-                layer.msg('上传成功', {
+                layer.msg('success', {
                     time: 1000,
                     icon: 1,
                     offset: '150px'
@@ -72,7 +72,7 @@ layui.use(['form', 'upload', 'element', 'layedit'], function () {
             }
         }, error: function () {
             layer.closeAll('loading');
-            layer.msg('上传失败', {
+            layer.msg('error', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -82,7 +82,7 @@ layui.use(['form', 'upload', 'element', 'layedit'], function () {
     form.on('submit(demo1)', function (data) {
         let vuemainimg = getmainimgurl();
         if (vuemainimg.length === 0) {
-            layer.msg('请上传公告的主图', {
+            layer.msg('Images', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -90,7 +90,7 @@ layui.use(['form', 'upload', 'element', 'layedit'], function () {
             return false;
         }
         if (data.field.newstitle.length > 200) {
-            layer.msg('公告标题过长', {
+            layer.msg('Title length too long', {
                 time: 1000,
                 icon: 2,
                 offset: '150px'
@@ -111,7 +111,7 @@ layui.use(['form', 'upload', 'element', 'layedit'], function () {
             dataType: "json",
             beforeSend: function () {
                 layer.load(1, {
-                    content: '发布中...',
+                    content: 'loading...',
                     success: function (layero) {
                         layero.find('.layui-layer-content').css({
                             'padding-top': '39px',
@@ -124,7 +124,7 @@ layui.use(['form', 'upload', 'element', 'layedit'], function () {
                 layer.closeAll('loading');
             },
             success: function (data) {
-                layer.msg("发布成功", {
+                layer.msg("success", {
                     time: 1000,
                     icon: 1,
                     offset: '100px'
@@ -132,7 +132,7 @@ layui.use(['form', 'upload', 'element', 'layedit'], function () {
                     window.location.reload();
                 });
             }, error: function () {
-                layer.msg('发布失败', {
+                layer.msg('error', {
                     time: 1000,
                     icon: 2,
                     offset: '150px'

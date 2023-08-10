@@ -16,7 +16,7 @@ layui.use(['form','layer'], function () {
 function submitlogin() {
     var username=$("#username").val();
     if (username.length == 0) {
-        layer.tips("请输入账号", '#username', {
+        layer.tips("Input account", '#username', {
             tips: [1, "#0FA6D8"],
             tipsMore: !1,
             time: 1300
@@ -26,7 +26,7 @@ function submitlogin() {
     }
     var password=$("#password").val();
     if (password.length == 0) {
-        layer.tips("请输入密码", '#password', {
+        layer.tips("Input passeord", '#password', {
             tips: [1, "#0FA6D8"],
             tipsMore: !1,
             time: 1300
@@ -35,7 +35,7 @@ function submitlogin() {
         return;
     }
     if (password.length > 20 || password.length < 5) {
-        layer.tips("请输入合法密码", '#password', {
+        layer.tips("Password", '#password', {
             tips: [1, "#FF5722"],
             tipsMore: !1,
             time: 1300
@@ -43,9 +43,9 @@ function submitlogin() {
         $("#password").focus();
         return;
     }
-    var vercode=$("#vercode").val();
+ /*   var vercode=$("#vercode").val();
     if (vercode.length === 0) {
-        layer.tips("请输入验证码", '#vercode', {
+        layer.tips("Input code", '#vercode', {
             tips: [1, "#0FA6D8"],
             tipsMore: !1,
             time: 1300
@@ -53,20 +53,20 @@ function submitlogin() {
         $("#vercode").focus();
         return;
     } else if (vercode.length != 5) {
-        layer.tips("请输入正确验证码", '#vercode', {
+        layer.tips("Input code", '#vercode', {
             tips: [1, "#FF5722"],
             tipsMore: !1,
             time: 1300
         });
         $("#vercode").focus();
         return;
-    }
+    }*/
     $("#submitlg").addClass("layui-btn-disabled");
     $("#submitlg").attr("disabled", true);
     var object = new Object(); //创建一个存放数据的对象
     object["username"] = username;
     object["password"] = password;
-    object["vercode"] = vercode;
+    // object["vercode"] = vercode;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
     $.ajax({
         url: basePath + "/user/login",
@@ -76,7 +76,7 @@ function submitlogin() {
         dataType: "json", //回调
         beforeSend: function () {
             layer.load(1, { //icon支持传入0-2
-                content: '登陆中...',
+                content: 'login...',
                 success: function (layero) {
                     layero.find('.layui-layer-content').css({
                         'padding-top': '39px',
@@ -107,7 +107,7 @@ function submitlogin() {
                 $("#submitlg").attr("disabled", false);
             }
         },error:function () {
-            layer.msg("系统错误", {
+            layer.msg("Error", {
                 time: 1000,
                 icon: 2,
                 offset: '100px'
@@ -137,7 +137,7 @@ var app = new Vue({
         jiantingphone: function () {
             var phone=$("#userphone").val();
             if(phone.length==0){
-                layer.tips("请输入手机号", '#userphone', {
+                layer.tips("Input mobile", '#userphone', {
                     tips: [1, "#0FA6D8"],
                     tipsMore: !1,
                     time: 1300
@@ -145,7 +145,7 @@ var app = new Vue({
                 $("#userphone").focus();
                 return 0;
             }else if(!re.test(phone)){
-                layer.tips("请输入合法的手机号", '#userphone', {
+                layer.tips("Input mobile", '#userphone', {
                     tips: [1, "#FF5722"],
                     tipsMore: !1,
                     time: 1300
@@ -157,7 +157,7 @@ var app = new Vue({
         },jiantingemail:function () {
             var email=$("#useremail").val();
             if(email.length==0){
-                layer.tips("请输入邮箱", '#useremail', {
+                layer.tips("Input email", '#useremail', {
                     tips: [1, "#0FA6D8"],
                     tipsMore: !1,
                     time: 1300
@@ -165,7 +165,7 @@ var app = new Vue({
                 $("#useremail").focus();
                 return 0;
             }else if(!reemail.test(email)){
-                layer.tips("请输入合法的邮箱", '#useremail', {
+                layer.tips("Input email", '#useremail', {
                     tips: [1, "#FF5722"],
                     tipsMore: !1,
                     time: 1300
@@ -202,7 +202,7 @@ function submitregister() {
         return;
     }
     if (password2.length == 0) {
-        layer.tips("请输入密码", '#password2', {
+        layer.tips("Input password", '#password2', {
             tips: [1, "#0FA6D8"],
             tipsMore: !1,
             time: 1300
@@ -211,7 +211,7 @@ function submitregister() {
         return;
     }
     if (password2.length > 20 || password2.length < 5) {
-        layer.tips("密码长度为：5-20", '#password2', {
+        layer.tips("Password length：5-20", '#password2', {
             tips: [1, "#FF5722"],
             tipsMore: !1,
             time: 1500
@@ -220,7 +220,7 @@ function submitregister() {
         return;
     }
     if (phonevercode.length === 0) {
-        layer.tips("请输入验证码", '#phonevercode', {
+        layer.tips("Input code", '#phonevercode', {
             tips: [1, "#0FA6D8"],
             tipsMore: !1,
             time: 1300
@@ -228,7 +228,7 @@ function submitregister() {
         $("#phonevercode").focus();
         return;
     } else if (phonevercode.length != 6) {
-        layer.tips("请输入正确验证码", '#phonevercode', {
+        layer.tips("Input code", '#phonevercode', {
             tips: [1, "#FF5722"],
             tipsMore: !1,
             time: 1300
@@ -242,7 +242,7 @@ function submitregister() {
     object["username"] = nickname;
     object["mobilephone"] = phone;
     object["password"] = password2;
-    object["vercode"] = phonevercode;
+    // object["vercode"] = phonevercode;
     object["email"] = useremail;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
     $.ajax({
@@ -253,7 +253,7 @@ function submitregister() {
         dataType: "json", //回调
         beforeSend: function () {
             layer.load(1, { //icon支持传入0-2
-                content: '注册中...',
+                content: 'registering...',
                 success: function (layero) {
                     layero.find('.layui-layer-content').css({
                         'padding-top': '39px',
@@ -280,7 +280,7 @@ function submitregister() {
                 }, function () {
                     layer.open({
                         type: 2,
-                        title: '完善信息',
+                        title: 'Complete information',
                         shadeClose: true,
                         shade: 0.8,
                         maxmin: true,
@@ -295,7 +295,7 @@ function submitregister() {
             $("#submitrg").removeClass("layui-btn-disabled");
             $("#submitrg").attr("disabled", false);
         },error:function () {
-            layer.msg("系统错误", {
+            layer.msg("Error", {
                 time: 1000,
                 icon: 2,
                 offset: '100px'
@@ -337,7 +337,7 @@ function getphonecode() {
         dataType: "json", //回调
         beforeSend: function () {
             layer.load(1, { //icon支持传入0-2
-                content: '发送中...',
+                content: 'sending...',
                 success: function (layero) {
                     layero.find('.layui-layer-content').css({
                         'padding-top': '39px',
@@ -371,7 +371,7 @@ function getphonecode() {
                 });
             }
         },error:function () {
-            layer.msg("系统错误", {
+            layer.msg("error", {
                 time: 1000,
                 icon: 2,
                 offset: '100px'
@@ -383,7 +383,7 @@ function getphonecode() {
 function timers() {
     if (time == 0) {
         window.clearInterval(p_timer);
-        $("#LAY-user-getsmscode").html("获取验证码");
+        $("#LAY-user-getsmscode").html("get code");
         $("#LAY-user-getsmscode").removeClass("layui-btn-disabled");
         $("#LAY-user-getsmscode").attr("disabled", false);
         Cookies.remove('times', {path: logregurl});
@@ -392,7 +392,7 @@ function timers() {
         time = time - 1;
         $("#LAY-user-getsmscode").addClass("layui-btn-disabled");
         $("#LAY-user-getsmscode").attr("disabled", true);
-        $("#LAY-user-getsmscode").html(time+"s后可重新发送");
+        $("#LAY-user-getsmscode").html(time+"s latte send");
         Cookies.remove('times', {path: logregurl});
         Cookies.set('times', time, {path: logregurl});
     }

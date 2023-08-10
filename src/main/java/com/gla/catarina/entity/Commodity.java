@@ -71,7 +71,7 @@ public class Commodity implements Serializable {
      */
     private Integer commstatus;
     /**
-     * 常用选项：自提，可小刀，不议价等选项
+     * 常用选项：自提，Bargaining，No bargaining等选项
      */
     private String common;
     /**
@@ -79,7 +79,7 @@ public class Commodity implements Serializable {
      * */
     private String common2;
     /**
-     * 商品其他图集合
+     * 商品Other图集合
      * */
     private List<String> otherimg;
 

@@ -198,9 +198,9 @@ public class LoginController {
         String password = login.getPassword();
         String vercode = login.getVercode();
         UsernamePasswordToken token;
-        if (!ValidateCode.code.equalsIgnoreCase(vercode)) {
+       /* if (!ValidateCode.code.equalsIgnoreCase(vercode)) {
             return new ResultVo(false, StatusCode.ERROR, "请输入正确的验证码");
-        }
+        }*/
         //判断输入的账号是否邮箱
         if (Validator.isEmail(account)) {
             //输入的是邮箱
@@ -234,12 +234,12 @@ public class LoginController {
             Login login1 = ILoginService.userLogin(login);
             session.setAttribute("userid", login1.getUserid());
             session.setAttribute("username", login1.getUsername());
-            return new ResultVo(true, StatusCode.OK, "登录成功");
+            return new ResultVo(true, StatusCode.OK, "Login success");
         } catch (UnknownAccountException e) {
-            log.error("用户名不存在", e);
-            return new ResultVo(true, StatusCode.LOGINERROR, "用户名不存在");
+            log.error("No account", e);
+            return new ResultVo(true, StatusCode.LOGINERROR, "No account");
         } catch (IncorrectCredentialsException e) {
-            return new ResultVo(true, StatusCode.LOGINERROR, "密码错误");
+            return new ResultVo(true, StatusCode.LOGINERROR, "Error password");
         }
     }
 
@@ -270,7 +270,7 @@ public class LoginController {
             return new ResultVo(false, StatusCode.LOGINERROR, "该用户不存在");
         }
         String code = EmailUtils.phonecode();
-        Integer result = new SmsUtil().SendMsg(mobilephone, code, type);//发送验证码
+        Integer result = EmailUtils.SendMsg(mobilephone, code, type);//发送验证码
         if (result == 1) {//发送成功
             phonecodemap2.put(mobilephone, code);//放入map集合进行对比
 

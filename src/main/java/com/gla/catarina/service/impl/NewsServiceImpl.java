@@ -84,9 +84,9 @@ public class NewsServiceImpl implements INewsService {
         news.setId(KeyUtil.genUniqueKey()).setUsername(username);
         Integer i = this.insertNews(news);
         if (i == 1){
-            return new ResultVo(true, StatusCode.OK,"公告发布成功");
+            return new ResultVo(true, StatusCode.OK,"Success");
         }
-        return new ResultVo(false,StatusCode.ERROR,"公告发布失败，请重新发布");
+        return new ResultVo(false,StatusCode.ERROR,"Error");
     }
 
     @Override
@@ -94,17 +94,17 @@ public class NewsServiceImpl implements INewsService {
         String username = (String) session.getAttribute("username");
         News news = this.queryNewsById(id);
         if (StringUtils.isEmpty(news)){
-            return new ResultVo(false,StatusCode.FINDERROR,"找不到要删除的公告");
+            return new ResultVo(false,StatusCode.FINDERROR,"Not find notice");
         }else {
             /**判断是否是本人或超级管理员*/
             if (news.getUsername().equals(username) || username.equals("admin")){
                 Integer i = this.delectNews(id);
                 if (i == 1){
-                    return new ResultVo(true,StatusCode.OK,"删除成功");
+                    return new ResultVo(true,StatusCode.OK,"success");
                 }
-                return new ResultVo(false,StatusCode.ERROR,"删除失败");
+                return new ResultVo(false,StatusCode.ERROR,"error");
             }else {
-                return new ResultVo(false,StatusCode.ACCESSERROR,"权限不足，无法删除");
+                return new ResultVo(false,StatusCode.ACCESSERROR,"error");
             }
         }
     }

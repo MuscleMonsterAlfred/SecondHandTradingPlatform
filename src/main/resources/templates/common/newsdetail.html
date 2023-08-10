@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>公告详情</title>
+    <title>Notice detail</title>
     <!-- Fonts-->
     <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
     <link rel="stylesheet" th:href="@{/static/plugins/font-awesome/css/font-awesome.min.css}">
@@ -14,7 +14,7 @@
 <body>
 <h1 th:text="${news.newstitle}" style="text-align: center;margin-top:10px"></h1>
 <h3 style="text-align: center;line-height:40px"
-    th:text="'发布时间：'+${#dates.format(news.createtime,'yyyy-MM-dd')}+'&nbsp;&nbsp;发布者：网站管理员&nbsp;&nbsp;阅读数：'+${news.rednumber}"></h3>
+    th:text="'Release time：'+${#dates.format(news.createtime,'yyyy-MM-dd')}+'&nbsp;&nbsp;&nbsp;&nbsp;Reading count：'+${news.rednumber}"></h3>
 <div style="margin:10px 30px 0px 30px;font-size:20px" th:utext="${news.newscontent}">
 </div>
 </body>

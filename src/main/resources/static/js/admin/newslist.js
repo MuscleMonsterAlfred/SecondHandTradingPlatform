@@ -10,11 +10,11 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
             , limit: 20
         }, cols: [[
             {field: 'qid', title: 'ID',width:60, align:'center'}
-            , {field: 'newstitle', title: '公告标题', width: 190, align:'center'}
-            , {field: 'newsdesc', title: '公告简介', width: 580, align:'center'}
-            , {field: 'username', title: '发布者', width: 100, align:'center'}
-            , {field: 'createtime', title: '发布时间', width: 160, align:'center'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:200, align:'center'}
+            , {field: 'newstitle', title: 'Title', width: 190, align:'center'}
+            , {field: 'newsdesc', title: 'Introduction', width: 580, align:'center'}
+            , {field: 'username', title: 'Publisher', width: 100, align:'center'}
+            , {field: 'createtime', title: 'Date', width: 160, align:'center'}
+            , {fixed: 'right', title: 'Opera', toolbar: '#barDemo', width:250, align:'center'}
         ]]
         ,height: 500
         , done: function (res, curr, count) {
@@ -34,7 +34,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
         if (obj.event === 'xiangqing') {
             layer.open({
                 type: 2,
-                title: '公告详情',
+                title: 'Detail',
                 shadeClose: true,
                 shade: 0.8,
                 maxmin: true,
@@ -44,7 +44,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
         }else if (obj.event === 'bianji') {
             layer.open({
                 type: 2,
-                title: '修改公告',
+                title: 'Edit',
                 shadeClose: true,
                 shade: 0.8,
                 maxmin: true,
@@ -55,9 +55,9 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
                 }
             });
         }else if(obj.event === 'shanchu'){
-            layer.confirm('确认删除公告吗？', {
-                btn: ['确定','算了'], //按钮
-                title:"删除公告",
+            layer.confirm('Confirm delete？', {
+                btn: ['Yes','No'], //按钮
+                title:"",
                 offset:"50px"
             }, function(){
                 layer.closeAll();
@@ -69,7 +69,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
                     dataType: "json", //回调
                     beforeSend: function () {
                         layer.load(1, { //icon支持传入0-2
-                            content: '请稍等...',
+                            content: 'loading...',
                             success: function (layero) {
                                 layero.find('.layui-layer-content').css({
                                     'padding-top': '39px',

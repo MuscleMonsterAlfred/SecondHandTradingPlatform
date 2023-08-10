@@ -9,24 +9,24 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
             , limits: [20, 50, 100]
             , limit: 20
         }, cols: [[
-            {field: 'ordernumber', title: '订单编号',width:180, align:'center'}
-            , {field: 'commname', title: '名称', width: 280, align:'center'}
-            , {field: 'price', title: '售价', width: 90, align:'center'}
-            , {field: 'username', title: '收货人', width: 90, align:'center'}
-            , {field: 'mobilephone', title: '收货人手机号', width: 150, align:'center'}
-            , {field: 'kdstatus', title: '发货状态', width: 90, align:'center'}
-            , {field: 'kdnumber', title: '快递编号', width: 90, align:'center'}
-            , {field: 'ordertime', title: '售出时间', width: 160, sort: true, align:'center'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:160, align:'center'}
+            {field: 'ordernumber', title: 'Order no',width:180, align:'center'}
+            , {field: 'commname', title: 'Product name', width: 280, align:'center'}
+            , {field: 'price', title: 'Price', width: 90, align:'center'}
+            , {field: 'username', title: 'Consignee', width: 150, align:'center'}
+            , {field: 'mobilephone', title: 'Consignee mobile', width: 150, align:'center'}
+            , {field: 'kdstatus', title: 'Shipment status', width: 150, align:'center'}
+            , {field: 'kdnumber', title: 'Delivery number', width: 150, align:'center'}
+            , {field: 'ordertime', title: 'Sold time', width: 160, sort: true, align:'center'}
+            , {fixed: 'right', title: 'Opera', toolbar: '#barDemo', width:260, align:'center'}
         ]]
         , done: function (res, curr, count) {
             $("[data-field='kdstatus']").children().each(function () {
                 if($(this).text() == '0') {
-                    $(this).text("待发货")
+                    $(this).text("To be shipped")
                 }else if($(this).text() == '1'){
-                    $(this).text("已发货")
+                    $(this).text("Shipped")
                 }else if($(this).text() == '2'){
-                    $(this).text("已确认收货")
+                    $(this).text("Confirm receipt")
                 }
             });
         }
@@ -38,9 +38,9 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
         if (obj.event === 'xiangqing') {
             window.open(basePath+"/product-detail/"+data.commid)
         }else if(obj.event === 'shouhuo'){
-            layer.confirm('是否确定收货？', {
-                btn: ['确定','否'], //按钮
-                title:"确认收货",
+            layer.confirm('Are you sure to receive the goods？', {
+                btn: ['Yes','No'], //按钮
+                title:"Confirm",
                 offset:"50px"
             }, function(){
                 layer.closeAll();
@@ -52,7 +52,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
                     dataType: "json", //回调
                     beforeSend: function () {
                         layer.load(1, { //icon支持传入0-2
-                            content: '请稍等...',
+                            content: 'loading...',
                             success: function (layero) {
                                 layero.find('.layui-layer-content').css({
                                     'padding-top': '39px',

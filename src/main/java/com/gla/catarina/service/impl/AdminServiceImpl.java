@@ -39,11 +39,7 @@ public class AdminServiceImpl implements IAdminService {
     public ResultVo adminlogin(Login login, HttpSession session) {
         String account = login.getUsername();
         String password = login.getPassword();
-        String vercode = login.getVercode();
         UsernamePasswordToken token;
-        if (!ValidateCode.code.equalsIgnoreCase(vercode)) {
-            return new ResultVo(false, StatusCode.ERROR, "请输入正确的验证码");
-        }
         //判断输入的账号是否手机号
         if (!EmailUtils.justPhone(account)) {
             //输入的是用户名
@@ -75,13 +71,13 @@ public class AdminServiceImpl implements IAdminService {
                 System.out.println("userid：" + login1.getId());
                 System.out.println("admin：" + login1.getUsername());
                 System.out.println("username：" + login1.getUsername());
-                return new ResultVo(true, StatusCode.OK, "登录成功");
+                return new ResultVo(true, StatusCode.OK, "Login success");
             }
-            return new ResultVo(true, StatusCode.ACCESSERROR, "权限不足");
+            return new ResultVo(true, StatusCode.ACCESSERROR, "No Perm");
         } catch (UnknownAccountException e) {
-            return new ResultVo(true, StatusCode.LOGINERROR, "用户名不存在");
+            return new ResultVo(true, StatusCode.LOGINERROR, "No account");
         } catch (IncorrectCredentialsException e) {
-            return new ResultVo(true, StatusCode.LOGINERROR, "密码错误");
+            return new ResultVo(true, StatusCode.LOGINERROR, "Error password");
         }
     }
 
@@ -98,26 +94,18 @@ public class AdminServiceImpl implements IAdminService {
             Integer i = ILoginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
             if (i == 1) {
                 IUserRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(2).setIdentity("网站管理员"));
-                /**发出设置为管理员的系统通知*/
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
-                        .setWhys("恭喜您已被设置为网站管理员，努力维护网站的良好氛围。");
-                INoticesService.insertNotices(notices);
-                return new ResultVo(true, StatusCode.OK, "设置管理员成功");
+                return new ResultVo(true, StatusCode.OK, "success");
             }
-            return new ResultVo(true, StatusCode.ERROR, "设置管理员失败");
+            return new ResultVo(true, StatusCode.ERROR, "error");
         } else if (roleid == 1) {
             Integer i = ILoginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
             if (i == 1) {
                 IUserRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(1).setIdentity("网站用户"));
-                /**发出设置为网站用户的系统通知*/
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
-                        .setWhys("您已被设置为网站用户，希望您再接再厉。");
-                INoticesService.insertNotices(notices);
-                return new ResultVo(true, StatusCode.OK, "设置成员成功");
+                return new ResultVo(true, StatusCode.OK, "success");
             }
-            return new ResultVo(true, StatusCode.ERROR, "设置成员失败");
+            return new ResultVo(true, StatusCode.ERROR, "error");
         }
-        return new ResultVo(false, StatusCode.ACCESSERROR, "违规操作");
+        return new ResultVo(false, StatusCode.ACCESSERROR, "error");
     }
 
     @Override
@@ -126,26 +114,18 @@ public class AdminServiceImpl implements IAdminService {
             Integer i = ILoginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
             Integer j = IUserInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
             if (i == 1 && j == 1) {
-                /**发出封号的系统通知*/
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
-                        .setWhys("因为您的不良行为，您在该网站的账号已被封号。");
-                INoticesService.insertNotices(notices);
-                return new ResultVo(true, StatusCode.OK, "封号成功");
+                return new ResultVo(true, StatusCode.OK, "success");
             }
-            return new ResultVo(true, StatusCode.ERROR, "封号失败");
+            return new ResultVo(true, StatusCode.ERROR, "error");
         } else if (userstatus == 1) {
             Integer i = ILoginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
             Integer j = IUserInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
             if (i == 1 && j == 1) {
-                /**发出解封的系统通知*/
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
-                        .setWhys("您在该网站的账号已被解封，希望您保持良好的行为。");
-                INoticesService.insertNotices(notices);
-                return new ResultVo(true, StatusCode.OK, "解封成功");
+                return new ResultVo(true, StatusCode.OK, "success");
             }
-            return new ResultVo(true, StatusCode.ERROR, "解封失败");
+            return new ResultVo(true, StatusCode.ERROR, "error");
         }
-        return new ResultVo(false, StatusCode.ACCESSERROR, "违规操作");
+        return new ResultVo(false, StatusCode.ACCESSERROR, "error");
     }
 
 
@@ -166,20 +146,20 @@ public class AdminServiceImpl implements IAdminService {
     public ResultVo changeCommstatus(String commid, Integer commstatus) {
         Integer i = ICommodityService.ChangeCommstatus(commid, commstatus);
         if (i == 1) {
-            /**发出商品审核结果的系统通知*/
+            /**发出Wait Approve结果的系统通知*/
             Commodity commodity = ICommodityService.LookCommodity(new Commodity().setCommid(commid));
             if (commstatus == 0) {
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(commodity.getUserid()).setTpname("商品审核")
-                        .setWhys("您的商品 <a href=/product-detail/" + commodity.getCommid() + " style=\"color:#08bf91\" target=\"_blank\" >" + commodity.getCommname() + "</a> 未通过审核，目前不支持公开发布。");
+                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(commodity.getUserid()).setTpname("Wait Approve")
+                        .setWhys("Your product has not been approved and currently does not support public release <a href=/product-detail/" + commodity.getCommid() + " style=\"color:#08bf91\" target=\"_blank\" >" + commodity.getCommname() + "</a> ");
                 INoticesService.insertNotices(notices);
             } else if (commstatus == 1) {
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(commodity.getUserid()).setTpname("商品审核")
-                        .setWhys("您的商品 <a href=/product-detail/" + commodity.getCommid() + " style=\"color:#08bf91\" target=\"_blank\" >" + commodity.getCommname() + "</a> 已通过审核，快去看看吧。");
+                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(commodity.getUserid()).setTpname("Wait Approve")
+                        .setWhys("Your product has been approved, go and take a look now <a href=/product-detail/" + commodity.getCommid() + " style=\"color:#08bf91\" target=\"_blank\" >" + commodity.getCommname() + "</a> ");
                 INoticesService.insertNotices(notices);
             }
-            return new ResultVo(true, StatusCode.OK, "操作成功");
+            return new ResultVo(true, StatusCode.OK, "success");
         }
-        return new ResultVo(false, StatusCode.ERROR, "操作失败");
+        return new ResultVo(false, StatusCode.ERROR, "error");
     }
 
 }

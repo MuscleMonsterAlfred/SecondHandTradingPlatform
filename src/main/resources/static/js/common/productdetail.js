@@ -215,7 +215,7 @@ layui.use(['form', 'util','layer','carousel'], function () {
 });
 function submitbuy() {
     if(userid==null){
-        layer.msg("请登录", {
+        layer.msg("Login", {
             time: 1000,
             icon: 2,
             offset: '300px'
@@ -234,7 +234,7 @@ function submitbuy() {
 }
 function ganxingqu() {
     if(userid==null){
-        layer.msg("请登录", {
+        layer.msg("Login", {
             time: 1000,
             icon: 2,
             offset: '300px'

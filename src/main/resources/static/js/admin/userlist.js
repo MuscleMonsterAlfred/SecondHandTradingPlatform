@@ -18,17 +18,17 @@ function lookalluser(stuatus) {
                 , limits: [20, 50, 100]
                 , limit: 20
             }, cols: [[
-                {field: 'uimage', title: '头像', templet: '<div><img src="{{d.uimage}}" class="layui-nav-img"></div>',width:70}
-                , {field: 'username', title: '昵称', width: 120, align:'center'}
-                , {field: 'mobilephone', title: '手机号', width: 160, align:'center'}
-                , {field: 'email', title: '邮箱', width: 200, align:'center'}
-                , {field: 'sex', title: '性别', width: 80, align:'center'}
-                , {field: 'school', title: '学校', width: 200, align:'center'}
-                , {field: 'faculty', title: '院系', width: 160, align:'center'}
-                , {field: 'roleid', title: '身份', width: 100, align:'center'}
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:300, align:'center'}
+                {field: 'uimage', title: 'Avatar', templet: '<div><img src="{{d.uimage}}" class="layui-nav-img"></div>',width:170}
+                , {field: 'username', title: 'Nick name', width: 120, align:'center'}
+                , {field: 'mobilephone', title: 'Mobile', width: 160, align:'center'}
+                , {field: 'email', title: 'Email', width: 200, align:'center'}
+                , {field: 'sex', title: 'Sex', width: 80, align:'center'}
+                , {field: 'school', title: 'University', width: 200, align:'center'}
+                , {field: 'faculty', title: 'College', width: 160, align:'center'}
+               /* , {field: 'roleid', title: 'Role', width: 100, align:'center'}*/
+                , {fixed: 'right', title: 'Opera', toolbar: '#barDemo', width:300, align:'center'}
             ]], done: function (res, curr, count) {
-                $("[data-field='roleid']").children().each(function () {
+                /*$("[data-field='roleid']").children().each(function () {
                     if($(this).text() == '身份') {
                         $(this).text("身份")
                     }else if($(this).text()==1){
@@ -36,7 +36,7 @@ function lookalluser(stuatus) {
                     }else if($(this).text()==2){
                         $(this).text("管理员")
                     }
-                });
+                });*/
             }
             ,height: 500
         });
@@ -142,9 +142,9 @@ function lookalluser(stuatus) {
                 }, function(){
                 });
             }else if (obj.event === 'setadmin') {
-                layer.confirm('确认设置为管理员吗？', {
-                    btn: ['确定','算了'], //按钮
-                    title:"设置管理员",
+                layer.confirm('Confirm manager？', {
+                    btn: ['Yes','No'], //按钮
+                    title:"",
                     offset:"50px"
                 }, function(){
                     layer.closeAll();
@@ -156,7 +156,7 @@ function lookalluser(stuatus) {
                         dataType: "json", //回调
                         beforeSend: function () {
                             layer.load(1, { //icon支持传入0-2
-                                content: '请稍等...',
+                                content: 'loading...',
                                 success: function (layero) {
                                     layero.find('.layui-layer-content').css({
                                         'padding-top': '39px',
