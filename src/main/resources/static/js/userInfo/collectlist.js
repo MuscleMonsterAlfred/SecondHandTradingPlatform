@@ -2,7 +2,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
     var table = layui.table;
     table.render({
         elem: '#collect'
-        , url: basePath+'/user/collect/queryall'
+        , url: basePath+'/user/collect/queryAll'
         , page: {
             layout: ['limit', 'count', 'prev', 'page', 'next', 'skip']
             , groups: 3
@@ -42,7 +42,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
                 shade: 0.8,
                 maxmin: true,
                 area: ['80%', '80%'],
-                content: basePath+'/user/editgoods/'+data.commid
+                content: basePath+'/user/editPre/'+data.commid
             });
         }else if(obj.event === 'quxiaoshoucang'){
             layer.confirm('Confirm cancel？', {

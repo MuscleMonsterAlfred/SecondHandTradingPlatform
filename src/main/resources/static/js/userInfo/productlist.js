@@ -51,7 +51,7 @@ function lookallproduct(stuatus) {
                     shade: 0.8,
                     maxmin: true,
                     area: ['80%', '80%'],
-                    content: basePath+'/user/editgoods/'+data.commid,
+                    content: basePath+'/user/editPre/'+data.commid,
                     end: function () {
                         location.reload();
                     }

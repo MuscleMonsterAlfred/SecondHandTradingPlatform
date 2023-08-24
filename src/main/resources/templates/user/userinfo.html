@@ -49,9 +49,31 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">School</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="school" lay-verify="school" autocomplete="off"
+                                <select name="school" >
+                                    <option th:title="UniversityofCambridge" th:selected="${userInfo.school == 'UniversityofCambridge'}">University of Cambridge</option>
+                                    <option th:title="UniversityofOxford" th:selected="${userInfo.school == 'UniversityofOxford'}">University of Oxford</option>
+                                    <option th:title="ImperialCollegeLondon" th:selected="${userInfo.school == 'ImperialCollegeLondon'}">Imperial College London</option>
+                                    <option th:title="UniversityCollegeLondon" th:selected="${userInfo.school == 'UniversityCollegeLondon'}">University College London(UCL)</option>
+                                    <option th:title="TheUniversityOfEdinburgh" th:selected="${userInfo.school == 'TheUniversityOfEdinburgh'}">The University of Edinburgh</option>
+                                    <option th:title="TheUniversityOfManchester" th:selected="${userInfo.school == 'TheUniversityOfManchester'}">The University of Manchester</option>
+                                    <option th:title="KingsCollegeLondon" th:selected="${userInfo.school == 'KingsCollegeLondon'}">King’s College London</option>
+                                    <option th:title="LondonSchoolOfEconomicsPoliticalScience" th:selected="${userInfo.school == 'LondonSchoolOfEconomicsPoliticalScience'}">London School of Economics and Political Science</option>
+                                    <option th:title="UniversityOfBristol" th:selected="${userInfo.school == 'UniversityOfBristol'}">University of Bristol</option>
+                                    <option th:title="UniversityOfWarwick" th:selected="${userInfo.school == 'UniversityOfWarwick'}">University of Warwick</option>
+                                    <option th:title="UniversityOfSouthampton" th:selected="${userInfo.school == 'UniversityOfSouthampton'}">University of Southampton</option>
+                                    <option th:title="UniversityOfGlasgow" th:selected="${userInfo.school == 'UniversityOfGlasgow'}">University of Glasgow</option>
+                                    <option th:title="UniversityOfLeeds" th:selected="${userInfo.school == 'UniversityOfLeeds'}">University of Leeds</option>
+                                    <option th:title="UniversityOfBirmingham" th:selected="${userInfo.school == 'UniversityOfBirmingham'}">University of Birmingham</option>
+                                    <option th:title="DurhamUniversity" th:selected="${userInfo.school == 'DurhamUniversity'}">Durham University</option>
+                                    <option th:title="TheUniversityOfSheffield" th:selected="${userInfo.school == 'TheUniversityOfSheffield'}">The University of Sheffield</option>
+                                    <option th:title="UniversityOfStAndrews" th:selected="${userInfo.school == 'UniversityOfStAndrews'}">University of St Andrews</option>
+                                    <option th:title="UniversityOfNottingham" th:selected="${userInfo.school == 'UniversityOfNottingham'}">University of Nottingham</option>
+                                    <option th:title="NewcastleUniversity" th:selected="${userInfo.school == 'NewcastleUniversity'}">Newcastle University</option>
+                                </select>
+
+                                <!--<input type="text" name="school" lay-verify="school" autocomplete="off"
                                        placeholder="" class="layui-input" th:value="${userInfo.school}"
-                                       style="cursor:not-allowed;" readonly="readonly">
+                                       style="cursor:not-allowed;" readonly="readonly">-->
                             </div>
                         </div>
                         <div class="layui-form-item">

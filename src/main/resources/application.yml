@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: Appnew123456!
-    url: jdbc:mysql://121.40.236.164:3306/shop?allowMultiQueries=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://121.40.236.164:3306/yt_test?allowMultiQueries=true&characterEncoding=utf-8&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
     #指定数据源
     type: com.alibaba.druid.pool.DruidDataSource
@@ -59,20 +59,20 @@ spring:
       mail.smtp.socketFactory.port: 465
       mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
       mail.smtp.socketFactory.fallback: false
-#配置文件式开发
+
+mybatis-plus:
+  #所有sql映射配置文件的位置
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
 mybatis:
   #全局配置文件的位置
   config-location: classpath:mybatis/mybatis-config.xml
-  #所有sql映射配置文件的位置
-  mapper-locations: classpath:mybatis/mapper/**/*.xml
   #开启MyBatis的二级缓存
   mybatis.configuration.cache-enabled: true
 
 #控制台看到执行的SQL语句
 logging:
   level:
-    com:
-      mapper: debug
+    com.gla.catarina.mapper: debug
 
 server:
   port: 80

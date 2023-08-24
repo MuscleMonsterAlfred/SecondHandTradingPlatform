@@ -10,7 +10,7 @@
     <title></title>
     <script th:inline="javascript">
         let basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
-        let mainimgs=[[${news.image}]];
+        let mainimgs=[[${shopNews.image}]];
         let qxs=[[${qx}]];
     </script>
 </head>
@@ -19,28 +19,28 @@
 <form  class="layui-form" id="updatenews" style="margin-top: 10px">
     <div class="layui-form-item" style="display: none">
         <div class="layui-input-block">
-            <input type="text" name="id" class="layui-input" th:value="${news.id}">
+            <input type="text" name="id" class="layui-input" th:value="${shopNews.id}">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>Title</label>
         <div class="layui-input-block">
             <input type="text" name="newstitle" lay-verify="required" autocomplete="off" placeholder="Title"
-                   class="layui-input" th:value="${news.newstitle}">
+                   class="layui-input" th:value="${shopNews.newstitle}">
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label"><span style="color: red">*</span>Introduction</label>
         <div class="layui-input-block">
             <textarea placeholder="Introduction" name="newsdesc" lay-verify="required" autocomplete="off"
-                      class="layui-textarea" th:text="${news.newsdesc}"></textarea>
+                      class="layui-textarea" th:text="${shopNews.newsdesc}"></textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label"><span style="color: red">*</span>Content</label>
         <div class="layui-input-block">
             <textarea class="layui-textarea layui-hide" id="newscontents"
-                      name="newscontent" placeholder="Content" th:text="${news.newscontent}"></textarea>
+                      name="newscontent" placeholder="Content" th:text="${shopNews.newscontent}"></textarea>
         </div>
     </div>
     <div class="layui-form-item">

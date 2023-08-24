@@ -166,6 +166,13 @@ layui.use(['form', 'util','layer','carousel'], function () {
     layui.$('#openPositionBtn').on('click', function(e){
         var goodpositionStr = $(e.target).attr('goodposition');
         if(undefined != goodpositionStr){
+            layer.open({
+                type: 1,
+                title:"Good location",
+                area: ['920px', '620px'],
+                content: $('#map') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            });
+
             // 创建地图
             var goodposition = JSON.parse(goodpositionStr);
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -204,11 +211,7 @@ layui.use(['form', 'util','layer','carousel'], function () {
                 });
             }*/
 
-            layer.open({
-                type: 1,
-                area: ['920px', '620px'],
-                content: $('#map') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-            });
+
         }
     });
 
@@ -223,7 +226,7 @@ function submitbuy() {
     }else{
         layer.open({
             type: 2,
-            title: '填写收件地址',
+            title: 'Input address',
             shadeClose: true,
             shade: 0.8,
             area: ['40%', '40%'],

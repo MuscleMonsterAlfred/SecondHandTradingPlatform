@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gla.catarina.mapper.ShopCommodityMapper">
+
+
+    <!-- 通过商品名分页模糊查询 -->
+    <select id="pageByName" resultType="com.gla.catarina.entity.ShopCommodity">
+        select *
+        from shop_commodity
+        where commname like #{cName} and commstatus=1
+        order by
+        updatetime desc
+        LIMIT #{current},#{pageSize}
+    </select>
+
+    <!-- 分页展示各类状态的商品信息 -->
+    <select id="listByUserStatus" resultType="com.gla.catarina.entity.ShopCommodity">
+        select commid,commname,commdesc,updatetime,category,commstatus
+        from shop_commodity
+        <where>
+            <if test="commstatus != null">and commstatus = #{commstatus}</if>
+            <if test="userid != null">and userid = #{userid}</if>
+        </where>
+        order by updatetime desc limit #{page},#{count}
+    </select>
+
+    <!-- 首页分类展示8条商品 -->
+    <select id="listByCategory" resultType="com.gla.catarina.entity.ShopCommodity">
+        select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
+        from shop_commodity
+        <where>
+            <if test="category != 'All'">and category = #{category}</if>
+            and commstatus=1
+        </where>
+            order by updatetime desc limit 0,8
+    </select>
+
+</mapper>

@@ -86,5 +86,8 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
             }, function(){
             });
         }
+        else if(obj.event === 'toPay'){
+            window.open(basePath+"/shop/preorder/"+data.ordernumber)
+        }
     });
 });

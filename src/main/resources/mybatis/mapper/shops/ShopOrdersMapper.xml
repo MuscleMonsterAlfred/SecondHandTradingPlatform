@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gla.catarina.mapper.ShopOrdersMapper">
+
+
+
+    <!--分页展示订单记录-->
+    <select id="listOrder" resultType="com.gla.catarina.entity.ShopOrders">
+
+        select *
+        from shop_orders
+        <where>
+            <if test="buyuserid != null">and buyuserid = #{buyuserid}</if>
+            and orderstatus &lt; 2
+        </where>
+        order by ordertime desc limit #{page},#{count}
+    </select>
+    <!--查看售出订单总数-->
+    <select id="countByUserId" resultType="java.lang.Integer">
+        select count(*) from shop_orders
+        <where>
+            <if test="buyuserid != null">and buyuserid = #{buyuserid}</if>
+            and orderstatus=1
+        </where>
+    </select>
+
+    <!--分页展示售出记录-->
+    <select id="listAllSell" resultType="com.gla.catarina.entity.ShopOrders">
+        select ordernumber,commid,commname,commdesc,price,kdstatus,ordertime from shop_orders
+        <where>
+            <if test="selluserid != null">and selluserid = #{selluserid}</if>
+            and orderstatus=1
+        </where>
+        order by ordertime desc limit #{page},#{count}
+    </select>
+    <!--查看售出记录总数-->
+    <select id="countAllSell" resultType="java.lang.Integer">
+        select count(*) from shop_orders
+        <where>
+            <if test="selluserid != null">and selluserid = #{selluserid}</if>
+            and orderstatus=1
+        </where>
+    </select>
+
+</mapper>

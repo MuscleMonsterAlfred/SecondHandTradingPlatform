@@ -54,24 +54,48 @@
         <div class="form sign-up" id="registers" style="margin-top:-25px">
             <h2>Register</h2>
             <label>
-                <span>Eamil</span>
-                <input type="email" autocomplete="off" placeholder="email" id="useremail" onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
+                <span>Email</span>
+                <input type="email" autocomplete="off" placeholder="Email ends with .ac.uk" id="useremail" onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
             </label>
             <label>
                 <span>Mobile</span><!-- @blur="jiantingphone()"/>-->
-                <input type="text" autocomplete="off" placeholder="account" id="userphone" onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
+                <input type="text" autocomplete="off" placeholder="" id="userphone" onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
             </label>
             <label>
-                <span>Nick Name</span>
-                <input type="text" autocomplete="off" placeholder="nick name" id="nickname"/>
+                <span>User Name</span>
+                <input type="text" autocomplete="off" placeholder="" id="nickname"/>
             </label>
             <label>
-                <span>Passeord</span>
-                <input type="password" autocomplete="off" placeholder="password" id="password2" onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
+                <span>Password</span>
+                <input type="password" autocomplete="off" placeholder="" id="password2" onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
             </label>
+            <label class="layui-form-label" style="font-size:25px;color:#626262"><b>School</b></label>
+            <div class="layui-input-inline">
+                <select name="school" id="school">
+                    <option th:title="UniversityofCambridge">University of Cambridge</option>
+                    <option th:title="UniversityofOxford">University of Oxford</option>
+                    <option th:title="ImperialCollegeLondon">Imperial College London</option>
+                    <option th:title="UniversityCollegeLondon">University College London(UCL)</option>
+                    <option th:title="TheUniversityOfEdinburgh">The University of Edinburgh</option>
+                    <option th:title="TheUniversityOfManchester">The University of Manchester</option>
+                    <option th:title="KingsCollegeLondon">King’s College London</option>
+                    <option th:title="LondonSchoolOfEconomicsPoliticalScience">London School of Economics and Political Science</option>
+                    <option th:title="UniversityOfBristol">University of Bristol</option>
+                    <option th:title="UniversityOfWarwick">University of Warwick</option>
+                    <option th:title="UniversityOfSouthampton">University of Southampton</option>
+                    <option th:title="UniversityOfGlasgow">University of Glasgow</option>
+                    <option th:title="UniversityOfLeeds">University of Leeds</option>
+                    <option th:title="UniversityOfBirmingham">University of Birmingham</option>
+                    <option th:title="DurhamUniversity">Durham University</option>
+                    <option th:title="TheUniversityOfSheffield">The University of Sheffield</option>
+                    <option th:title="UniversityOfStAndrews">University of St Andrews</option>
+                    <option th:title="UniversityOfNottingham">University of Nottingham</option>
+                    <option th:title="NewcastleUniversity">Newcastle University</option>
+                </select>
+            </div>
             <label>
                 <span>Code</span>
-                <input type="text" autocomplete="off" placeholder="code" id="phonevercode"  onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
+                <input type="text" autocomplete="off" placeholder="" id="phonevercode"  onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
             </label>
             <label>
                 <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid " id="LAY-user-getsmscode"

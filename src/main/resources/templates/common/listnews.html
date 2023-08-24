@@ -67,14 +67,14 @@
             </div>
             <div class="ps-section__content">
                 <div class="row" style="display: none" id="newscontent">
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" v-for="news in newslistdata" :key="news.id">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" v-for="shopNews in newslistdata" :key="shopNews.id">
                         <div class="ps-post">
-                            <div class="ps-post__thumbnail"><a class="ps-post__overlay" style="cursor: pointer" @click="showNewsDetail(news.id)"></a>
-                                <img :src="news.image" alt=""></div>
-                            <div class="ps-post__content"><a class="ps-post__title" href="#">{{news.newstitle}}</a>
+                            <div class="ps-post__thumbnail"><a class="ps-post__overlay" style="cursor: pointer" @click="showNewsDetail(shopNews.id)"></a>
+                                <img :src="shopNews.image" alt=""></div>
+                            <div class="ps-post__content"><a class="ps-post__title" href="#">{{shopNews.newstitle}}</a>
                                 <p class="ps-post__meta"><span>By:<a class="mr-5" href="#">网站管理员</a></span>
-                                    -<span class="ml-5">{{news.createtime}}</span></p>
-                                <p>{{news.newsdesc}}</p><a class="ps-morelink" style="cursor: pointer" @click="showNewsDetail(news.id)">阅读全文<i
+                                    -<span class="ml-5">{{shopNews.createtime}}</span></p>
+                                <p>{{shopNews.newsdesc}}</p><a class="ps-morelink" style="cursor: pointer" @click="showNewsDetail(shopNews.id)">阅读全文<i
                                         class="fa fa-long-arrow-right"></i></a>
                             </div>
                         </div>

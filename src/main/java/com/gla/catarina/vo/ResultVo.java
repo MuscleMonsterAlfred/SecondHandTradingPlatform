@@ -1,12 +1,14 @@
 package com.gla.catarina.vo;
 
+import com.gla.catarina.util.StatusCode;
+
 public class ResultVo {
     private boolean flag;   //是否成功
     private Integer status; //状态码
     private String message; //返回信息
     private Object data;    //返回数据
 
-    public ResultVo(){
+    public ResultVo() {
         super();
     }
 
@@ -21,6 +23,38 @@ public class ResultVo {
         this.flag = flag;
         this.status = status;
         this.message = message;
+    }
+
+    public static ResultVo ok() {
+        return res(true, StatusCode.OK, "Success", null);
+    }
+
+    public static ResultVo error() {
+        return res(false, StatusCode.ERROR, "Fail", null);
+    }
+
+    public static ResultVo ok(Object data) {
+        return res(true, StatusCode.OK, null, data);
+    }
+    public static ResultVo okData(Object data) {
+        return res(true, StatusCode.OK, null, data);
+    }
+
+    public static ResultVo ok(String message) {
+        return res(true, StatusCode.OK, message, null);
+    }
+
+    public static ResultVo error(String message) {
+        return res(false, StatusCode.ERROR, message, null);
+    }
+
+    public static ResultVo res(boolean flag, Integer status, String message, Object data) {
+        ResultVo res = new ResultVo();
+        res.setFlag(flag);
+        res.setStatus(status);
+        res.setMessage(message);
+        res.setData(data);
+        return res;
     }
 
     public Integer getStatus() {

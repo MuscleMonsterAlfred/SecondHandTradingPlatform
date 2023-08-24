@@ -19,6 +19,9 @@
                 <table class="layui-hide" id="sold" lay-filter="test" style="width:100%"></table>
                 <script type="text/html" id="barDemo">
                     <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="xiangqing">Detail</a>
+                    {{# if(d.orderstatus==0){ }}
+                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="toPay">To pay</a>
+                    {{# } }}
                     {{# if(d.kdstatus==1){ }}
                     <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="shouhuo">Confirm receipt</a>
                     {{# } }}
@@ -30,5 +33,5 @@
 </body>
 <script th:src="@{/static/layui/jquery.min.js}"></script>
 <script th:src="@{/static/layui/layui.js}"></script>
-<script th:src="@{/static/js/userInfo/orderecord.js?version=3}"></script>
+<script th:src="@{/static/js/userInfo/orderecord.js?version=4}"></script>
 </html>

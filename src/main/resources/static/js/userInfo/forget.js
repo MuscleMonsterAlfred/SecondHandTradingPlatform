@@ -16,22 +16,14 @@ var app = new Vue({
     },
     methods: {
         jiantingphone: function () {
-            var phone=$("#mobilephone").val();
+            var phone=$("#email").val();
             if(phone.length==0){
-                layer.tips("Input mobile", '#mobilephone', {
+                layer.tips("Input mobile", '#email', {
                     tips: [1, "#0FA6D8"],
                     tipsMore: !1,
                     time: 1300
                 });
-                $("#mobilephone").focus();
-                return 0;
-            }else if(!re.test(phone)){
-                layer.tips("Input mobile", '#mobilephone', {
-                    tips: [1, "#FF5722"],
-                    tipsMore: !1,
-                    time: 1300
-                });
-                $("#mobilephone").focus();
+                $("#email").focus();
                 return 0;
             }
             return 1;
@@ -40,7 +32,7 @@ var app = new Vue({
 });
 
 function submitforget() {
-    var mobilephone=$("#mobilephone").val();
+    var email=$("#email").val();
     var password=$("#password").val();
     var vercode=$("#vercode").val();
     var t=jiantingphone();
@@ -48,7 +40,7 @@ function submitforget() {
         return;
     }
     if (password.length == 0) {
-        layer.tips("请输入密码", '#password', {
+        layer.tips("input password", '#password', {
             tips: [1, "#0FA6D8"],
             tipsMore: !1,
             time: 1300
@@ -57,7 +49,7 @@ function submitforget() {
         return;
     }
     if (password.length > 20 || password.length < 5) {
-        layer.tips("密码长度为：5-20", '#password', {
+        layer.tips("Length：5-20", '#password', {
             tips: [1, "#FF5722"],
             tipsMore: !1,
             time: 1500
@@ -66,7 +58,7 @@ function submitforget() {
         return;
     }
     if (vercode.length === 0) {
-        layer.tips("请输入验证码", '#vercode', {
+        layer.tips("code", '#vercode', {
             tips: [1, "#0FA6D8"],
             tipsMore: !1,
             time: 1300
@@ -74,7 +66,7 @@ function submitforget() {
         $("#vercode").focus();
         return;
     } else if (vercode.length != 6) {
-        layer.tips("请输入正确验证码", '#vercode', {
+        layer.tips("code", '#vercode', {
             tips: [1, "#FF5722"],
             tipsMore: !1,
             time: 1300
@@ -85,7 +77,7 @@ function submitforget() {
     $("#submitrg").addClass("layui-btn-disabled");
     $("#submitrg").attr("disabled", true);
     var object = new Object(); //创建一个存放数据的对象
-    object["mobilephone"] = mobilephone;
+    object["email"] = email;
     object["password"] = password;
     object["vercode"] = vercode;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
@@ -159,9 +151,9 @@ function getphonecode() {
         return;
     }
     //ajax到后台
-    var mobilephone=$("#mobilephone").val();
+    var email=$("#email").val();
     var object = new Object(); //创建一个存放数据的对象
-    object["mobilephone"] = mobilephone;
+    object["email"] = email;
     object["type"] = 1;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
     $.ajax({
@@ -172,7 +164,7 @@ function getphonecode() {
         dataType: "json", //回调
         beforeSend: function () {
             layer.load(1, { //icon支持传入0-2
-                content: '发送中...',
+                content: 'sending...',
                 success: function (layero) {
                     layero.find('.layui-layer-content').css({
                         'padding-top': '39px',
@@ -199,7 +191,7 @@ function getphonecode() {
                 });
             }
         },error:function () {
-            layer.msg("系统错误", {
+            layer.msg("error", {
                 time: 1000,
                 icon: 5,
                 offset: '100px'
@@ -212,7 +204,7 @@ function getphonecode() {
 function timers() {
     if (time == 0) {
         window.clearInterval(p_timer);
-        $("#LAY-user-getsmscode").html("获取验证码");
+        $("#LAY-user-getsmscode").html("get code");
         $("#LAY-user-getsmscode").removeClass("layui-btn-disabled");
         $("#LAY-user-getsmscode").attr("disabled", false);
         Cookies.remove('times', {path: url});
@@ -221,7 +213,7 @@ function timers() {
         time = time - 1;
         $("#LAY-user-getsmscode").addClass("layui-btn-disabled");
         $("#LAY-user-getsmscode").attr("disabled", true);
-        $("#LAY-user-getsmscode").html(time+"s后可重新发送");
+        $("#LAY-user-getsmscode").html(time+"s");
         Cookies.remove('times', {path: url});
         Cookies.set('times', time, {path: url});
     }

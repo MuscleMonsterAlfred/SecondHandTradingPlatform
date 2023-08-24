@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gla.catarina.mapper.ShopNoticesMapper">
+
+    <!-- 开启二级缓存 -->
+<!--    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/>-->
+
+    <!-- 查询前10条通知 -->
+    <select id="listTen" resultType="com.gla.catarina.entity.ShopNotices">
+        select id,tpname,whys,isread,nttime,latest from shop_notices where userid=#{userid} order by nttime desc limit 0,10
+    </select>
+
+    <!-- 分页查询用户所有通知消息 -->
+    <select id="page" resultType="com.gla.catarina.entity.ShopNotices">
+        select id,tpname,whys,isread,nttime from shop_notices where userid=#{userid} order by nttime desc limit #{page},#{count}
+    </select>
+
+</mapper>

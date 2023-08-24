@@ -12,10 +12,10 @@
     <link rel="stylesheet" th:href="@{/static/plugins/font-awesome/css/font-awesome.min.css}">
 </head>
 <body>
-<h1 th:text="${news.newstitle}" style="text-align: center;margin-top:10px"></h1>
+<h1 th:text="${shopNews.newstitle}" style="text-align: center;margin-top:10px"></h1>
 <h3 style="text-align: center;line-height:40px"
-    th:text="'Release time：'+${#dates.format(news.createtime,'yyyy-MM-dd')}+'&nbsp;&nbsp;&nbsp;&nbsp;Reading count：'+${news.rednumber}"></h3>
-<div style="margin:10px 30px 0px 30px;font-size:20px" th:utext="${news.newscontent}">
+    th:text="'Release time：'+${#dates.format(shopNews.createtime,'yyyy-MM-dd')}+'&nbsp;&nbsp;&nbsp;&nbsp;Reading count：'+${shopNews.rednumber}"></h3>
+<div style="margin:10px 30px 0px 30px;font-size:20px" th:utext="${shopNews.newscontent}">
 </div>
 </body>
 <script type="text/javascript" th:src="@{/static/layui/layui.js}"></script>

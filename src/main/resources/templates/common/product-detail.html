@@ -96,9 +96,9 @@
                         <h1 style='width:400px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;' id="commname"
                             th:title="${gddetail.commname}" th:text="${gddetail.commname}"></h1>
                         <div style="margin-top:10px;margin-bottom:10px">
-                            <span style="font-size:25px;color:#E7503C">￥</span>
+                            <span style="font-size:25px;color:#E7503C">￡</span>
                             <span style="font-size:30px;color:#E7503C" th:text="${gddetail.thinkmoney}"></span>
-                            <span><del th:text="${'￥'+gddetail.orimoney}"></del></span>
+                            <span><del th:text="${'￡'+gddetail.orimoney}"></del></span>
                         </div>
                         <h4 style="margin-bottom:15px">
                             <div class="layui-inline">
@@ -236,8 +236,8 @@
                             <div class="layui-form-item layui-form-text">
                                 <div class="layui-input-block">
                                     <textarea class="layui-textarea" name="content" id="content"
-                                    style="resize: none;height:66px" lay-verify="required" lay-reqtext="评论内容岂能为空？"
-                                              placeholder="请输入评论内容"></textarea>
+                                    style="resize: none;height:66px" lay-verify="required" lay-reqtext="not empty？"
+                                              placeholder=""></textarea>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -246,7 +246,7 @@
                                             lay-filter="demo1" title="Login">Submit</button>
                                     <button th:if="${session.userid!=null}" id="subid" type="submit" class="layui-btn" lay-submit=""
                                             lay-filter="demo1">Submit</button>
-                                    <button style="display: none" id="reply" type="submit" class="layui-btn" lay-submit=""
+                                    <button style="display: none" id="shopReply" type="submit" class="layui-btn" lay-submit=""
                                             lay-filter="demo2">Submit</button>
                                 </div>
                             </div>
@@ -270,34 +270,34 @@
                      data-radio="100%">
                     <div class="layui-container">
                         <div class="layui-row layui-col-space5">
-                            <div class="layui-col-md3" v-for="commodity in latestData" :key="commodity.commid">
+                            <div class="layui-col-md3" v-for="shopCommodity in latestData" :key="shopCommodity.commid">
                                 <div class="ps-shoes--carousel">
                                     <div class="ps-shoe">
                                         <div class="ps-shoe__thumbnail">
                                             <div class="ps-badge"><span>New</span></div>
                                             <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
-                                            <img v-bind:src="commodity.image" alt="商品主图" style="height:300px">
-                                            <a class="ps-shoe__overlay" :href="'/product-detail/'+commodity.commid"
+                                            <img v-bind:src="shopCommodity.image" alt="商品主图" style="height:300px">
+                                            <a class="ps-shoe__overlay" :href="'/product-detail/'+shopCommodity.commid"
                                                target="_blank"></a>
                                         </div>
                                         <div class="ps-shoe__content">
                                             <div class="ps-shoe__variants">
-                                                <div class="layui-col-md4" v-for="imgs in commodity.otherimg"
+                                                <div class="layui-col-md4" v-for="imgs in shopCommodity.otherimg"
                                                      :key="imgs.id">
                                                     <img v-bind:src="imgs" style="height:80px">
                                                 </div>
                                             </div>
                                             <div class="ps-shoe__detail">
                                                 <p style="width:130px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">
-                                                    <a class="ps-shoe__name" :href="'/product-detail/'+commodity.commid">
-                                                        {{ commodity.commname }}
+                                                    <a class="ps-shoe__name" :href="'/product-detail/'+shopCommodity.commid">
+                                                        {{ shopCommodity.commname }}
                                                     </a>
                                                 </p>
                                                 <p class="ps-shoe__categories">
-                                                    {{ commodity.school }}
+                                                    {{ shopCommodity.school }}
                                                 </p>
                                                 <span class="ps-shoe__price">
-                                            <del> ￥ {{ commodity.orimoney }}</del> ￥ {{ commodity.thinkmoney }}
+                                            <del> ￡ {{ shopCommodity.orimoney }}</del> ￡ {{ shopCommodity.thinkmoney }}
                                         </span>
                                             </div>
                                         </div>

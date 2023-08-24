@@ -184,6 +184,22 @@ function submitregister() {
     var password2=$("#password2").val();
     var phonevercode=$("#phonevercode").val();
     var useremail=$("#useremail").val();
+    var school=$("#school").val();
+
+    const regex = /^\w+@.*\.ac\.uk$/;
+
+    const isMatch = regex.test(useremail);
+
+    if (!isMatch) {
+        layer.tips("Email ends with .ac.uk", '#useremail', {
+            tips: [1, "#FF5722"],
+            tipsMore: !1,
+            time: 1300
+        });
+        $("#useremail").focus();
+        return;
+    }
+
     var t=jiantingphone();
     if(t==0){
         return;
@@ -193,7 +209,7 @@ function submitregister() {
         return;
     }
     if (nickname.length == 0) {
-        layer.tips("请输入用户名", '#nickname', {
+        layer.tips("Input nickName", '#nickname', {
             tips: [1, "#0FA6D8"],
             tipsMore: !1,
             time: 1300
@@ -244,6 +260,7 @@ function submitregister() {
     object["password"] = password2;
     // object["vercode"] = phonevercode;
     object["email"] = useremail;
+    object["school"] = school;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
     $.ajax({
         url: basePath + "/user/register",

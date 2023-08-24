@@ -1,27 +1,26 @@
 package com.gla.catarina.controller;
 
-import com.gla.catarina.service.INoticesService;
-import com.gla.catarina.service.IOrdersService;
-import com.gla.catarina.entity.Notices;
-import com.gla.catarina.entity.Orders;
+import com.gla.catarina.entity.ShopNotices;
+import com.gla.catarina.entity.ShopOrders;
+import com.gla.catarina.service.IShopNoticesService;
+import com.gla.catarina.service.IShopOrdersService;
 import com.gla.catarina.util.KeyUtil;
-import com.gla.catarina.util.StatusCode;
 import com.gla.catarina.vo.LayuiPageVo;
 import com.gla.catarina.vo.ResultVo;
-import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import javax.annotation.Resource;
 import java.util.List;
+
+import static com.gla.catarina.util.ServletUtils.getUserId;
 
 /**
  * <p>
- *  售出记录控制器
+ * 售出记录
  * </p>
  *
  * @author catarina
@@ -31,58 +30,64 @@ import java.util.List;
 public class SoldrecordController {
 
     @Resource
-    private IOrdersService IOrdersService;
+    private IShopOrdersService shopOrdersService;
     @Resource
-    private INoticesService INoticesService;
+    private IShopNoticesService shopNoticesService;
 
     /**
-     * 确认收货
-     * 1.前端传入需修改记录的id（id）
-     * */
+     * confirmReceive
+     */
     @ResponseBody
     @PutMapping("/soldrecord/change/{ordernumber}")
-    public ResultVo delectSold (@PathVariable("ordernumber") String ordernumber) {
-        IOrdersService.ChangeOrder(new Orders().setOrdernumber(ordernumber).setKdstatus(2));
+    public ResultVo confirmReceive(@PathVariable("ordernumber") String ordernumber) {
+        ShopOrders order = new ShopOrders();
+        order.setOrdernumber(ordernumber);
+        order.setKdstatus(2);
+        shopOrdersService.updateOrderByNumber(order);
 
-        /**查询订单详情*/
-        Orders orders = IOrdersService.LookOrderDetail(ordernumber);
-        /**给卖家发送订单通知*/
-        Notices notices1 = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(orders.getSelluserid()).setTpname("System Notice")
-                .setWhys("The product you sold <a href=/product-detail/"+orders.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+orders.getCommname()+"</a>,The goods have been received");
-        INoticesService.insertNotices(notices1);
+        /**detail*/
+        ShopOrders shopOrders = shopOrdersService.getByNumber(ordernumber);
+        saveNotice(shopOrders);
 
-        return new ResultVo(true, StatusCode.OK,"操作成功");
+        return ResultVo.ok();
+    }
+
+    private void saveNotice(ShopOrders shopOrders) {
+        /**发出待审核系统通知*/
+        ShopNotices shopNotices = new ShopNotices();
+        shopNotices.setId(KeyUtil.genUniqueKey());
+        shopNotices.setUserid(shopOrders.getBuyuserid());
+        shopNotices.setTpname("System Notice");
+        StringBuilder sb = new StringBuilder();
+        sb.append("The product you sold <a href=/product-detail/")
+                .append(shopOrders.getCommid()).append(" style=\"color:#08bf91\" target=\"_blank\" >")
+                .append(shopOrders.getCommname())
+                .append("</a> ,The goods have been received");
+
+        shopNotices.setWhys(sb.toString());
+        shopNoticesService.save(shopNotices);
     }
 
     /**
-     * 分页查看用户所有售出记录
-     * 1.前端传入页码、分页数量
-     * 2.查询分页数据
+     * list
      */
     @ResponseBody
     @GetMapping("/soldrecord/lookuser")
-    public LayuiPageVo LookUserSold(int limit, int page, HttpSession session) {
-        String selluserid = (String) session.getAttribute("userid");
-        //如果未登录，给一个假id
-        if(StringUtils.isEmpty(selluserid)){
-            selluserid = "123456";
-        }
-        List<Orders> soldrecordList = IOrdersService.queryAllSoldrecord((page - 1) * limit, limit, selluserid);
-        Integer dataNumber = IOrdersService.querySoldCount(selluserid);
-        return new LayuiPageVo("",0,dataNumber,soldrecordList);
+    public LayuiPageVo list(int limit, int page) {
+        int current = (page - 1) * limit;
+        List<ShopOrders> dataList = shopOrdersService.listAllSell(current, limit, getUserId());
+        return new LayuiPageVo("", 0, shopOrdersService.countAllSell(getUserId()), dataList);
     }
 
     /**
-     * 分页查看全部的售出记录
-     * 1.前端传入页码、分页数量
-     * 2.查询分页数据
+     * listAllSold
      */
     @ResponseBody
     @GetMapping("/soldrecord/queryall")
-    public LayuiPageVo queryAllSold(int limit, int page) {
-        List<Orders> soldrecordList = IOrdersService.queryAllSoldrecord((page - 1) * limit, limit, null);
-        Integer dataNumber = IOrdersService.querySoldCount(null);
-        return new LayuiPageVo("",0,dataNumber,soldrecordList);
+    public LayuiPageVo listAllSold(int limit, int page) {
+        int current = (page - 1) * limit;
+        List<ShopOrders> dataList = shopOrdersService.listAllSell(current, limit, null);
+        return new LayuiPageVo("", 0, shopOrdersService.countAllSell(null), dataList);
     }
 
 }

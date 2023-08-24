@@ -13,31 +13,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ShiroConfig {
     /**
-     * 创建ShiroFilterFactoryBean
+     * ShiroFilterFactoryBean
      */
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        //设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        //设置未授权的界面
+        //No auth
         shiroFilterFactoryBean.setUnauthorizedUrl("/authorization");
         return shiroFilterFactoryBean;
     }
 
-    /**
-     * 创建DefaultWebSecurityManager
-     */
+
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        //关联realm
         securityManager.setRealm(userRealm);
         return securityManager;
     }
 
     /**
-     * 创建Realm
+     * Realm
      */
     @Bean(name = "userRealm")
     public UserRealm getRealm() {

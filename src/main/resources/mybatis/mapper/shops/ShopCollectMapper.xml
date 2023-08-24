@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gla.catarina.mapper.ShopCollectMapper">
+
+    <!--分页查看所有收藏内容-->
+    <select id="queryAllCollect" resultType="com.gla.catarina.entity.ShopCollect">
+        select * from shop_collect where collstatus=1 and couserid=#{couserid} order by soldtime desc limit #{page},#{count}
+    </select>
+
+
+</mapper>

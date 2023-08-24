@@ -247,7 +247,7 @@ layui.use(['form', 'upload', 'element'], function () {
         object["goodposition"] = data.field.goodPosition;
         var jsonData = JSON.stringify(object);
         $.ajax({
-            url: basePath + "/relgoods/rel",
+            url: basePath + "/product/add",
             data: jsonData,
             contentType: "application/json;charset=UTF-8",
             type: "post",

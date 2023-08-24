@@ -15,7 +15,7 @@
     <meta name="author" content="Nghia Minh Luong">
     <meta name="keywords" content="Default Description">
     <meta name="description" content="Default keyword">
-    <title>商品搜索</title>
+    <title>Search</title>
     <!-- Fonts-->
     <link rel="stylesheet" th:href="@{/static/css/fontsgoogleapis.css}">
     <link rel="stylesheet" th:href="@{/static/plugins/font-awesome/css/font-awesome.min.css}">
@@ -149,33 +149,33 @@
 <main class="ps-main" id="productlist">
     <div class="layui-container">
         <div class="layui-row" style="display: none" id="contents">
-            <div class="layui-col-md4" v-for="commodity in productlistData" :key="commodity.commid">
+            <div class="layui-col-md4" v-for="shopCommodity in productlistData" :key="shopCommodity.commid">
                 <div class="ps-shoes--carousel">
                     <div class="ps-shoe">
                         <div class="ps-shoe__thumbnail">
                             <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
-                            <img v-bind:src="commodity.image" alt="商品主图" style="height:400px">
-                            <a class="ps-shoe__overlay" :href="'/product-detail/'+commodity.commid"
+                            <img v-bind:src="shopCommodity.image" alt="商品主图" style="height:400px">
+                            <a class="ps-shoe__overlay" :href="'/product-detail/'+shopCommodity.commid"
                                target="_blank"></a>
                         </div>
                         <div class="ps-shoe__content">
                             <div class="ps-shoe__variants">
-                                <div class="layui-col-md4" v-for="imgs in commodity.otherimg"
+                                <div class="layui-col-md4" v-for="imgs in shopCommodity.otherimg"
                                      :key="imgs.id">
                                     <img v-bind:src="imgs" style="height:80px">
                                 </div>
                             </div>
                             <div class="ps-shoe__detail">
                                 <p style="width:130px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">
-                                    <a class="ps-shoe__name" :href="'/product-detail/'+commodity.commid">
-                                        {{ commodity.commname }}
+                                    <a class="ps-shoe__name" :href="'/product-detail/'+shopCommodity.commid">
+                                        {{ shopCommodity.commname }}
                                     </a>
                                 </p>
                                 <p class="ps-shoe__categories">
-                                    {{ commodity.school }}
+                                    {{ shopCommodity.school }}
                                 </p>
                                 <span class="ps-shoe__price">
-                                            <del> ￥ {{ commodity.orimoney }}</del> ￥ {{ commodity.thinkmoney }}
+                                            <del> ￡ {{ shopCommodity.orimoney }}</del> ￡ {{ shopCommodity.thinkmoney }}
                                         </span>
                             </div>
                         </div>

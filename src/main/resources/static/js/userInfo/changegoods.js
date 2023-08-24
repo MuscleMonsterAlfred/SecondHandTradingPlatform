@@ -261,9 +261,10 @@ layui.use(['form', 'upload', 'element'], function () {
         object["common2"] = data.field.common2;
         object["image"] = vuemainimg;
         object["otherimg"] = rellistimgs;
+        object["goodposition"] = data.field.goodPosition;
         var jsonData = JSON.stringify(object);
         $.ajax({
-            url: basePath + "/changegoods/rel",
+            url: basePath + "/product/edit",
             data: jsonData,
             contentType: "application/json;charset=UTF-8",
             type: "post",
@@ -283,7 +284,7 @@ layui.use(['form', 'upload', 'element'], function () {
                 layer.closeAll('loading');
             },
             success: function (data) {
-                layer.msg("修改成功，请等待审核", {
+                layer.msg("Success wait approve", {
                     time: 1000,
                     icon: 1,
                     offset: '100px'
@@ -301,4 +302,79 @@ layui.use(['form', 'upload', 'element'], function () {
         });
         return false;
     });
+
+    function activeMap(position, map) {
+        var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            name: position.coords.name
+        };
+
+        // 在地图上添加标记
+        var marker = new google.maps.Marker({
+            position: pos,
+            map: map
+        });
+
+        // 将位置信息显示在信息窗口中
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Current location: ' + pos.name
+        });
+
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+
+        // 将地图中心移动到当前位置
+        map.setCenter(pos);
+
+        $("#goodPosition").val(JSON.stringify(pos));
+    }
+
+    function initMap() {
+        // 创建地图
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644}, // 设置地图中心坐标
+            zoom: 8 // 设置地图缩放级别
+        });
+
+        // 获取当前位置
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                activeMap(position, map);
+            }, function() {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // 浏览器不支持地理定位
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+        var input = document.getElementById('address-input');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+
+            if (!place.geometry) {
+                window.alert("Invalid address, please reselect");
+                return;
+            }
+
+            var latitude = place.geometry.location.lat();
+            var longitude = place.geometry.location.lng();
+            var sPos={coords:{latitude:latitude,longitude:longitude,name:place.name}};
+            activeMap(sPos, map);
+        });
+
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error：Unable to obtain current location。' :
+            'Error：Your browser does not support geolocation。');
+        infoWindow.open(map);
+    }
+
+    initMap();
 });

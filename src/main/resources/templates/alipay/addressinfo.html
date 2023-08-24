@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/userInfo/relgoods.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/shopUserInfo/relgoods.css}"/>
     <script type="text/javascript" th:src="@{/static/layui/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
-    <script type="text/javascript" th:src="@{/static/js/userInfo/ckplayer.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/shopUserInfo/ckplayer.js}"></script>
     <title>校园二手交易商城 | 填写收货地址</title>
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
@@ -24,29 +24,29 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>收件人</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Recipient</label>
         <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="请输入收件人名称"
+            <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="recipient"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>手机号</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Mobile</label>
         <div class="layui-input-block">
-            <input type="number" name="mobilephone" lay-verify="required" autocomplete="off" placeholder="请输入收件人手机号"
+            <input type="number" name="mobilephone" lay-verify="required" autocomplete="off" placeholder="Mobile"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>收件地址</label>
+        <label class="layui-form-label"><span style="color: red">*</span>Address</label>
         <div class="layui-input-block">
-            <input type="text" name="useraddress" lay-verify="required" autocomplete="off" placeholder="请输入收件地址"
+            <input type="text" name="useraddress" lay-verify="required" autocomplete="off" placeholder="Address"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" id="demo1" lay-filter="demo1">立即提交</button>
+            <button type="submit" class="layui-btn" lay-submit="" id="demo1" lay-filter="demo1">Submit</button>
         </div>
     </div>
 </form>
@@ -71,7 +71,7 @@
                 dataType: "json",
                 beforeSend: function () {
                     layer.load(1, {
-                        content: '请稍等...',
+                        content: 'loading...',
                         success: function (layero) {
                             layero.find('.layui-layer-content').css({
                                 'padding-top': '39px',
@@ -84,7 +84,11 @@
                     layer.closeAll('loading');
                 },
                 success: function (data) {
-                    layer.msg("正在跳转到支付页面", {
+                    if(data.status != 200){
+                        layer.msg(data.message);
+                        return;
+                    }
+                    layer.msg("to pay", {
                         time: 1000,
                         icon: 1,
                         offset: '100px'
@@ -94,7 +98,7 @@
                         window.open(basePath+"/shop/preorder/"+data.data)
                     });
                 },error:function () {
-                    layer.msg('系统错误', {
+                    layer.msg('error', {
                         time: 1000,
                         icon: 2,
                         offset: '150px'

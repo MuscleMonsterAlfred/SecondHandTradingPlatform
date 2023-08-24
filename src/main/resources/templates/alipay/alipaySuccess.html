@@ -5,13 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}"/>
-    <title>校园二手交易商城 | 支付成功</title>
+    <title>SHTP</title>
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
     </script>
 </head>
 <body>
-    <h1 style="color: green;text-align: center;margin-top: 100px">支付成功</h1>
-    <div style="text-align: center;"><a th:href="@{/user/center}" style="color:red;">返回个人中心</a></div>
+    <div class="container" style="min-height: 200px;">
+        </br>
+        <div class="col-sm-12" style="text-align: center;margin:80px;">
+            <h1>Order pay success</h1>
+        </div>
+        <div class="col-sm-12" style="text-align: center">
+            <button  id="goHome" type="button"
+                     class="layui-btn layui-btn-radius layui-btn-lg">Go home page</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button  id="goManage" type="button"
+                     class="layui-btn layui-btn-radius layui-btn-lg">Go user center</button>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/static/layui/jquery.min.js}"></script>
+    <script th:inline="javascript">
+
+
+        $(document).ready(function () {
+            $("#goHome").click(function(){
+                window.location.href= basePath;
+            });
+            $("#goManage").click(function(){
+                window.location.href= basePath+"/user/center";
+            });
+        });
+
+    </script>
 </body>
 </html>
