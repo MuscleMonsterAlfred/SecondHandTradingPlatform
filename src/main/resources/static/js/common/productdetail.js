@@ -141,45 +141,44 @@ layui.use(['form', 'util','layer','carousel'], function () {
         return false;
     });
 
-    var activeMap= function (position, map) {
-
-        // 在地图上添加标记
-        var marker = new google.maps.Marker({
+    const activeMap= function (position, map) {
+        // marker location
+        const marker = new google.maps.Marker({
             position: position,
             map: map
         });
 
-        // 将位置信息显示在信息窗口中
-        var infowindow = new google.maps.InfoWindow({
-            content: '当前位置: ' + position.name
+        // show window
+        const locationWindow = new google.maps.InfoWindow({
+            content: 'Current location: ' + position.name
         });
 
         marker.addListener('click', function () {
-            infowindow.open(map, marker);
+            locationWindow.open(map, marker);
         });
-
-        // 将地图中心移动到当前位置
+        //
         map.setCenter(position);
-        infowindow.open(map, marker);
+        locationWindow.open(map, marker);
     }
 
     layui.$('#openPositionBtn').on('click', function(e){
-        var goodpositionStr = $(e.target).attr('goodposition');
-        if(undefined != goodpositionStr){
+        const goodPositionStr = $(e.target).attr('goodposition');
+        if(undefined != goodPositionStr){
             layer.open({
                 type: 1,
                 title:"Good location",
                 area: ['920px', '620px'],
-                content: $('#map') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                content: $('#map')
             });
 
-            // 创建地图
-            var goodposition = JSON.parse(goodpositionStr);
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644}, // 设置地图中心坐标
-                zoom: 8 // 设置地图缩放级别
+            // create map
+            const goodPosition = JSON.parse(goodPositionStr);
+            const map = new google.maps.Map(document.getElementById('map'), {
+                // setting Map
+                center: {lat: 55.87248820000001, lng: -4.2849319},
+                zoom: 8
             });
-            activeMap(goodposition,map);
+            activeMap(goodPosition,map);
 
             /*
             var directionsService = new google.maps.DirectionsService();

@@ -7,6 +7,7 @@ import com.gla.catarina.service.IShopCommodityService;
 import com.gla.catarina.service.IShopNoticesService;
 import com.gla.catarina.service.IShopOrdersService;
 import com.gla.catarina.util.KeyUtil;
+import com.gla.catarina.util.ThreadUtil;
 import com.gla.catarina.vo.LayuiPageVo;
 import com.gla.catarina.vo.ResultVo;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,7 @@ public class ShopOrderController {
     }
 
     private void saveNotice(ShopOrders shopOrders) {
-        /**发出待审核系统通知*/
+        /**Send Notice*/
         ShopNotices shopNotices = new ShopNotices();
         shopNotices.setId(KeyUtil.genUniqueKey());
         shopNotices.setUserid(shopOrders.getBuyuserid());
@@ -67,7 +68,11 @@ public class ShopOrderController {
                 .append("</a> ");
 
         shopNotices.setWhys(sb.toString());
-        shopNoticesService.save(shopNotices);
+
+        //Asynchronous Notification
+        ThreadUtil.run(()->{
+            shopNoticesService.save(shopNotices);
+        });
     }
 
     /**
