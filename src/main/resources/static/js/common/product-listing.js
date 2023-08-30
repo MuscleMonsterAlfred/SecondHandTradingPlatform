@@ -12,10 +12,10 @@ layui.use(['form', 'slider'], function () {
     //开启范围选择
     slider.render({
         elem: '#slideTest9'
-        , value: [0, 5000] //初始值
+        , value: [0, 500] //初始值
         , range: true //范围选择
         , min: 0 //最小值
-        , max: 30000 //最大值
+        , max: 5000 //最大值
         , change: function (value) {
             minmoney=value[0];
             maxmoney=value[1];
