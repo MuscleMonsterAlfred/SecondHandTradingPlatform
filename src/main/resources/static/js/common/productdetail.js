@@ -74,7 +74,7 @@ layui.use(['form', 'util','layer','carousel'], function () {
                 $("#subid").removeClass("layui-btn-disabled");
                 $("#subid").attr("disabled", false);
             },error:function () {
-                layer.msg("系统错误", {
+                layer.msg("Error", {
                     time: 1000,
                     icon: 2,
                     offset: '100px'
@@ -131,7 +131,7 @@ layui.use(['form', 'util','layer','carousel'], function () {
                     });
                 }
             },error:function () {
-                layer.msg("系统错误", {
+                layer.msg("Error", {
                     time: 1000,
                     icon: 2,
                     offset: '100px'
@@ -279,7 +279,7 @@ function ganxingqu() {
                     });
                 }
             },error:function () {
-                layer.msg("系统错误", {
+                layer.msg("Error", {
                     time: 1000,
                     icon: 2,
                     offset: '100px'
@@ -306,7 +306,7 @@ function dianjicllect(colloperates) {
         dataType: "json", //回调
         beforeSend: function () {
             layer.load(1, { //icon支持传入0-2
-                content: '提交中...',
+                content: 'loading...',
                 success: function (layero) {
                     layero.find('.layui-layer-content').css({
                         'padding-top': '39px',
@@ -341,7 +341,7 @@ function dianjicllect(colloperates) {
                 });
             }
         },error:function () {
-            layer.msg("系统错误", {
+            layer.msg("Error", {
                 time: 1000,
                 icon: 2,
                 offset: '100px'
@@ -379,7 +379,7 @@ var app = new Vue({
                         $("#nocomment").show();
                     }
                 },error:function () {
-                    layer.msg("系统错误", {
+                    layer.msg("Error", {
                         time: 1000,
                         icon: 5,
                         offset: '100px'
@@ -430,7 +430,7 @@ var app = new Vue({
                         that.latestData = msg.data;
                     }
                 },error:function () {
-                    layer.msg("系统错误", {
+                    layer.msg("Error", {
                         time: 1000,
                         icon: 5,
                         offset: '100px'

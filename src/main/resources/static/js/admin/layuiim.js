@@ -19,7 +19,7 @@ layui.use('layim', function(layim){
             dataType: "text",
             success: function (data) {
             },error:function () {
-                layer.msg('系统错误', {
+                layer.msg('Error', {
                     time: 2000,
                     icon: 2,
                     offset: '150px'

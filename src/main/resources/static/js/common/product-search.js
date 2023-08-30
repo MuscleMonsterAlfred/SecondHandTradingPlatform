@@ -44,7 +44,7 @@ var productList = new Vue({
                         });
                     });
                 },error:function () {
-                    layer.msg("系统错误", {
+                    layer.msg("Error", {
                         time: 1000,
                         icon: 2,
                         offset: '100px'
@@ -78,7 +78,7 @@ var productList = new Vue({
                     that.productlistData=data.data;
                     $("#contents").show();
                 },error:function () {
-                    layer.msg("系统错误", {
+                    layer.msg("Error", {
                         time: 1000,
                         icon: 2,
                         offset: '100px'

@@ -44,7 +44,7 @@ layui.config({
                     $("#submitlg").attr("disabled", false);
                 }
             },error:function () {
-                layer.msg("系统错误", {
+                layer.msg("Error", {
                     time: 1000,
                     icon: 2,
                     offset: '100px'

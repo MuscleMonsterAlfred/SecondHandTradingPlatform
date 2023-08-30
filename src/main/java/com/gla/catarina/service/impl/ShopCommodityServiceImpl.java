@@ -92,7 +92,8 @@ public class ShopCommodityServiceImpl extends ServiceImpl<ShopCommodityMapper, S
     public List<ShopCommodity> listAll(Integer page, Integer count, String area, String school, String category, BigDecimal minmoney, BigDecimal maxmoney) {
         LambdaQueryWrapper<ShopCommodity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(!"All".equals(category), ShopCommodity::getCategory, category);
-        queryWrapper.eq(!"All".equals(area), ShopCommodity::getSchool, school);
+        queryWrapper.eq(!"All".equals(school), ShopCommodity::getSchool, school);
+        queryWrapper.eq(ShopCommodity::getCommstatus, 1);
         queryWrapper.between(minmoney != null && maxmoney != null, ShopCommodity::getCommstatus, minmoney, maxmoney);
         return list(queryWrapper);
     }
@@ -105,8 +106,9 @@ public class ShopCommodityServiceImpl extends ServiceImpl<ShopCommodityMapper, S
         LambdaQueryWrapper<ShopCommodity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(!"All".equals(category), ShopCommodity::getCategory, category);
         queryWrapper.notIn("Vicinity".equals(area), ShopCommodity::getSchool, school);
-        queryWrapper.eq("School".equals(area), ShopCommodity::getSchool, school);
-        queryWrapper.between(minmoney != null && maxmoney != null, ShopCommodity::getCommstatus, minmoney, maxmoney);
+        queryWrapper.eq(!"All".equals(school), ShopCommodity::getSchool, school);
+        queryWrapper.eq(ShopCommodity::getCommstatus, 1);
+        queryWrapper.between(minmoney != null && maxmoney != null, ShopCommodity::getThinkmoney, minmoney, maxmoney);
         return shopCommodityMapper.selectCount(queryWrapper).intValue();
     }
 

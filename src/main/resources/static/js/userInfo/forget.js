@@ -122,7 +122,7 @@ function submitforget() {
             $("#submitrg").removeClass("layui-btn-disabled");
             $("#submitrg").attr("disabled", false);
         },error:function () {
-            layer.msg("系统错误", {
+            layer.msg("Error", {
                 time: 1000,
                 icon: 5,
                 offset: '100px'

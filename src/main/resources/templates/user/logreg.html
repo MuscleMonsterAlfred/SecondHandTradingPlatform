@@ -69,8 +69,8 @@
                 <span>Password</span>
                 <input type="password" autocomplete="off" placeholder="" id="password2" onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
             </label>
-            <label class="layui-form-label" style="font-size:25px;color:#626262"><b>School</b></label>
-            <div class="layui-input-inline">
+            <label>
+                <span>School</span>
                 <select name="school" id="school">
                     <option th:title="UniversityofCambridge">University of Cambridge</option>
                     <option th:title="UniversityofOxford">University of Oxford</option>
@@ -92,7 +92,7 @@
                     <option th:title="UniversityOfNottingham">University of Nottingham</option>
                     <option th:title="NewcastleUniversity">Newcastle University</option>
                 </select>
-            </div>
+            </label>
             <label>
                 <span>Code</span>
                 <input type="text" autocomplete="off" placeholder="" id="phonevercode"  onkeyup="this.value=this.value.replace(/\s+/g,'')"/>

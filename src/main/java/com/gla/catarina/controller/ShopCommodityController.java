@@ -304,12 +304,15 @@ public class ShopCommodityController {
     public PageVo productListNumber(@PathVariable("category") String category, @PathVariable("area") String area,
                                     @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
                                     HttpSession session) {
-        String schoolStr = null;
-        if (!area.equals("All")) {
+        String school = null;
+        if (null == area) {
             ShopUserInfo shopUserInfo = shopUserInfoService.getByUserId(getUserId());
-            schoolStr = shopUserInfo.getSchool();
+            school = shopUserInfo.getSchool();
+        }else{
+            school = area;
         }
-        Integer dataNumber = shopCommodityService.countAllByCategoryCount(area, schoolStr, category, minmoney, maxmoney);
+
+        Integer dataNumber = shopCommodityService.countAllByCategoryCount(area, school, category, minmoney, maxmoney);
         return new PageVo(StatusCode.OK, "Success", dataNumber);
     }
 
@@ -322,10 +325,13 @@ public class ShopCommodityController {
                                    @PathVariable("area") String area, @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
                                    @PathVariable("price") Integer price) {
         String school = null;
-        if (!area.equals("All")) {
+        if (null == area) {
             ShopUserInfo shopUserInfo = shopUserInfoService.getByUserId(getUserId());
             school = shopUserInfo.getSchool();
+        }else{
+            school = area;
         }
+
         List<ShopCommodity> dataList = shopCommodityService.listAll((page - 1) * 16, 16, area, school, category, minmoney, maxmoney);
 
         dataList.forEach(e -> {

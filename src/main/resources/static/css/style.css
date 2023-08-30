@@ -6884,7 +6884,6 @@ textarea.form-control {
 }
 
 .header .ps-logo {
-    padding: 20px 0px;
     display: inline-block;
     max-width: 150px;
     line-height: 55px;
@@ -8497,7 +8496,7 @@ html .bg--parallax {
 }
 
 .mb-50 {
-    margin-bottom: 50px;
+    /*margin-bottom: 50px;*/
 }
 
 .mb-55 {
@@ -8693,7 +8692,7 @@ html .bg--parallax {
 }
 
 .pt-80 {
-    padding-top: 80px;
+    padding-top: 20px;
 }
 
 .pt-85 {
