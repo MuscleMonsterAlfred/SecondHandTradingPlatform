@@ -200,10 +200,10 @@ function submitregister() {
         return;
     }
 
-    var t=jiantingphone();
-    if(t==0){
-        return;
-    }
+    // var t=jiantingphone();
+    // if(t==0){
+    //     return;
+    // }
     var e=jiantingemail();
     if(e==0){
         return;
@@ -258,7 +258,7 @@ function submitregister() {
     object["username"] = nickname;
     object["mobilephone"] = phone;
     object["password"] = password2;
-    // object["vercode"] = phonevercode;
+    object["vercode"] = phonevercode;
     object["email"] = useremail;
     object["school"] = school;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
