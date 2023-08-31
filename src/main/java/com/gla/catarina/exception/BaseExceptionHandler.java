@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 /**
  * @Author: catarina
  * @Description: 统一异常处理类
- * @Date: 2019/12/27 16:09
  */
 
 @ControllerAdvice

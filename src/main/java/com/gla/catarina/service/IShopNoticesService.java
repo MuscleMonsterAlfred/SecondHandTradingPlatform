@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * @author catarina
- * @since 2023-06-21
  */
 public interface IShopNoticesService extends IService<ShopNotices> {
     Integer saveEntity(ShopNotices shopNotices);

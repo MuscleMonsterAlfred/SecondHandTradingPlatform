@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * @author catarina
- * @since 2023-06-21
  */
 public interface IShopNewsService extends IService<ShopNews> {
 

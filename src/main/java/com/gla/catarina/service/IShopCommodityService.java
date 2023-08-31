@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * @author catarina
- * @since 2023-06-21
  */
 public interface IShopCommodityService extends IService<ShopCommodity> {
     Integer updateStatus(String commid, Integer commstatus);

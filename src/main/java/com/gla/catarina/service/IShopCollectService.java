@@ -7,7 +7,6 @@ import com.gla.catarina.vo.ResultVo;
 
 /**
  * @author catarina
- * @since 2023-06-21
  */
 public interface IShopCollectService extends IService<ShopCollect> {
 

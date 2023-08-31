@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author catarina
- * @since 2023-06-21
  */
 public interface IShopAdminService {
     ResultVo adminlogin(ShopLogin shopLogin, HttpSession session);

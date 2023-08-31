@@ -36,7 +36,6 @@ import static com.gla.catarina.util.ServletUtils.getUserId;
  * </p>
  *
  * @author catarina
- * @since 2023-06-21
  */
 @Controller
 public class ShopCommodityController {

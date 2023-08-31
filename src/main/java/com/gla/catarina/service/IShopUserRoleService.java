@@ -5,7 +5,6 @@ import com.gla.catarina.entity.ShopUserRole;
 
 /**
  * @author catarina
- * @since 2023-06-21
  */
 public interface IShopUserRoleService extends IService<ShopUserRole> {
     Integer saveRole(ShopUserRole shopUserRole);

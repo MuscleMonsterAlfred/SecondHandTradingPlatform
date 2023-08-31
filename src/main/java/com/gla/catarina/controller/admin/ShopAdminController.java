@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 /**
  * @Author: catarina
  * @Description: 管理员控制器
- * @Date: 2023/3/10 16:54
  */
 @Controller
 public class ShopAdminController {

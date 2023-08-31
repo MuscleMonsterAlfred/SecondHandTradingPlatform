@@ -12,7 +12,6 @@ import java.util.List;
  * </p>
  *
  * @author catarina
- * @since 2021-03-06
  */
 public interface ShopOrdersMapper extends BaseMapper<ShopOrders> {
 

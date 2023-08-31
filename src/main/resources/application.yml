@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: root
-    password: Appnew123456!
-    url: jdbc:mysql://121.40.236.164:3306/shop?allowMultiQueries=true&characterEncoding=utf-8&useSSL=false
+    password: Czh1q2w3e4r5t
+    url: jdbc:mysql://127.0.0.1:3306/shop?allowMultiQueries=true&characterEncoding=utf-8&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
     #指定数据源
     type: com.alibaba.druid.pool.DruidDataSource
@@ -82,4 +82,4 @@ server:
 catarina:
   env:
     website: http://127.0.0.1
-    filePath: D:/campusshops/file/
+    filePath: /Users/alfred/eclipse-workspace/campusshops/

@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * @author catarina
- * @since 2023-06-21
  */
 public interface IShopUserPermService extends IService<ShopUserPerm> {
     //查询用户的权限

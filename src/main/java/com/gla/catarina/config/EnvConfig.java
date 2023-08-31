@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * 全局配置类
  *
- * @author yangfan
  */
 @Component
 @ConfigurationProperties(prefix = "catarina.env")

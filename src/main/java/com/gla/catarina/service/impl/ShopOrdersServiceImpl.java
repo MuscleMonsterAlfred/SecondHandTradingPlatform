@@ -17,7 +17,6 @@ import java.util.List;
  * </p>
  *
  * @author catarina
- * @since 2023-06-06
  */
 @Service
 @Transactional

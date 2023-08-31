@@ -5,7 +5,6 @@ import com.gla.catarina.entity.ShopLogin;
 
 /**
  * @author catarina
- * @since 2023-06-21
  */
 public interface IShopLoginService extends IService<ShopLogin> {
     Integer saveLogin(ShopLogin shopLogin);

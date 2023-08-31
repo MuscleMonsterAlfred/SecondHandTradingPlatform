@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author catarina
- * @Date 2019/11/27 14:49
  */
 
 @ControllerAdvice
